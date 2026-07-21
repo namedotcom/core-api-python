@@ -6,29 +6,24 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .url_forwarding_type import UrlForwardingType
+from .url_forwarding_input_type import UrlForwardingInputType
 
 
-class UpdateUrlForwardingBody(UniversalBaseModel):
+class UrlForwardingInput(UniversalBaseModel):
     """
-    The request body for updating an existing URL forwarding entry.
-    """
-
-    host: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    The subdomain portion of the hostname that is being forwarded.
+    Fields for creating or updating a URL forwarding entry.
     """
 
-    domain_name: typing_extensions.Annotated[
-        typing.Optional[str],
-        FieldMetadata(alias="domainName"),
-        pydantic.Field(alias="domainName", description="The domain name (without subdomains) that is being forwarded."),
-    ] = None
     forwards_to: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="forwardsTo"),
         pydantic.Field(alias="forwardsTo", description="The destination URL to which this hostname will be forwarded."),
     ]
+    host: str = pydantic.Field()
+    """
+    The subdomain portion of the hostname that is being forwarded.
+    """
+
     meta: typing.Optional[str] = pydantic.Field(default=None)
     """
     Meta tags to include in the HTML page when using "masked" forwarding.
@@ -42,7 +37,7 @@ class UpdateUrlForwardingBody(UniversalBaseModel):
     Ignored for other forwarding types.
     """
 
-    type: UrlForwardingType = pydantic.Field()
+    type: UrlForwardingInputType = pydantic.Field()
     """
     The type of URL forwarding. Valid values:
       - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.

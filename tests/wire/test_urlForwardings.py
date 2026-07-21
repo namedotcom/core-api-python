@@ -44,9 +44,10 @@ def test_urlForwardings_update_url_forwarding() -> None:
     test_id = "url_forwardings.update_url_forwarding.0"
     client = get_client(test_id)
     client.url_forwardings.update_url_forwarding(
-        domain_name_="example.com",
+        domain_name="example.com",
         host_="www.example.org",
         forwards_to="https://destination-site.com",
+        host="www",
         type="masked",
     )
     verify_request_count(test_id, "PUT", "/core/v1/domains/example.com/url/forwarding/www.example.org", None, 1)
@@ -102,9 +103,10 @@ def test_urlForwardings_update_url_forwarding_by_id() -> None:
     test_id = "url_forwardings.update_url_forwarding_by_id.0"
     client = get_client(test_id)
     client.url_forwardings.update_url_forwarding_by_id(
-        domain_name_="example.com",
+        domain_name="example.com",
         id=12345,
         forwards_to="https://destination-site.com",
+        host="www",
         type="masked",
     )
     verify_request_count(test_id, "PATCH", "/core/v1/urlforwarding/example.com/12345", None, 1)

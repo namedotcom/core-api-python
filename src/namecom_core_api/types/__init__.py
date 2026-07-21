@@ -47,12 +47,13 @@ if typing.TYPE_CHECKING:
     from .create_domain_response import CreateDomainResponse
     from .create_transfer_response import CreateTransferResponse
     from .create_transfer_response_warnings import CreateTransferResponseWarnings
-    from .create_url_forwarding_body import CreateUrlForwardingBody
     from .dnssec import Dnssec
     from .domain import Domain
     from .domain_claims_check_response import DomainClaimsCheckResponse
     from .domain_claims_info import DomainClaimsInfo
     from .domain_create_payload import DomainCreatePayload
+    from .domain_expiration import DomainExpiration
+    from .domain_expiration_event_name import DomainExpirationEventName
     from .domain_lock_status_change import DomainLockStatusChange
     from .domain_lock_status_change_action import DomainLockStatusChangeAction
     from .domain_lock_status_change_event_name import DomainLockStatusChangeEventName
@@ -64,6 +65,9 @@ if typing.TYPE_CHECKING:
     from .domain_transfer_internal_in_status_change import DomainTransferInternalInStatusChange
     from .domain_transfer_internal_in_status_change_event_name import DomainTransferInternalInStatusChangeEventName
     from .domain_transfer_internal_in_status_change_status import DomainTransferInternalInStatusChangeStatus
+    from .domain_transfer_internal_out_status_change import DomainTransferInternalOutStatusChange
+    from .domain_transfer_internal_out_status_change_event_name import DomainTransferInternalOutStatusChangeEventName
+    from .domain_transfer_internal_out_status_change_status import DomainTransferInternalOutStatusChangeStatus
     from .domain_transfer_out_status_change import DomainTransferOutStatusChange
     from .domain_transfer_out_status_change_event_name import DomainTransferOutStatusChangeEventName
     from .domain_transfer_out_status_change_status import DomainTransferOutStatusChangeStatus
@@ -142,8 +146,9 @@ if typing.TYPE_CHECKING:
     from .unsupported_media415 import UnsupportedMedia415
     from .unverified_contact import UnverifiedContact
     from .unverified_contacts_response import UnverifiedContactsResponse
-    from .update_url_forwarding_body import UpdateUrlForwardingBody
     from .url_forwarding import UrlForwarding
+    from .url_forwarding_input import UrlForwardingInput
+    from .url_forwarding_input_type import UrlForwardingInputType
     from .url_forwarding_response import UrlForwardingResponse
     from .url_forwarding_type import UrlForwardingType
     from .vanity_nameserver import VanityNameserver
@@ -186,12 +191,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateDomainResponse": ".create_domain_response",
     "CreateTransferResponse": ".create_transfer_response",
     "CreateTransferResponseWarnings": ".create_transfer_response_warnings",
-    "CreateUrlForwardingBody": ".create_url_forwarding_body",
     "Dnssec": ".dnssec",
     "Domain": ".domain",
     "DomainClaimsCheckResponse": ".domain_claims_check_response",
     "DomainClaimsInfo": ".domain_claims_info",
     "DomainCreatePayload": ".domain_create_payload",
+    "DomainExpiration": ".domain_expiration",
+    "DomainExpirationEventName": ".domain_expiration_event_name",
     "DomainLockStatusChange": ".domain_lock_status_change",
     "DomainLockStatusChangeAction": ".domain_lock_status_change_action",
     "DomainLockStatusChangeEventName": ".domain_lock_status_change_event_name",
@@ -203,6 +209,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DomainTransferInternalInStatusChange": ".domain_transfer_internal_in_status_change",
     "DomainTransferInternalInStatusChangeEventName": ".domain_transfer_internal_in_status_change_event_name",
     "DomainTransferInternalInStatusChangeStatus": ".domain_transfer_internal_in_status_change_status",
+    "DomainTransferInternalOutStatusChange": ".domain_transfer_internal_out_status_change",
+    "DomainTransferInternalOutStatusChangeEventName": ".domain_transfer_internal_out_status_change_event_name",
+    "DomainTransferInternalOutStatusChangeStatus": ".domain_transfer_internal_out_status_change_status",
     "DomainTransferOutStatusChange": ".domain_transfer_out_status_change",
     "DomainTransferOutStatusChangeEventName": ".domain_transfer_out_status_change_event_name",
     "DomainTransferOutStatusChangeStatus": ".domain_transfer_out_status_change_status",
@@ -281,8 +290,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnsupportedMedia415": ".unsupported_media415",
     "UnverifiedContact": ".unverified_contact",
     "UnverifiedContactsResponse": ".unverified_contacts_response",
-    "UpdateUrlForwardingBody": ".update_url_forwarding_body",
     "UrlForwarding": ".url_forwarding",
+    "UrlForwardingInput": ".url_forwarding_input",
+    "UrlForwardingInputType": ".url_forwarding_input_type",
     "UrlForwardingResponse": ".url_forwarding_response",
     "UrlForwardingType": ".url_forwarding_type",
     "VanityNameserver": ".vanity_nameserver",
@@ -349,12 +359,13 @@ __all__ = [
     "CreateDomainResponse",
     "CreateTransferResponse",
     "CreateTransferResponseWarnings",
-    "CreateUrlForwardingBody",
     "Dnssec",
     "Domain",
     "DomainClaimsCheckResponse",
     "DomainClaimsInfo",
     "DomainCreatePayload",
+    "DomainExpiration",
+    "DomainExpirationEventName",
     "DomainLockStatusChange",
     "DomainLockStatusChangeAction",
     "DomainLockStatusChangeEventName",
@@ -366,6 +377,9 @@ __all__ = [
     "DomainTransferInternalInStatusChange",
     "DomainTransferInternalInStatusChangeEventName",
     "DomainTransferInternalInStatusChangeStatus",
+    "DomainTransferInternalOutStatusChange",
+    "DomainTransferInternalOutStatusChangeEventName",
+    "DomainTransferInternalOutStatusChangeStatus",
     "DomainTransferOutStatusChange",
     "DomainTransferOutStatusChangeEventName",
     "DomainTransferOutStatusChangeStatus",
@@ -444,8 +458,9 @@ __all__ = [
     "UnsupportedMedia415",
     "UnverifiedContact",
     "UnverifiedContactsResponse",
-    "UpdateUrlForwardingBody",
     "UrlForwarding",
+    "UrlForwardingInput",
+    "UrlForwardingInputType",
     "UrlForwardingResponse",
     "UrlForwardingType",
     "VanityNameserver",

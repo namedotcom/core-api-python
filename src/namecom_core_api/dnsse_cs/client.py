@@ -65,11 +65,10 @@ class DnsseCsClient:
         self,
         domain_name: str,
         *,
-        algorithm: typing.Optional[int] = OMIT,
-        digest: typing.Optional[str] = OMIT,
-        create_dnssec_body_domain_name: typing.Optional[str] = OMIT,
-        digest_type: typing.Optional[int] = OMIT,
-        key_tag: typing.Optional[int] = OMIT,
+        algorithm: int,
+        digest: str,
+        digest_type: int,
+        key_tag: int,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Dnssec:
         """
@@ -80,17 +79,14 @@ class DnsseCsClient:
         domain_name : str
             DomainName is the domain name to create keys for.
 
-        algorithm : typing.Optional[int]
+        algorithm : int
 
-        digest : typing.Optional[str]
+        digest : str
             Digest is a digest of the DNSKEY RR that is registered with the registry.
 
-        create_dnssec_body_domain_name : typing.Optional[str]
-            The name of the domain.
+        digest_type : int
 
-        digest_type : typing.Optional[int]
-
-        key_tag : typing.Optional[int]
+        key_tag : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -110,13 +106,16 @@ class DnsseCsClient:
         )
         client.dnsse_cs.create_dnssec(
             domain_name="domainName",
+            algorithm=1,
+            digest="digest",
+            digest_type=1,
+            key_tag=1,
         )
         """
         _response = self._raw_client.create_dnssec(
             domain_name,
             algorithm=algorithm,
             digest=digest,
-            create_dnssec_body_domain_name=create_dnssec_body_domain_name,
             digest_type=digest_type,
             key_tag=key_tag,
             request_options=request_options,
@@ -260,11 +259,10 @@ class AsyncDnsseCsClient:
         self,
         domain_name: str,
         *,
-        algorithm: typing.Optional[int] = OMIT,
-        digest: typing.Optional[str] = OMIT,
-        create_dnssec_body_domain_name: typing.Optional[str] = OMIT,
-        digest_type: typing.Optional[int] = OMIT,
-        key_tag: typing.Optional[int] = OMIT,
+        algorithm: int,
+        digest: str,
+        digest_type: int,
+        key_tag: int,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Dnssec:
         """
@@ -275,17 +273,14 @@ class AsyncDnsseCsClient:
         domain_name : str
             DomainName is the domain name to create keys for.
 
-        algorithm : typing.Optional[int]
+        algorithm : int
 
-        digest : typing.Optional[str]
+        digest : str
             Digest is a digest of the DNSKEY RR that is registered with the registry.
 
-        create_dnssec_body_domain_name : typing.Optional[str]
-            The name of the domain.
+        digest_type : int
 
-        digest_type : typing.Optional[int]
-
-        key_tag : typing.Optional[int]
+        key_tag : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -310,6 +305,10 @@ class AsyncDnsseCsClient:
         async def main() -> None:
             await client.dnsse_cs.create_dnssec(
                 domain_name="domainName",
+                algorithm=1,
+                digest="digest",
+                digest_type=1,
+                key_tag=1,
             )
 
 
@@ -319,7 +318,6 @@ class AsyncDnsseCsClient:
             domain_name,
             algorithm=algorithm,
             digest=digest,
-            create_dnssec_body_domain_name=create_dnssec_body_domain_name,
             digest_type=digest_type,
             key_tag=key_tag,
             request_options=request_options,

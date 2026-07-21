@@ -1,12 +1,13 @@
-# Namecom Python Library
+# name.com Core API Python Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fnamedotcom%2Fcore-api-python)
 [![pypi](https://img.shields.io/pypi/v/namecom-core-api)](https://pypi.python.org/pypi/namecom-core-api)
 
-The Namecom Python library provides convenient access to the Namecom APIs from Python.
+The name.com Core API Python library provides convenient access to the name.com Core API APIs from Python.
 
 ## Table of Contents
 
+- [Documentation](#documentation)
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
@@ -19,6 +20,10 @@ The Namecom Python library provides convenient access to the Namecom APIs from P
   - [Timeouts](#timeouts)
   - [Custom Client](#custom-client)
 - [Contributing](#contributing)
+
+## Documentation
+
+API reference documentation is available [here](https://docs.name.com).
 
 ## Installation
 
@@ -35,34 +40,14 @@ A full reference for this library is available [here](https://github.com/namedot
 Instantiate and use the client with the following:
 
 ```python
-from namecom_core_api import Namecom, AccountRequest, ContactsRequest, RegistrantContactRequest
+from namecom_core_api import Namecom
 
 client = Namecom(
     username="<username>",
     password="<password>",
 )
 
-client.accounts.create_account(
-    account=AccountRequest(
-        contacts=ContactsRequest(
-            registrant=RegistrantContactRequest(
-                first_name="Jane",
-                last_name="Doe",
-                address1="123 Main St.",
-                city="Denver",
-                state="CO",
-                zip="12345",
-                country="US",
-                email="admin@example.net",
-                phone="+13035551212",
-            ),
-        ),
-        account_name="reseller_subaccount",
-        password="SecureP4ss!",
-    ),
-    api_tos=True,
-    tos=True,
-)
+client.hello()
 ```
 
 ## Environments
@@ -74,7 +59,7 @@ from namecom_core_api import Namecom
 from namecom_core_api.environment import NamecomEnvironment
 
 client = Namecom(
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 ```
 
@@ -94,27 +79,7 @@ client = AsyncNamecom(
 
 
 async def main() -> None:
-    await client.accounts.create_account(
-        account=AccountRequest(
-            contacts=ContactsRequest(
-                registrant=RegistrantContactRequest(
-                    first_name="Jane",
-                    last_name="Doe",
-                    address1="123 Main St.",
-                    city="Denver",
-                    state="CO",
-                    zip="12345",
-                    country="US",
-                    email="admin@example.net",
-                    phone="+13035551212",
-                ),
-            ),
-            account_name="reseller_subaccount",
-            password="SecureP4ss!",
-        ),
-        api_tos=True,
-        tos=True,
-    )
+    await client.hello()
 
 
 asyncio.run(main())
@@ -129,7 +94,7 @@ will be thrown.
 from namecom_core_api.core.api_error import ApiError
 
 try:
-    client.accounts.create_account(...)
+    client.hello()
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -146,7 +111,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 from namecom_core_api import Namecom
 
 client = Namecom(...)
-response = client.accounts.with_raw_response.create_account(...)
+response = client.with_raw_response.hello()
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -177,7 +142,7 @@ Which status codes are retried depends on the `retryStatusCodes` generator confi
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.accounts.create_account(..., request_options={
+client.hello(request_options={
     "max_retries": 1
 })
 ```
@@ -192,7 +157,7 @@ from namecom_core_api import Namecom
 client = Namecom(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.accounts.create_account(..., request_options={
+client.hello(request_options={
     "timeout_in_seconds": 1
 })
 ```

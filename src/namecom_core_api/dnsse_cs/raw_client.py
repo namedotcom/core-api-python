@@ -170,11 +170,10 @@ class RawDnsseCsClient:
         self,
         domain_name: str,
         *,
-        algorithm: typing.Optional[int] = OMIT,
-        digest: typing.Optional[str] = OMIT,
-        create_dnssec_body_domain_name: typing.Optional[str] = OMIT,
-        digest_type: typing.Optional[int] = OMIT,
-        key_tag: typing.Optional[int] = OMIT,
+        algorithm: int,
+        digest: str,
+        digest_type: int,
+        key_tag: int,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Dnssec]:
         """
@@ -185,17 +184,14 @@ class RawDnsseCsClient:
         domain_name : str
             DomainName is the domain name to create keys for.
 
-        algorithm : typing.Optional[int]
+        algorithm : int
 
-        digest : typing.Optional[str]
+        digest : str
             Digest is a digest of the DNSKEY RR that is registered with the registry.
 
-        create_dnssec_body_domain_name : typing.Optional[str]
-            The name of the domain.
+        digest_type : int
 
-        digest_type : typing.Optional[int]
-
-        key_tag : typing.Optional[int]
+        key_tag : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -211,7 +207,6 @@ class RawDnsseCsClient:
             json={
                 "algorithm": algorithm,
                 "digest": digest,
-                "domainName": create_dnssec_body_domain_name,
                 "digestType": digest_type,
                 "keyTag": key_tag,
             },
@@ -761,11 +756,10 @@ class AsyncRawDnsseCsClient:
         self,
         domain_name: str,
         *,
-        algorithm: typing.Optional[int] = OMIT,
-        digest: typing.Optional[str] = OMIT,
-        create_dnssec_body_domain_name: typing.Optional[str] = OMIT,
-        digest_type: typing.Optional[int] = OMIT,
-        key_tag: typing.Optional[int] = OMIT,
+        algorithm: int,
+        digest: str,
+        digest_type: int,
+        key_tag: int,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Dnssec]:
         """
@@ -776,17 +770,14 @@ class AsyncRawDnsseCsClient:
         domain_name : str
             DomainName is the domain name to create keys for.
 
-        algorithm : typing.Optional[int]
+        algorithm : int
 
-        digest : typing.Optional[str]
+        digest : str
             Digest is a digest of the DNSKEY RR that is registered with the registry.
 
-        create_dnssec_body_domain_name : typing.Optional[str]
-            The name of the domain.
+        digest_type : int
 
-        digest_type : typing.Optional[int]
-
-        key_tag : typing.Optional[int]
+        key_tag : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -802,7 +793,6 @@ class AsyncRawDnsseCsClient:
             json={
                 "algorithm": algorithm,
                 "digest": digest,
-                "domainName": create_dnssec_body_domain_name,
                 "digestType": digest_type,
                 "keyTag": key_tag,
             },

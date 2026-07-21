@@ -4,4 +4,5 @@ import enum
 
 
 class NamecomEnvironment(enum.Enum):
-    DEFAULT = "https://api.dev.name.com"
+    SANDBOX = "https://api.dev.name.com"
+    PRODUCTION = "https://api.name.com"
