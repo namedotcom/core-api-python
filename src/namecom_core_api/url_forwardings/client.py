@@ -5,8 +5,8 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.list_url_forwardings_response import ListUrlForwardingsResponse
+from ..types.url_forwarding_input_type import UrlForwardingInputType
 from ..types.url_forwarding_response import UrlForwardingResponse
-from ..types.url_forwarding_type import UrlForwardingType
 from .raw_client import AsyncRawUrlForwardingsClient, RawUrlForwardingsClient
 
 # this is used as the default value for optional parameters
@@ -79,12 +79,11 @@ class UrlForwardingsClient:
 
     def create_url_forwarding(
         self,
-        domain_name_: str,
+        domain_name: str,
         *,
         forwards_to: str,
         host: str,
-        type: UrlForwardingType,
-        domain_name: typing.Optional[str] = OMIT,
+        type: UrlForwardingInputType,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -94,7 +93,7 @@ class UrlForwardingsClient:
 
         Parameters
         ----------
-        domain_name_ : str
+        domain_name : str
             DomainName is the domain part of the hostname to forward.
 
         forwards_to : str
@@ -103,14 +102,11 @@ class UrlForwardingsClient:
         host : str
             The subdomain portion of the hostname that is being forwarded.
 
-        type : UrlForwardingType
+        type : UrlForwardingInputType
             The type of URL forwarding. Valid values:
               - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
               - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
               - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
-
-        domain_name : typing.Optional[str]
-            The domain name (without subdomains) that is being forwarded.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -138,18 +134,17 @@ class UrlForwardingsClient:
             password="YOUR_PASSWORD",
         )
         client.url_forwardings.create_url_forwarding(
-            domain_name_="example.com",
+            domain_name="example.com",
             forwards_to="https://destination-site.com",
             host="www",
             type="masked",
         )
         """
         _response = self._raw_client.create_url_forwarding(
-            domain_name_,
+            domain_name,
             forwards_to=forwards_to,
             host=host,
             type=type,
-            domain_name=domain_name,
             meta=meta,
             title=title,
             request_options=request_options,
@@ -196,13 +191,12 @@ class UrlForwardingsClient:
 
     def update_url_forwarding(
         self,
-        domain_name_: str,
+        domain_name: str,
         host_: str,
         *,
         forwards_to: str,
-        type: UrlForwardingType,
-        host: typing.Optional[str] = OMIT,
-        domain_name: typing.Optional[str] = OMIT,
+        host: str,
+        type: UrlForwardingInputType,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -212,7 +206,7 @@ class UrlForwardingsClient:
 
         Parameters
         ----------
-        domain_name_ : str
+        domain_name : str
             DomainName is the domain part of the hostname to forward.
 
         host_ : str
@@ -221,17 +215,14 @@ class UrlForwardingsClient:
         forwards_to : str
             The destination URL to which this hostname will be forwarded.
 
-        type : UrlForwardingType
+        host : str
+            The subdomain portion of the hostname that is being forwarded.
+
+        type : UrlForwardingInputType
             The type of URL forwarding. Valid values:
               - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
               - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
               - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
-
-        host : typing.Optional[str]
-            The subdomain portion of the hostname that is being forwarded.
-
-        domain_name : typing.Optional[str]
-            The domain name (without subdomains) that is being forwarded.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -259,19 +250,19 @@ class UrlForwardingsClient:
             password="YOUR_PASSWORD",
         )
         client.url_forwardings.update_url_forwarding(
-            domain_name_="example.com",
+            domain_name="example.com",
             host_="www.example.org",
             forwards_to="https://destination-site.com",
+            host="www",
             type="masked",
         )
         """
         _response = self._raw_client.update_url_forwarding(
-            domain_name_,
+            domain_name,
             host_,
             forwards_to=forwards_to,
-            type=type,
             host=host,
-            domain_name=domain_name,
+            type=type,
             meta=meta,
             title=title,
             request_options=request_options,
@@ -441,13 +432,12 @@ class UrlForwardingsClient:
 
     def update_url_forwarding_by_id(
         self,
-        domain_name_: str,
+        domain_name: str,
         id: int,
         *,
         forwards_to: str,
-        type: UrlForwardingType,
-        host: typing.Optional[str] = OMIT,
-        domain_name: typing.Optional[str] = OMIT,
+        host: str,
+        type: UrlForwardingInputType,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -457,7 +447,7 @@ class UrlForwardingsClient:
 
         Parameters
         ----------
-        domain_name_ : str
+        domain_name : str
             DomainName is the domain that owns the URL forwarding entry. Must be owned by the authenticated account.
 
         id : int
@@ -466,17 +456,14 @@ class UrlForwardingsClient:
         forwards_to : str
             The destination URL to which this hostname will be forwarded.
 
-        type : UrlForwardingType
+        host : str
+            The subdomain portion of the hostname that is being forwarded.
+
+        type : UrlForwardingInputType
             The type of URL forwarding. Valid values:
               - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
               - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
               - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
-
-        host : typing.Optional[str]
-            The subdomain portion of the hostname that is being forwarded.
-
-        domain_name : typing.Optional[str]
-            The domain name (without subdomains) that is being forwarded.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -504,19 +491,19 @@ class UrlForwardingsClient:
             password="YOUR_PASSWORD",
         )
         client.url_forwardings.update_url_forwarding_by_id(
-            domain_name_="example.com",
+            domain_name="example.com",
             id=12345,
             forwards_to="https://destination-site.com",
+            host="www",
             type="masked",
         )
         """
         _response = self._raw_client.update_url_forwarding_by_id(
-            domain_name_,
+            domain_name,
             id,
             forwards_to=forwards_to,
-            type=type,
             host=host,
-            domain_name=domain_name,
+            type=type,
             meta=meta,
             title=title,
             request_options=request_options,
@@ -598,12 +585,11 @@ class AsyncUrlForwardingsClient:
 
     async def create_url_forwarding(
         self,
-        domain_name_: str,
+        domain_name: str,
         *,
         forwards_to: str,
         host: str,
-        type: UrlForwardingType,
-        domain_name: typing.Optional[str] = OMIT,
+        type: UrlForwardingInputType,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -613,7 +599,7 @@ class AsyncUrlForwardingsClient:
 
         Parameters
         ----------
-        domain_name_ : str
+        domain_name : str
             DomainName is the domain part of the hostname to forward.
 
         forwards_to : str
@@ -622,14 +608,11 @@ class AsyncUrlForwardingsClient:
         host : str
             The subdomain portion of the hostname that is being forwarded.
 
-        type : UrlForwardingType
+        type : UrlForwardingInputType
             The type of URL forwarding. Valid values:
               - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
               - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
               - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
-
-        domain_name : typing.Optional[str]
-            The domain name (without subdomains) that is being forwarded.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -662,7 +645,7 @@ class AsyncUrlForwardingsClient:
 
         async def main() -> None:
             await client.url_forwardings.create_url_forwarding(
-                domain_name_="example.com",
+                domain_name="example.com",
                 forwards_to="https://destination-site.com",
                 host="www",
                 type="masked",
@@ -672,11 +655,10 @@ class AsyncUrlForwardingsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_url_forwarding(
-            domain_name_,
+            domain_name,
             forwards_to=forwards_to,
             host=host,
             type=type,
-            domain_name=domain_name,
             meta=meta,
             title=title,
             request_options=request_options,
@@ -731,13 +713,12 @@ class AsyncUrlForwardingsClient:
 
     async def update_url_forwarding(
         self,
-        domain_name_: str,
+        domain_name: str,
         host_: str,
         *,
         forwards_to: str,
-        type: UrlForwardingType,
-        host: typing.Optional[str] = OMIT,
-        domain_name: typing.Optional[str] = OMIT,
+        host: str,
+        type: UrlForwardingInputType,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -747,7 +728,7 @@ class AsyncUrlForwardingsClient:
 
         Parameters
         ----------
-        domain_name_ : str
+        domain_name : str
             DomainName is the domain part of the hostname to forward.
 
         host_ : str
@@ -756,17 +737,14 @@ class AsyncUrlForwardingsClient:
         forwards_to : str
             The destination URL to which this hostname will be forwarded.
 
-        type : UrlForwardingType
+        host : str
+            The subdomain portion of the hostname that is being forwarded.
+
+        type : UrlForwardingInputType
             The type of URL forwarding. Valid values:
               - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
               - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
               - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
-
-        host : typing.Optional[str]
-            The subdomain portion of the hostname that is being forwarded.
-
-        domain_name : typing.Optional[str]
-            The domain name (without subdomains) that is being forwarded.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -799,9 +777,10 @@ class AsyncUrlForwardingsClient:
 
         async def main() -> None:
             await client.url_forwardings.update_url_forwarding(
-                domain_name_="example.com",
+                domain_name="example.com",
                 host_="www.example.org",
                 forwards_to="https://destination-site.com",
+                host="www",
                 type="masked",
             )
 
@@ -809,12 +788,11 @@ class AsyncUrlForwardingsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update_url_forwarding(
-            domain_name_,
+            domain_name,
             host_,
             forwards_to=forwards_to,
-            type=type,
             host=host,
-            domain_name=domain_name,
+            type=type,
             meta=meta,
             title=title,
             request_options=request_options,
@@ -1016,13 +994,12 @@ class AsyncUrlForwardingsClient:
 
     async def update_url_forwarding_by_id(
         self,
-        domain_name_: str,
+        domain_name: str,
         id: int,
         *,
         forwards_to: str,
-        type: UrlForwardingType,
-        host: typing.Optional[str] = OMIT,
-        domain_name: typing.Optional[str] = OMIT,
+        host: str,
+        type: UrlForwardingInputType,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1032,7 +1009,7 @@ class AsyncUrlForwardingsClient:
 
         Parameters
         ----------
-        domain_name_ : str
+        domain_name : str
             DomainName is the domain that owns the URL forwarding entry. Must be owned by the authenticated account.
 
         id : int
@@ -1041,17 +1018,14 @@ class AsyncUrlForwardingsClient:
         forwards_to : str
             The destination URL to which this hostname will be forwarded.
 
-        type : UrlForwardingType
+        host : str
+            The subdomain portion of the hostname that is being forwarded.
+
+        type : UrlForwardingInputType
             The type of URL forwarding. Valid values:
               - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
               - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
               - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
-
-        host : typing.Optional[str]
-            The subdomain portion of the hostname that is being forwarded.
-
-        domain_name : typing.Optional[str]
-            The domain name (without subdomains) that is being forwarded.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -1084,9 +1058,10 @@ class AsyncUrlForwardingsClient:
 
         async def main() -> None:
             await client.url_forwardings.update_url_forwarding_by_id(
-                domain_name_="example.com",
+                domain_name="example.com",
                 id=12345,
                 forwards_to="https://destination-site.com",
+                host="www",
                 type="masked",
             )
 
@@ -1094,12 +1069,11 @@ class AsyncUrlForwardingsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update_url_forwarding_by_id(
-            domain_name_,
+            domain_name,
             id,
             forwards_to=forwards_to,
-            type=type,
             host=host,
-            domain_name=domain_name,
+            type=type,
             meta=meta,
             title=title,
             request_options=request_options,

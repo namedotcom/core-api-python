@@ -10,7 +10,9 @@ AvailableWebhooks = typing.Union[
         "domain.transfer_out.status_change",
         "contact.verification.status_change",
         "domain.transfer.internal_in",
+        "domain.transfer.internal_out",
         "domain.registry.rejection",
+        "domain.expiration",
     ],
     typing.Any,
 ]

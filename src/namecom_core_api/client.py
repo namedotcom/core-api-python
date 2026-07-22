@@ -45,7 +45,7 @@ class Namecom:
 
 
 
-        Defaults to NamecomEnvironment.DEFAULT
+        Defaults to NamecomEnvironment.SANDBOX
 
 
 
@@ -89,7 +89,7 @@ class Namecom:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: NamecomEnvironment = NamecomEnvironment.DEFAULT,
+        environment: NamecomEnvironment = NamecomEnvironment.SANDBOX,
         username: typing.Union[str, typing.Callable[[], str]],
         password: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -336,7 +336,7 @@ class AsyncNamecom:
 
 
 
-        Defaults to NamecomEnvironment.DEFAULT
+        Defaults to NamecomEnvironment.SANDBOX
 
 
 
@@ -380,7 +380,7 @@ class AsyncNamecom:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: NamecomEnvironment = NamecomEnvironment.DEFAULT,
+        environment: NamecomEnvironment = NamecomEnvironment.SANDBOX,
         username: typing.Union[str, typing.Callable[[], str]],
         password: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,

@@ -17,6 +17,10 @@ def test_dnsseCs_create_dnssec() -> None:
     client = get_client(test_id)
     client.dnsse_cs.create_dnssec(
         domain_name="domainName",
+        algorithm=1,
+        digest="digest",
+        digest_type=1,
+        key_tag=1,
     )
     verify_request_count(test_id, "POST", "/core/v1/domains/domainName/dnssec", None, 1)
 

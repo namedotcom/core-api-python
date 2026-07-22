@@ -32,7 +32,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.hello()
@@ -97,7 +97,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.account_info.check_account_balance()
@@ -162,7 +162,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.accounts.create_account(
@@ -271,7 +271,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.list_domains()
@@ -515,7 +515,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.create_domain(
@@ -653,7 +653,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.get_domain(
@@ -728,7 +728,7 @@ from namecom_core_api.domains import UpdateDomainRequestBodyAutorenewEnabled
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.update_domain(
@@ -813,7 +813,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.disable_autorenew(
@@ -887,7 +887,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.disable_whois_privacy(
@@ -961,7 +961,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.enable_autorenew(
@@ -1035,7 +1035,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.enable_whois_privacy(
@@ -1109,7 +1109,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.get_auth_code_for_domain(
@@ -1195,7 +1195,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.get_pricing_for_domain(
@@ -1278,7 +1278,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.lock_domain(
@@ -1352,7 +1352,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.purchase_privacy(
@@ -1451,7 +1451,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.renew_domain(
@@ -1543,7 +1543,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.set_contacts(
@@ -1625,7 +1625,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.set_nameservers(
@@ -1711,7 +1711,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.unlock_domain(
@@ -1795,7 +1795,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.check_availability(
@@ -1891,7 +1891,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.search(
@@ -1998,7 +1998,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domains.zone_check(
@@ -2089,7 +2089,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.dnsse_cs.list_dnsse_cs(
@@ -2163,11 +2163,15 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.dnsse_cs.create_dnssec(
     domain_name="domainName",
+    algorithm=1,
+    digest="digest",
+    digest_type=1,
+    key_tag=1,
 )
 
 ```
@@ -2192,7 +2196,7 @@ client.dnsse_cs.create_dnssec(
 <dl>
 <dd>
 
-**algorithm:** `typing.Optional[int]` 
+**algorithm:** `int` 
     
 </dd>
 </dl>
@@ -2200,7 +2204,7 @@ client.dnsse_cs.create_dnssec(
 <dl>
 <dd>
 
-**digest:** `typing.Optional[str]` — Digest is a digest of the DNSKEY RR that is registered with the registry.
+**digest:** `str` — Digest is a digest of the DNSKEY RR that is registered with the registry.
     
 </dd>
 </dl>
@@ -2208,7 +2212,7 @@ client.dnsse_cs.create_dnssec(
 <dl>
 <dd>
 
-**create_dnssec_body_domain_name:** `typing.Optional[str]` — The name of the domain.
+**digest_type:** `int` 
     
 </dd>
 </dl>
@@ -2216,15 +2220,7 @@ client.dnsse_cs.create_dnssec(
 <dl>
 <dd>
 
-**digest_type:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**key_tag:** `typing.Optional[int]` 
+**key_tag:** `int` 
     
 </dd>
 </dl>
@@ -2277,7 +2273,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.dnsse_cs.get_dnssec(
@@ -2360,7 +2356,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.dnsse_cs.delete_dnssec(
@@ -2444,7 +2440,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.email_forwardings.list_email_forwardings(
@@ -2536,7 +2532,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.email_forwardings.create_email_forwarding(
@@ -2628,7 +2624,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.email_forwardings.get_email_forwarding(
@@ -2711,7 +2707,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.email_forwardings.update_email_forwarding(
@@ -2802,7 +2798,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.email_forwardings.delete_email_forwarding(
@@ -2886,7 +2882,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.dns.list_records(
@@ -2976,7 +2972,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.dns.create_record(
@@ -3116,7 +3112,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.dns.get_record(
@@ -3199,7 +3195,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.dns.update_record(
@@ -3339,7 +3335,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.dns.delete_record(
@@ -3423,7 +3419,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.url_forwardings.list_url_forwardings(
@@ -3515,7 +3511,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.url_forwardings.create_url_forwarding(
@@ -3547,7 +3543,7 @@ client.url_forwardings.create_url_forwarding(
 <dl>
 <dd>
 
-**request:** `CreateUrlForwardingBody` 
+**request:** `UrlForwardingInput` 
     
 </dd>
 </dl>
@@ -3600,7 +3596,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.url_forwardings.get_url_forwarding(
@@ -3683,13 +3679,14 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.url_forwardings.update_url_forwarding(
-    domain_name_="example.com",
+    domain_name="example.com",
     host_="www.example.org",
     forwards_to="https://destination-site.com",
+    host="www",
     type="masked",
 )
 
@@ -3723,7 +3720,7 @@ client.url_forwardings.update_url_forwarding(
 <dl>
 <dd>
 
-**request:** `UpdateUrlForwardingBody` 
+**request:** `UrlForwardingInput` 
     
 </dd>
 </dl>
@@ -3776,7 +3773,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.url_forwardings.delete_url_forwarding(
@@ -3859,7 +3856,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.url_forwardings.list_url_forwardings_by_domain(
@@ -3951,7 +3948,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.url_forwardings.get_url_forwarding_by_id(
@@ -4034,7 +4031,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.url_forwardings.delete_url_forwarding_by_id(
@@ -4117,13 +4114,14 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.url_forwardings.update_url_forwarding_by_id(
-    domain_name_="example.com",
+    domain_name="example.com",
     id=12345,
     forwards_to="https://destination-site.com",
+    host="www",
     type="masked",
 )
 
@@ -4157,7 +4155,7 @@ client.url_forwardings.update_url_forwarding_by_id(
 <dl>
 <dd>
 
-**request:** `UpdateUrlForwardingBody` 
+**request:** `UrlForwardingInput` 
     
 </dd>
 </dl>
@@ -4211,7 +4209,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.vanity_nameservers.list_vanity_nameservers(
@@ -4303,7 +4301,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.vanity_nameservers.create_vanity_nameserver(
@@ -4398,7 +4396,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.vanity_nameservers.get_vanity_nameserver(
@@ -4481,7 +4479,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.vanity_nameservers.update_vanity_nameserver(
@@ -4572,7 +4570,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.vanity_nameservers.delete_vanity_nameserver(
@@ -4656,7 +4654,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.webhook_notifications.get_subscribed_notifications()
@@ -4705,9 +4703,11 @@ Supported webhook event names:
 - `domain.lock.status_change` – domain lock added or removed.
 - `domain.transfer.status_change` – domain transfer IN to name.com; status updates while name.com is the gaining registrar.
 - `domain.transfer_out.status_change` – domain transfer OUT from name.com to another registrar; fires when the domain is removed from the account.
-- `domain.transfer.internal_in` - name.com domain transfers in to the subscribing account.
+- `domain.transfer.internal_in` - name.com domain transfers in to the subscribing account via internal transfer.
+- `domain.transfer.internal_out` - name.com domain transfers out of the subscribing account via internal transfer.
 - `contact.verification.status_change` - contact verification status changes (verified or unverified).
 - `domain.registry.rejection` – domain **create** failed after asynchronous registry processing (uncommon; most creates succeed at request time).
+- `domain.expiration` – domain has expired and entered the post-expiry grace period. This is informational only.
 </dd>
 </dl>
 </dd>
@@ -4728,7 +4728,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.webhook_notifications.subscribe_to_notification(
@@ -4821,7 +4821,7 @@ from namecom_core_api.webhook_notifications import ModifySubscriptionRequestBody
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.webhook_notifications.modify_subscription(
@@ -4906,7 +4906,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.webhook_notifications.delete_subscription(
@@ -4981,7 +4981,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.orders.list_orders()
@@ -5117,7 +5117,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.orders.get_order(
@@ -5210,7 +5210,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.refunds.process_refund(
@@ -5305,7 +5305,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.transfers.list_transfers()
@@ -5386,7 +5386,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.transfers.create_transfer(
@@ -5485,7 +5485,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.transfers.get_transfer(
@@ -5576,7 +5576,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.transfers.cancel_transfer(
@@ -5651,7 +5651,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.transfers.cancel_outbound_transfer(
@@ -5735,7 +5735,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.transfers.create_internal_transfer_in(
@@ -5836,7 +5836,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.transfers.get_transfer_eligibility(
@@ -5911,7 +5911,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domain_info.get_requirement(
@@ -5985,7 +5985,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domain_info.check_domain_claims(
@@ -6067,7 +6067,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.domain_info.get_tld_requirements_v2(
@@ -6151,7 +6151,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.tld_pricing.tld_price_list(
@@ -6251,7 +6251,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.premium_domains.premium_domain_lists()
@@ -6317,7 +6317,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.contact_verification.unverified_contacts_list(
@@ -6401,7 +6401,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.contact_verification.verify_contact(
@@ -6493,7 +6493,7 @@ from namecom_core_api.environment import NamecomEnvironment
 client = Namecom(
     username="<username>",
     password="<password>",
-    environment=NamecomEnvironment.DEFAULT,
+    environment=NamecomEnvironment.SANDBOX,
 )
 
 client.contact_verification.resend_contact_verification_email(
