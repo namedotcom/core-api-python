@@ -35,12 +35,12 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "namecom-core-api/1.31.0",
+            "User-Agent": "namecom-core-api/1.33.2",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "namecom-core-api",
-            "X-Fern-SDK-Version": "1.31.0",
+            "X-Fern-SDK-Version": "1.33.2",
             **(self.get_custom_headers() or {}),
         }
         headers["Authorization"] = httpx.BasicAuth(self._get_username(), self._get_password())._auth_header

@@ -15,11 +15,18 @@ class PremiumDomainsDownloadResponse(UniversalBaseModel):
         FieldMetadata(alias="downloadUrl"),
         pydantic.Field(alias="downloadUrl", description="The pre-signed URL to use to download the list."),
     ] = None
+    """
+    The pre-signed URL to use to download the list.
+    """
+
     expire_date: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="expireDate"),
         pydantic.Field(alias="expireDate", description="The timestamp that the URL will expire."),
     ] = None
+    """
+    The timestamp that the URL will expire.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

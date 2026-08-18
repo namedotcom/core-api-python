@@ -167,13 +167,13 @@ class DomainsClient:
         self,
         *,
         domain: DomainCreatePayload,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         purchase_type: typing.Optional[str] = OMIT,
         tld_requirements: typing.Optional[typing.Dict[str, str]] = OMIT,
         claims: typing.Optional[DomainClaimsInfo] = OMIT,
         years: typing.Optional[int] = OMIT,
         promo_code: typing.Optional[str] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateDomainResponse:
         """
@@ -219,9 +219,6 @@ class DomainsClient:
         ----------
         domain : DomainCreatePayload
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
-
         purchase_price : typing.Optional[float]
             PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. If privacyEnabled is set, the regular price for Whois Privacy protection will be added automatically. If VAT tax applies, it will also be added automatically.
 
@@ -242,6 +239,8 @@ class DomainsClient:
         promo_code : typing.Optional[str]
             PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request.
 
+        x_idempotency_key : typing.Optional[str]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -259,7 +258,6 @@ class DomainsClient:
             password="YOUR_PASSWORD",
         )
         client.domains.create_domain(
-            idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
             domain=DomainCreatePayload(
                 domain_name="example.com",
             ),
@@ -267,13 +265,13 @@ class DomainsClient:
         """
         _response = self._raw_client.create_domain(
             domain=domain,
-            idempotency_key=idempotency_key,
             purchase_price=purchase_price,
             purchase_type=purchase_type,
             tld_requirements=tld_requirements,
             claims=claims,
             years=years,
             promo_code=promo_code,
+            x_idempotency_key=x_idempotency_key,
             request_options=request_options,
         )
         return _response.data
@@ -358,7 +356,7 @@ class DomainsClient:
 
     def disable_autorenew(self, domain_name: str, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
         """
-        Turns off automatic renewal for a domain.  **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
+        Turns off automatic renewal for a domain. **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
 
         Parameters
         ----------
@@ -612,9 +610,9 @@ class DomainsClient:
         self,
         domain_name: str,
         *,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         years: typing.Optional[int] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PrivacyResponse:
         """
@@ -625,14 +623,13 @@ class DomainsClient:
         domain_name : str
             DomainName is the domain to purchase Whois Privacy for.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
-
         purchase_price : typing.Optional[float]
             PurchasePrice is the (prorated) amount you expect to pay.
 
         years : typing.Optional[int]
             Years is the number of years you wish to purchase Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
+
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -652,14 +649,13 @@ class DomainsClient:
         )
         client.domains.purchase_privacy(
             domain_name="domainName",
-            idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
         )
         """
         _response = self._raw_client.purchase_privacy(
             domain_name,
-            idempotency_key=idempotency_key,
             purchase_price=purchase_price,
             years=years,
+            x_idempotency_key=x_idempotency_key,
             request_options=request_options,
         )
         return _response.data
@@ -1151,13 +1147,13 @@ class AsyncDomainsClient:
         self,
         *,
         domain: DomainCreatePayload,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         purchase_type: typing.Optional[str] = OMIT,
         tld_requirements: typing.Optional[typing.Dict[str, str]] = OMIT,
         claims: typing.Optional[DomainClaimsInfo] = OMIT,
         years: typing.Optional[int] = OMIT,
         promo_code: typing.Optional[str] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateDomainResponse:
         """
@@ -1203,9 +1199,6 @@ class AsyncDomainsClient:
         ----------
         domain : DomainCreatePayload
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
-
         purchase_price : typing.Optional[float]
             PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. If privacyEnabled is set, the regular price for Whois Privacy protection will be added automatically. If VAT tax applies, it will also be added automatically.
 
@@ -1225,6 +1218,8 @@ class AsyncDomainsClient:
 
         promo_code : typing.Optional[str]
             PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request.
+
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1248,7 +1243,6 @@ class AsyncDomainsClient:
 
         async def main() -> None:
             await client.domains.create_domain(
-                idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
                 domain=DomainCreatePayload(
                     domain_name="example.com",
                 ),
@@ -1259,13 +1253,13 @@ class AsyncDomainsClient:
         """
         _response = await self._raw_client.create_domain(
             domain=domain,
-            idempotency_key=idempotency_key,
             purchase_price=purchase_price,
             purchase_type=purchase_type,
             tld_requirements=tld_requirements,
             claims=claims,
             years=years,
             promo_code=promo_code,
+            x_idempotency_key=x_idempotency_key,
             request_options=request_options,
         )
         return _response.data
@@ -1368,7 +1362,7 @@ class AsyncDomainsClient:
         self, domain_name: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Domain:
         """
-        Turns off automatic renewal for a domain.  **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
+        Turns off automatic renewal for a domain. **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
 
         Parameters
         ----------
@@ -1682,9 +1676,9 @@ class AsyncDomainsClient:
         self,
         domain_name: str,
         *,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         years: typing.Optional[int] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PrivacyResponse:
         """
@@ -1695,14 +1689,13 @@ class AsyncDomainsClient:
         domain_name : str
             DomainName is the domain to purchase Whois Privacy for.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
-
         purchase_price : typing.Optional[float]
             PurchasePrice is the (prorated) amount you expect to pay.
 
         years : typing.Optional[int]
             Years is the number of years you wish to purchase Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
+
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1727,7 +1720,6 @@ class AsyncDomainsClient:
         async def main() -> None:
             await client.domains.purchase_privacy(
                 domain_name="domainName",
-                idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
             )
 
 
@@ -1735,9 +1727,9 @@ class AsyncDomainsClient:
         """
         _response = await self._raw_client.purchase_privacy(
             domain_name,
-            idempotency_key=idempotency_key,
             purchase_price=purchase_price,
             years=years,
+            x_idempotency_key=x_idempotency_key,
             request_options=request_options,
         )
         return _response.data

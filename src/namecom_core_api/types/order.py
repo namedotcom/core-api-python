@@ -21,11 +21,19 @@ class Order(UniversalBaseModel):
             alias="authAmount", description="AuthAmount is the amount authorized to complete the order purchase."
         ),
     ] = None
+    """
+    AuthAmount is the amount authorized to complete the order purchase.
+    """
+
     create_date: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="createDate"),
         pydantic.Field(alias="createDate", description="CreateDate is the date the order was placed."),
     ] = None
+    """
+    CreateDate is the date the order was placed.
+    """
+
     currency: typing.Optional[str] = pydantic.Field(default=None)
     """
     Currency indicates currency of the order ('USD', 'CNY').
@@ -39,6 +47,10 @@ class Order(UniversalBaseModel):
             description="CurrencyRate is the conversion rate from USD to order's currency.  This field is only populated if order's currency is non-USD.",
         ),
     ] = None
+    """
+    CurrencyRate is the conversion rate from USD to order's currency.  This field is only populated if order's currency is non-USD.
+    """
+
     final_amount: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="finalAmount"),
@@ -47,12 +59,20 @@ class Order(UniversalBaseModel):
             description="FinalAmount is the final amount of the order, after discounts and refunds.",
         ),
     ] = None
+    """
+    FinalAmount is the final amount of the order, after discounts and refunds.
+    """
+
     id: typing.Optional[int] = None
     order_items: typing_extensions.Annotated[
         typing.Optional[typing.List[OrderItem]],
         FieldMetadata(alias="orderItems"),
         pydantic.Field(alias="orderItems", description="OrderItems is the collection of 1 or more items in the order."),
     ] = None
+    """
+    OrderItems is the collection of 1 or more items in the order.
+    """
+
     registrar: typing.Optional[str] = pydantic.Field(default=None)
     """
     Registrar is registrar with which order is placed.
@@ -68,6 +88,10 @@ class Order(UniversalBaseModel):
         FieldMetadata(alias="totalCapture"),
         pydantic.Field(alias="totalCapture", description="TotalCapture is the amount captured."),
     ] = None
+    """
+    TotalCapture is the amount captured.
+    """
+
     total_refund: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="totalRefund"),
@@ -75,6 +99,9 @@ class Order(UniversalBaseModel):
             alias="totalRefund", description="TotalRefund is the amount, if any, refunded. Default is 0.00."
         ),
     ] = None
+    """
+    TotalRefund is the amount, if any, refunded. Default is 0.00.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

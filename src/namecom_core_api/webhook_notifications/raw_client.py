@@ -19,6 +19,7 @@ from ..errors.gateway_timeout_error import GatewayTimeoutError
 from ..errors.internal_server_error import InternalServerError
 from ..errors.method_not_allowed_error import MethodNotAllowedError
 from ..errors.not_found_error import NotFoundError
+from ..errors.service_unavailable_error import ServiceUnavailableError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..errors.unsupported_media_type_error import UnsupportedMediaTypeError
@@ -136,6 +137,17 @@ class RawWebhookNotificationsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -168,9 +180,10 @@ class RawWebhookNotificationsClient:
         Creates a webhook subscription to receive real-time notifications about specific domain or account events (e.g. transfer completions, renewals). Pass the callback URL and event types. This allows external systems to stay in sync with name.com changes.
         Supported webhook event names:
         - `account.credit.balance_change` – account credit balance changes (increases or decreases).
+        - `account.domain.removal` – domain removed from the subscribing account.
         - `domain.lock.status_change` – domain lock added or removed.
         - `domain.transfer.status_change` – domain transfer IN to name.com; status updates while name.com is the gaining registrar.
-        - `domain.transfer_out.status_change` – domain transfer OUT from name.com to another registrar; fires when the domain is removed from the account.
+        - `domain.transfer_out.status_change` – domain transfer OUT from name.com; `initiated`, `completed` (domain removed), or `canceled` (no longer pending at the registry).
         - `domain.transfer.internal_in` - name.com domain transfers in to the subscribing account via internal transfer.
         - `domain.transfer.internal_out` - name.com domain transfers out of the subscribing account via internal transfer.
         - `contact.verification.status_change` - contact verification status changes (verified or unverified).
@@ -309,6 +322,17 @@ class RawWebhookNotificationsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -473,6 +497,17 @@ class RawWebhookNotificationsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -587,6 +622,17 @@ class RawWebhookNotificationsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -718,6 +764,17 @@ class AsyncRawWebhookNotificationsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -750,9 +807,10 @@ class AsyncRawWebhookNotificationsClient:
         Creates a webhook subscription to receive real-time notifications about specific domain or account events (e.g. transfer completions, renewals). Pass the callback URL and event types. This allows external systems to stay in sync with name.com changes.
         Supported webhook event names:
         - `account.credit.balance_change` – account credit balance changes (increases or decreases).
+        - `account.domain.removal` – domain removed from the subscribing account.
         - `domain.lock.status_change` – domain lock added or removed.
         - `domain.transfer.status_change` – domain transfer IN to name.com; status updates while name.com is the gaining registrar.
-        - `domain.transfer_out.status_change` – domain transfer OUT from name.com to another registrar; fires when the domain is removed from the account.
+        - `domain.transfer_out.status_change` – domain transfer OUT from name.com; `initiated`, `completed` (domain removed), or `canceled` (no longer pending at the registry).
         - `domain.transfer.internal_in` - name.com domain transfers in to the subscribing account via internal transfer.
         - `domain.transfer.internal_out` - name.com domain transfers out of the subscribing account via internal transfer.
         - `contact.verification.status_change` - contact verification status changes (verified or unverified).
@@ -891,6 +949,17 @@ class AsyncRawWebhookNotificationsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -1055,6 +1124,17 @@ class AsyncRawWebhookNotificationsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -1169,6 +1249,17 @@ class AsyncRawWebhookNotificationsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

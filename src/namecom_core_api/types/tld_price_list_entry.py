@@ -35,6 +35,10 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is your account level price in US Dollars (USD) and is the price you pay for non-premium registrations. It includes applicable rebates, promotions and/or account-level discounts.",
         ),
     ] = None
+    """
+    This is your account level price in US Dollars (USD) and is the price you pay for non-premium registrations. It includes applicable rebates, promotions and/or account-level discounts.
+    """
+
     registration_retail_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="registrationRetailPrice"),
@@ -43,6 +47,10 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is the current retail price on name.com in US Dollars (USD) after including rebates, promotions and/or sales for registering non-premium domains.",
         ),
     ] = None
+    """
+    This is the current retail price on name.com in US Dollars (USD) after including rebates, promotions and/or sales for registering non-premium domains.
+    """
+
     registration_original_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="registrationOriginalPrice"),
@@ -51,6 +59,10 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is name.com's suggested retail price (MSRP) in US Dollars (USD) before any discounts for registering non-premium domains.",
         ),
     ] = None
+    """
+    This is name.com's suggested retail price (MSRP) in US Dollars (USD) before any discounts for registering non-premium domains.
+    """
+
     renewal_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="renewalPrice"),
@@ -59,6 +71,10 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is your account level price in US Dollars (USD) and is the price you pay for non-premium renewals. It includes applicable rebates, promotions and/or account-level discounts.",
         ),
     ] = None
+    """
+    This is your account level price in US Dollars (USD) and is the price you pay for non-premium renewals. It includes applicable rebates, promotions and/or account-level discounts.
+    """
+
     renewal_retail_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="renewalRetailPrice"),
@@ -67,6 +83,10 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is the current retail price on name.com in US Dollars (USD) after including rebates, promotions and/or sales for renewals of non-premium domains.",
         ),
     ] = None
+    """
+    This is the current retail price on name.com in US Dollars (USD) after including rebates, promotions and/or sales for renewals of non-premium domains.
+    """
+
     renewal_original_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="renewalOriginalPrice"),
@@ -75,6 +95,10 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is name.com's suggested retail price (MSRP) in US Dollars (USD) before any discounts for renewals of non-premium domains.",
         ),
     ] = None
+    """
+    This is name.com's suggested retail price (MSRP) in US Dollars (USD) before any discounts for renewals of non-premium domains.
+    """
+
     domain_restoration_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="domainRestorationPrice"),
@@ -83,6 +107,10 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is your account level price in US Dollars (USD) and is the price you pay for non-premium restorations. It includes applicable rebates, promotions and/or account-level discounts.",
         ),
     ] = None
+    """
+    This is your account level price in US Dollars (USD) and is the price you pay for non-premium restorations. It includes applicable rebates, promotions and/or account-level discounts.
+    """
+
     domain_restoration_retail_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="domainRestorationRetailPrice"),
@@ -91,6 +119,10 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is the current retail price on name.com in US Dollars (USD) after including rebates, promotions and/or sales for restorations of non-premium domains.",
         ),
     ] = None
+    """
+    This is the current retail price on name.com in US Dollars (USD) after including rebates, promotions and/or sales for restorations of non-premium domains.
+    """
+
     domain_restoration_original_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="domainRestorationOriginalPrice"),
@@ -99,6 +131,10 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is name.com's suggested retail price (MSRP) in US Dollars (USD) before any discounts for restoration of non-premium domains.",
         ),
     ] = None
+    """
+    This is name.com's suggested retail price (MSRP) in US Dollars (USD) before any discounts for restoration of non-premium domains.
+    """
+
     transfer_in_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="transferInPrice"),
@@ -107,6 +143,10 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is your account level price in US Dollars (USD) and is the price you pay for non-premium transfers. It includes applicable rebates, promotions and/or account-level discounts.",
         ),
     ] = None
+    """
+    This is your account level price in US Dollars (USD) and is the price you pay for non-premium transfers. It includes applicable rebates, promotions and/or account-level discounts.
+    """
+
     transfer_in_retail_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="transferInRetailPrice"),
@@ -115,6 +155,10 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is the current retail price on name.com in US Dollars (USD) after including rebates, promotions and/or sales for transfers of non-premium domains.",
         ),
     ] = None
+    """
+    This is the current retail price on name.com in US Dollars (USD) after including rebates, promotions and/or sales for transfers of non-premium domains.
+    """
+
     transfer_in_original_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="transferInOriginalPrice"),
@@ -123,6 +167,9 @@ class TldPriceListEntry(UniversalBaseModel):
             description="This is name.com's suggested retail price (MSRP) in US Dollars (USD) before any discounts for transfer of non-premium domains.",
         ),
     ] = None
+    """
+    This is name.com's suggested retail price (MSRP) in US Dollars (USD) before any discounts for transfer of non-premium domains.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

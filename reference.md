@@ -519,7 +519,6 @@ client = Namecom(
 )
 
 client.domains.create_domain(
-    idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
     domain=DomainCreatePayload(
         domain_name="example.com",
     ),
@@ -540,14 +539,6 @@ client.domains.create_domain(
 <dd>
 
 **domain:** `DomainCreatePayload` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
     
 </dd>
 </dl>
@@ -792,7 +783,7 @@ client.domains.update_domain(
 <dl>
 <dd>
 
-Turns off automatic renewal for a domain.  **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
+Turns off automatic renewal for a domain. **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
 </dd>
 </dl>
 </dd>
@@ -835,6 +826,14 @@ client.domains.disable_autorenew(
 <dd>
 
 **domain_name:** `str` — DomainName is the domain name to disable autorenew for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmptyObject` 
     
 </dd>
 </dl>
@@ -916,6 +915,14 @@ client.domains.disable_whois_privacy(
 <dl>
 <dd>
 
+**request:** `EmptyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -990,6 +997,14 @@ client.domains.enable_autorenew(
 <dl>
 <dd>
 
+**request:** `EmptyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1057,6 +1072,14 @@ client.domains.enable_whois_privacy(
 <dd>
 
 **domain_name:** `str` — DomainName is the domain name to enable whoisprivacy for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmptyObject` 
     
 </dd>
 </dl>
@@ -1307,6 +1330,14 @@ client.domains.lock_domain(
 <dl>
 <dd>
 
+**request:** `EmptyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1357,7 +1388,6 @@ client = Namecom(
 
 client.domains.purchase_privacy(
     domain_name="domainName",
-    idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
 )
 
 ```
@@ -1375,14 +1405,6 @@ client.domains.purchase_privacy(
 <dd>
 
 **domain_name:** `str` — DomainName is the domain to purchase Whois Privacy for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
     
 </dd>
 </dl>
@@ -1733,6 +1755,14 @@ client.domains.unlock_domain(
 <dd>
 
 **domain_name:** `str` — DomainName is the domain name to unlock.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmptyObject` 
     
 </dd>
 </dl>
@@ -4700,9 +4730,10 @@ client.webhook_notifications.get_subscribed_notifications()
 Creates a webhook subscription to receive real-time notifications about specific domain or account events (e.g. transfer completions, renewals). Pass the callback URL and event types. This allows external systems to stay in sync with name.com changes.
 Supported webhook event names:
 - `account.credit.balance_change` – account credit balance changes (increases or decreases).
+- `account.domain.removal` – domain removed from the subscribing account.
 - `domain.lock.status_change` – domain lock added or removed.
 - `domain.transfer.status_change` – domain transfer IN to name.com; status updates while name.com is the gaining registrar.
-- `domain.transfer_out.status_change` – domain transfer OUT from name.com to another registrar; fires when the domain is removed from the account.
+- `domain.transfer_out.status_change` – domain transfer OUT from name.com; `initiated`, `completed` (domain removed), or `canceled` (no longer pending at the registry).
 - `domain.transfer.internal_in` - name.com domain transfers in to the subscribing account via internal transfer.
 - `domain.transfer.internal_out` - name.com domain transfers out of the subscribing account via internal transfer.
 - `contact.verification.status_change` - contact verification status changes (verified or unverified).
@@ -5214,7 +5245,6 @@ client = Namecom(
 )
 
 client.refunds.process_refund(
-    idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
     order_id=123456,
     order_item_ids=[
         987654
@@ -5244,14 +5274,6 @@ client.refunds.process_refund(
 <dd>
 
 **order_item_ids:** `typing.List[int]` — An array of order item IDs to be refunded. All items must belong to the specified order. Use the List Orders endpoint to retrieve order item IDs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result. Idempotency keys are valid for 12 hours.
     
 </dd>
 </dl>
@@ -5605,6 +5627,14 @@ client.transfers.cancel_transfer(
 <dl>
 <dd>
 
+**request:** `EmptyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5630,6 +5660,7 @@ client.transfers.cancel_transfer(
 <dd>
 
 Cancels an outbound transfer for the given domain. Use this when the domain is being transferred out of name.com (losing registrar) to another (gaining) registrar and the registrant or reseller wants to cancel that transfer.
+On success, subscribers receive `domain.transfer_out.status_change` with status `canceled`.
 The endpoint validates that the domain exists and belongs to the authenticated account. Only domains in a pending transfer (out) state can be canceled.
 </dd>
 </dl>
@@ -5673,6 +5704,14 @@ client.transfers.cancel_outbound_transfer(
 <dd>
 
 **domain_name:** `str` — DomainName is the domain whose transfer out should be canceled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmptyObject` 
     
 </dd>
 </dl>
@@ -6406,7 +6445,6 @@ client = Namecom(
 
 client.contact_verification.verify_contact(
     verification_id=1,
-    idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
 )
 
 ```
@@ -6431,7 +6469,7 @@ client.contact_verification.verify_contact(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+**request:** `EmptyObject` 
     
 </dd>
 </dl>
@@ -6498,7 +6536,6 @@ client = Namecom(
 
 client.contact_verification.resend_contact_verification_email(
     verification_id=1,
-    idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
 )
 
 ```
@@ -6523,7 +6560,7 @@ client.contact_verification.resend_contact_verification_email(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+**request:** `EmptyObject` 
     
 </dd>
 </dl>

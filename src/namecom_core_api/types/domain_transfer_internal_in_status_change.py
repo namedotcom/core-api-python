@@ -22,22 +22,38 @@ class DomainTransferInternalInStatusChange(UniversalBaseModel):
         FieldMetadata(alias="eventName"),
         pydantic.Field(alias="eventName", description="The name of the subscription event."),
     ]
+    """
+    The name of the subscription event.
+    """
+
     source_account_id: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="sourceAccountId"),
         pydantic.Field(alias="sourceAccountId", description="The account id that previously owned the domain."),
     ]
+    """
+    The account id that previously owned the domain.
+    """
+
     destination_account_id: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="destinationAccountId"),
         pydantic.Field(alias="destinationAccountId", description="The account id that now owns the domain."),
     ]
+    """
+    The account id that now owns the domain.
+    """
+
     status: DomainTransferInternalInStatusChangeStatus
     occurred_at: typing_extensions.Annotated[
         dt.datetime,
         FieldMetadata(alias="occurredAt"),
         pydantic.Field(alias="occurredAt", description="When the domain transfer in occurred."),
     ]
+    """
+    When the domain transfer in occurred.
+    """
+
     domain: DomainResponsePayload
 
     if IS_PYDANTIC_V2:

@@ -19,6 +19,10 @@ class CancelTransferOutResponse(UniversalBaseModel):
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="The punycode-encoded domain name."),
     ]
+    """
+    The punycode-encoded domain name.
+    """
+
     status: CancelTransferOutResponseStatus = pydantic.Field()
     """
     The transfer-out status after the operation (e.g. canceled when the cancel succeeded).

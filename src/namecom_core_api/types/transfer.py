@@ -19,6 +19,10 @@ class Transfer(UniversalBaseModel):
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="DomainName is the domain to be transfered to name.com."),
     ]
+    """
+    DomainName is the domain to be transfered to name.com.
+    """
+
     email: typing.Optional[str] = pydantic.Field(default=None)
     """
     Email is the email address that the approval email was sent to. Not every TLD requries an approval email. This is usually pulled from Whois.

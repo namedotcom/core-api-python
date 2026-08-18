@@ -18,6 +18,10 @@ class ZoneCheckResult(UniversalBaseModel):
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="The domain name that was checked"),
     ]
+    """
+    The domain name that was checked
+    """
+
     available: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If the domain is potentially available for purchase after checking for it's presense in the DNZ zone files.

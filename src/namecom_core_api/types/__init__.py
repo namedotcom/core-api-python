@@ -9,6 +9,9 @@ if typing.TYPE_CHECKING:
     from .account import Account
     from .account_credit_balance_change import AccountCreditBalanceChange
     from .account_credit_balance_change_event_name import AccountCreditBalanceChangeEventName
+    from .account_domain_removal import AccountDomainRemoval
+    from .account_domain_removal_event_name import AccountDomainRemovalEventName
+    from .account_domain_removal_reason import AccountDomainRemovalReason
     from .account_request import AccountRequest
     from .auth_code_response import AuthCodeResponse
     from .autorenew_enabled import AutorenewEnabled
@@ -74,6 +77,7 @@ if typing.TYPE_CHECKING:
     from .domain_transfer_status_change import DomainTransferStatusChange
     from .domain_transfer_status_change_event_name import DomainTransferStatusChangeEventName
     from .email_forwarding import EmailForwarding
+    from .empty_object import EmptyObject
     from .expire_date import ExpireDate
     from .forbidden_error_body import ForbiddenErrorBody
     from .gateway_timeout504 import GatewayTimeout504
@@ -129,6 +133,7 @@ if typing.TYPE_CHECKING:
     from .search_purchase_type import SearchPurchaseType
     from .search_response import SearchResponse
     from .search_result import SearchResult
+    from .service_unavailable_error_body import ServiceUnavailableErrorBody
     from .subscribe_to_notification_response import SubscribeToNotificationResponse
     from .subscription_record import SubscriptionRecord
     from .tld_info_json_schema import TldInfoJsonSchema
@@ -159,6 +164,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Account": ".account",
     "AccountCreditBalanceChange": ".account_credit_balance_change",
     "AccountCreditBalanceChangeEventName": ".account_credit_balance_change_event_name",
+    "AccountDomainRemoval": ".account_domain_removal",
+    "AccountDomainRemovalEventName": ".account_domain_removal_event_name",
+    "AccountDomainRemovalReason": ".account_domain_removal_reason",
     "AccountRequest": ".account_request",
     "AuthCodeResponse": ".auth_code_response",
     "AutorenewEnabled": ".autorenew_enabled",
@@ -218,6 +226,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DomainTransferStatusChange": ".domain_transfer_status_change",
     "DomainTransferStatusChangeEventName": ".domain_transfer_status_change_event_name",
     "EmailForwarding": ".email_forwarding",
+    "EmptyObject": ".empty_object",
     "ExpireDate": ".expire_date",
     "ForbiddenErrorBody": ".forbidden_error_body",
     "GatewayTimeout504": ".gateway_timeout504",
@@ -273,6 +282,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SearchPurchaseType": ".search_purchase_type",
     "SearchResponse": ".search_response",
     "SearchResult": ".search_result",
+    "ServiceUnavailableErrorBody": ".service_unavailable_error_body",
     "SubscribeToNotificationResponse": ".subscribe_to_notification_response",
     "SubscriptionRecord": ".subscription_record",
     "TldInfoJsonSchema": ".tld_info_json_schema",
@@ -327,6 +337,9 @@ __all__ = [
     "Account",
     "AccountCreditBalanceChange",
     "AccountCreditBalanceChangeEventName",
+    "AccountDomainRemoval",
+    "AccountDomainRemovalEventName",
+    "AccountDomainRemovalReason",
     "AccountRequest",
     "AuthCodeResponse",
     "AutorenewEnabled",
@@ -386,6 +399,7 @@ __all__ = [
     "DomainTransferStatusChange",
     "DomainTransferStatusChangeEventName",
     "EmailForwarding",
+    "EmptyObject",
     "ExpireDate",
     "ForbiddenErrorBody",
     "GatewayTimeout504",
@@ -441,6 +455,7 @@ __all__ = [
     "SearchPurchaseType",
     "SearchResponse",
     "SearchResult",
+    "ServiceUnavailableErrorBody",
     "SubscribeToNotificationResponse",
     "SubscriptionRecord",
     "TldInfoJsonSchema",

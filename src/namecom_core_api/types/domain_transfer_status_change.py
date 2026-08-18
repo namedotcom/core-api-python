@@ -20,11 +20,19 @@ class DomainTransferStatusChange(UniversalBaseModel):
         FieldMetadata(alias="eventName"),
         pydantic.Field(alias="eventName", description="The name of the subscription event"),
     ]
+    """
+    The name of the subscription event
+    """
+
     domain_name: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="The domain that the transfer status has changed for"),
     ]
+    """
+    The domain that the transfer status has changed for
+    """
+
     status: TransferStatus
 
     if IS_PYDANTIC_V2:

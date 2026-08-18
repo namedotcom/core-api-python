@@ -20,6 +20,10 @@ class TransferEligibilityResponse(UniversalBaseModel):
             alias="domainName", description="The domain that was checked, in its canonical (ASCII / punycode) form."
         ),
     ]
+    """
+    The domain that was checked, in its canonical (ASCII / punycode) form.
+    """
+
     at_name: typing_extensions.Annotated[
         bool,
         FieldMetadata(alias="atName"),
@@ -27,6 +31,10 @@ class TransferEligibilityResponse(UniversalBaseModel):
             alias="atName", description="Whether the domain is currently registered at name.com (in any account)."
         ),
     ]
+    """
+    Whether the domain is currently registered at name.com (in any account).
+    """
+
     supports_internal_transfer: typing_extensions.Annotated[
         bool,
         FieldMetadata(alias="supportsInternalTransfer"),
@@ -35,6 +43,9 @@ class TransferEligibilityResponse(UniversalBaseModel):
             description="Whether the TLD supports internal transfer between name.com accounts. Mirrors the TLD-level flag returned by Get Tld Requirements. Does not reflect per-account allowlist eligibility for the internal transfer-in API.",
         ),
     ]
+    """
+    Whether the TLD supports internal transfer between name.com accounts. Mirrors the TLD-level flag returned by Get Tld Requirements. Does not reflect per-account allowlist eligibility for the internal transfer-in API.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

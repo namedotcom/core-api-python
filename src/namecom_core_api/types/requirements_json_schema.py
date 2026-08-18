@@ -24,6 +24,10 @@ class RequirementsJsonSchema(UniversalBaseModel):
             description='The JSON Schema version identifier, should be "http://json-schema.org/draft-07/schema#"',
         ),
     ] = None
+    """
+    The JSON Schema version identifier, should be "http://json-schema.org/draft-07/schema#"
+    """
+
     type: typing.Optional[str] = pydantic.Field(default=None)
     """
     The JSON Schema type, typically "object" for requirement schemas
@@ -57,6 +61,10 @@ class RequirementsJsonSchema(UniversalBaseModel):
             description="An array of schema objects that must all be valid. Used for conditional validation with multiple conditions.",
         ),
     ] = None
+    """
+    An array of schema objects that must all be valid. Used for conditional validation with multiple conditions.
+    """
+
     if_: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]],
         FieldMetadata(alias="if"),
@@ -65,6 +73,10 @@ class RequirementsJsonSchema(UniversalBaseModel):
             description="The condition schema for conditional validation. When this condition is true, the 'then' schema applies.",
         ),
     ] = None
+    """
+    The condition schema for conditional validation. When this condition is true, the 'then' schema applies.
+    """
+
     then: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     The schema to apply when the 'if' condition is true.
@@ -75,6 +87,9 @@ class RequirementsJsonSchema(UniversalBaseModel):
         FieldMetadata(alias="else"),
         pydantic.Field(alias="else", description="The schema to apply when the 'if' condition is false (optional)."),
     ] = None
+    """
+    The schema to apply when the 'if' condition is false (optional).
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

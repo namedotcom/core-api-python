@@ -20,6 +20,10 @@ class Account(UniversalBaseModel):
         FieldMetadata(alias="accountId"),
         pydantic.Field(alias="accountId", description="AccountId is the unique id of account."),
     ] = None
+    """
+    AccountId is the unique id of account.
+    """
+
     account_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="accountName"),
@@ -28,6 +32,10 @@ class Account(UniversalBaseModel):
             description="AccountName is the unique name of the account.  Minimum length is 6 characters, maximum length is 60.",
         ),
     ] = None
+    """
+    AccountName is the unique name of the account.  Minimum length is 6 characters, maximum length is 60.
+    """
+
     auto_renew: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="autoRenew"),
@@ -36,6 +44,10 @@ class Account(UniversalBaseModel):
             description="When set to true, domains in this account will be automatically renewed before expiration.",
         ),
     ] = None
+    """
+    When set to true, domains in this account will be automatically renewed before expiration.
+    """
+
     contacts: typing.Optional[Contacts] = pydantic.Field(default=None)
     """
     Contact information associated with this account.
@@ -46,6 +58,10 @@ class Account(UniversalBaseModel):
         FieldMetadata(alias="createDate"),
         pydantic.Field(alias="createDate", description="CreateDate is the date the account was created."),
     ] = None
+    """
+    CreateDate is the date the account was created.
+    """
+
     password: typing.Optional[str] = pydantic.Field(default=None)
     """
     Password has minimum length of 7 characters. It must contain at least 1 letter and at least 1 number/symbol.

@@ -12,7 +12,7 @@ from .domain_transfer_out_status_change_status import DomainTransferOutStatusCha
 
 class DomainTransferOutStatusChange(UniversalBaseModel):
     """
-    Payload sent when a domain transfer OUT from name.com to another registrar has a status change (initiated, completed, or canceled). When status is "completed", the domain has been removed from name.com. In some edge cases (including near-expiration scenarios) the data may not be fully accurate.
+    Payload for `domain.transfer_out.status_change`. `completed` means the domain left name.com. `canceled` means the outbound transfer is no longer pending at the registry.
     """
 
     event_name: typing_extensions.Annotated[
@@ -20,14 +20,25 @@ class DomainTransferOutStatusChange(UniversalBaseModel):
         FieldMetadata(alias="eventName"),
         pydantic.Field(alias="eventName", description="The name of the subscription event."),
     ]
+    """
+    The name of the subscription event.
+    """
+
     domain_name: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="domainName"),
-        pydantic.Field(alias="domainName", description="The domain that has transferred out of name.com."),
+        pydantic.Field(
+            alias="domainName",
+            description="The domain whose outbound transfer status changed. For `completed`, the domain has left name.com; for `initiated` and `canceled`, it remains on the losing account.",
+        ),
     ]
+    """
+    The domain whose outbound transfer status changed. For `completed`, the domain has left name.com; for `initiated` and `canceled`, it remains on the losing account.
+    """
+
     status: DomainTransferOutStatusChangeStatus = pydantic.Field()
     """
-    The status of the transfer out event. May be "initiated" (transfer out was started), "completed" (domain has been removed from the account), or "canceled" (transfer out was canceled before completion).
+    `initiated` (pending out started), `completed` (domain removed), or `canceled` (no longer pending at the registry).
     """
 
     registry_client_id: typing_extensions.Annotated[
@@ -38,6 +49,9 @@ class DomainTransferOutStatusChange(UniversalBaseModel):
             description="The registry client ID associated with the domain at the time of transfer out, when available. This can help identify the gaining registrar at the registry.",
         ),
     ] = None
+    """
+    The registry client ID associated with the domain at the time of transfer out, when available. This can help identify the gaining registrar at the registry.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

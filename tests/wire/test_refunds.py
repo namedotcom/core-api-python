@@ -6,7 +6,6 @@ def test_refunds_process_refund() -> None:
     test_id = "refunds.process_refund.0"
     client = get_client(test_id)
     client.refunds.process_refund(
-        idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
         order_id=123456,
         order_item_ids=[987654],
     )

@@ -22,11 +22,19 @@ class UnverifiedContact(UniversalBaseModel):
             description="The id of the verification record for the contact. Please note, this is different than the `contact_id` that may be returned in other API contexts. This id specifically relates to the verification record and will be different than a `contact_id` for the same contact record in other contexts.",
         ),
     ]
+    """
+    The id of the verification record for the contact. Please note, this is different than the `contact_id` that may be returned in other API contexts. This id specifically relates to the verification record and will be different than a `contact_id` for the same contact record in other contexts.
+    """
+
     create_date: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="createDate"),
         pydantic.Field(alias="createDate", description="The date the record requiring verification was created."),
     ] = None
+    """
+    The date the record requiring verification was created.
+    """
+
     verify_by: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="verifyBy"),
@@ -35,6 +43,10 @@ class UnverifiedContact(UniversalBaseModel):
             description="The date/time that the contact record **must** be verified by.  If the contact record is not verified by this date, the domain may become locked by the registry. This is typically 15 days from the creation date of the verification record, but may vary by TLD and registry.",
         ),
     ] = None
+    """
+    The date/time that the contact record **must** be verified by.  If the contact record is not verified by this date, the domain may become locked by the registry. This is typically 15 days from the creation date of the verification record, but may vary by TLD and registry.
+    """
+
     email: typing.Optional[str] = pydantic.Field(default=None)
     """
     The email address of the contact to be verified. This is the primary identifier used for verification.

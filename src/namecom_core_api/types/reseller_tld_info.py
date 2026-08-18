@@ -24,6 +24,10 @@ class ResellerTldInfo(UniversalBaseModel):
         FieldMetadata(alias="ccTld"),
         pydantic.Field(alias="ccTld", description="Whether the TLD is a Country Code TLD."),
     ]
+    """
+    Whether the TLD is a Country Code TLD.
+    """
+
     supports_transfer_lock: typing_extensions.Annotated[
         bool,
         FieldMetadata(alias="supportsTransferLock"),
@@ -31,21 +35,37 @@ class ResellerTldInfo(UniversalBaseModel):
             alias="supportsTransferLock", description="Whether the TLD supports implementing a Transfer Lock."
         ),
     ]
+    """
+    Whether the TLD supports implementing a Transfer Lock.
+    """
+
     supports_dnssec: typing_extensions.Annotated[
         bool,
         FieldMetadata(alias="supportsDnssec"),
         pydantic.Field(alias="supportsDnssec", description="Whether the TLD supports DNSSEC."),
     ]
+    """
+    Whether the TLD supports DNSSEC.
+    """
+
     supports_premium: typing_extensions.Annotated[
         bool,
         FieldMetadata(alias="supportsPremium"),
         pydantic.Field(alias="supportsPremium", description="Whether there are premium domains for this TLD."),
     ]
+    """
+    Whether there are premium domains for this TLD.
+    """
+
     supports_privacy: typing_extensions.Annotated[
         bool,
         FieldMetadata(alias="supportsPrivacy"),
         pydantic.Field(alias="supportsPrivacy", description="Whether the TLD supports WHOIS Privacy."),
     ]
+    """
+    Whether the TLD supports WHOIS Privacy.
+    """
+
     supports_internal_transfer: typing_extensions.Annotated[
         bool,
         FieldMetadata(alias="supportsInternalTransfer"),
@@ -54,6 +74,10 @@ class ResellerTldInfo(UniversalBaseModel):
             description="Whether the TLD supports internal transfer between reseller accounts.",
         ),
     ]
+    """
+    Whether the TLD supports internal transfer between reseller accounts.
+    """
+
     requires_pre_delegation: typing_extensions.Annotated[
         bool,
         FieldMetadata(alias="requiresPreDelegation"),
@@ -62,6 +86,10 @@ class ResellerTldInfo(UniversalBaseModel):
             description="Whether this TLD requires pre-delegation. If this is true, these domains must be added to the name servers before the domain creation is completed.",
         ),
     ]
+    """
+    Whether this TLD requires pre-delegation. If this is true, these domains must be added to the name servers before the domain creation is completed.
+    """
+
     expiration_grace_period: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="expirationGracePeriod"),
@@ -70,6 +98,10 @@ class ResellerTldInfo(UniversalBaseModel):
             description="The number of days you have to renew your domain after it has expired, but before it is removed from your account.",
         ),
     ]
+    """
+    The number of days you have to renew your domain after it has expired, but before it is removed from your account.
+    """
+
     allowed_registration_years: typing_extensions.Annotated[
         typing.List[int],
         FieldMetadata(alias="allowedRegistrationYears"),
@@ -77,11 +109,19 @@ class ResellerTldInfo(UniversalBaseModel):
             alias="allowedRegistrationYears", description="The years that a domain is allowed to be registered for."
         ),
     ]
+    """
+    The years that a domain is allowed to be registered for.
+    """
+
     idn_languages: typing_extensions.Annotated[
         typing.Dict[str, str],
         FieldMetadata(alias="idnLanguages"),
         pydantic.Field(alias="idnLanguages", description="The IND Languages that the TLD supports (if any)."),
     ]
+    """
+    The IND Languages that the TLD supports (if any).
+    """
+
     hsts: bool = pydantic.Field()
     """
     The entire TLD namespace has been added to the HSTS Preload list. As such, all second-level domains under .TLD will only load on modern browsers if a valid SSL certificate has been configured and the webserver is serving HTTPS.
@@ -95,6 +135,10 @@ class ResellerTldInfo(UniversalBaseModel):
             description="The minimum allowed length for the second level domain (SLD) for a given TLD. The SLD would be the `example` part of `example.com`. Attempts to register a domain with a shorter length than allowed will result in a failure of a Create Domain request.",
         ),
     ]
+    """
+    The minimum allowed length for the second level domain (SLD) for a given TLD. The SLD would be the `example` part of `example.com`. Attempts to register a domain with a shorter length than allowed will result in a failure of a Create Domain request.
+    """
+
     min_idn_domain_length: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="minIdnDomainLength"),
@@ -103,11 +147,19 @@ class ResellerTldInfo(UniversalBaseModel):
             description="The minimum allowed length for the second level domain (SLD) that utilizes an IDN character for a given TLD.  The SLD would be the `èxample` part of `èxample.com`. Attempts to register a domain with a shorter length than allowed will result in a failure of a Create Domain request. This value will often be different from the `minDomainLength` for non-IDN registrations.  This parameter will return as `null` for any TLDs that do not support IDN registrations.",
         ),
     ] = None
+    """
+    The minimum allowed length for the second level domain (SLD) that utilizes an IDN character for a given TLD.  The SLD would be the `èxample` part of `èxample.com`. Attempts to register a domain with a shorter length than allowed will result in a failure of a Create Domain request. This value will often be different from the `minDomainLength` for non-IDN registrations.  This parameter will return as `null` for any TLDs that do not support IDN registrations.
+    """
+
     registry_operator: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="registryOperator"),
         pydantic.Field(alias="registryOperator", description="The registry that operates the given TLD."),
     ]
+    """
+    The registry that operates the given TLD.
+    """
+
     claims_check_required: typing_extensions.Annotated[
         typing.List[ResellerTldInfoClaimsCheckRequiredItem],
         FieldMetadata(alias="claimsCheckRequired"),
@@ -116,6 +168,10 @@ class ResellerTldInfo(UniversalBaseModel):
             description='Array of valid purchase types if claims check is required for this TLD for current date/time.  If claims checking is required, returns an array of valid purchase types (e.g., ["registration", "landrush_eap"]).  If claims checking is not required, returns an empty array [].',
         ),
     ]
+    """
+    Array of valid purchase types if claims check is required for this TLD for current date/time.  If claims checking is required, returns an array of valid purchase types (e.g., ["registration", "landrush_eap"]).  If claims checking is not required, returns an empty array [].
+    """
+
     require_idn_sld: typing_extensions.Annotated[
         bool,
         FieldMetadata(alias="requireIdnSld"),
@@ -124,6 +180,9 @@ class ResellerTldInfo(UniversalBaseModel):
             description="When true, the TLD only accepts IDN (punycode) second-level domain names in the required script. ASCII/Latin SLDs are not valid for registration.",
         ),
     ]
+    """
+    When true, the TLD only accepts IDN (punycode) second-level domain names in the required script. ASCII/Latin SLDs are not valid for registration.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

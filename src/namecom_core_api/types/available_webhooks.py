@@ -5,6 +5,7 @@ import typing
 AvailableWebhooks = typing.Union[
     typing.Literal[
         "account.credit.balance_change",
+        "account.domain.removal",
         "domain.lock.status_change",
         "domain.transfer.status_change",
         "domain.transfer_out.status_change",

@@ -18,6 +18,7 @@ if typing.TYPE_CHECKING:
     from .not_found_error import NotFoundError
     from .not_implemented_error import NotImplementedError
     from .payment_required_error import PaymentRequiredError
+    from .service_unavailable_error import ServiceUnavailableError
     from .too_many_requests_error import TooManyRequestsError
     from .unauthorized_error import UnauthorizedError
     from .unavailable_for_legal_reasons_error import UnavailableForLegalReasonsError
@@ -36,6 +37,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NotFoundError": ".not_found_error",
     "NotImplementedError": ".not_implemented_error",
     "PaymentRequiredError": ".payment_required_error",
+    "ServiceUnavailableError": ".service_unavailable_error",
     "TooManyRequestsError": ".too_many_requests_error",
     "UnauthorizedError": ".unauthorized_error",
     "UnavailableForLegalReasonsError": ".unavailable_for_legal_reasons_error",
@@ -78,6 +80,7 @@ __all__ = [
     "NotFoundError",
     "NotImplementedError",
     "PaymentRequiredError",
+    "ServiceUnavailableError",
     "TooManyRequestsError",
     "UnauthorizedError",
     "UnavailableForLegalReasonsError",

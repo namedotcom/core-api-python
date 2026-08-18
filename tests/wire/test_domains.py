@@ -17,7 +17,6 @@ def test_domains_create_domain() -> None:
     test_id = "domains.create_domain.0"
     client = get_client(test_id)
     client.domains.create_domain(
-        idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
         domain=DomainCreatePayload(
             domain_name="example.com",
         ),
@@ -125,7 +124,6 @@ def test_domains_purchase_privacy() -> None:
     client = get_client(test_id)
     client.domains.purchase_privacy(
         domain_name="domainName",
-        idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
     )
     verify_request_count(test_id, "POST", "/core/v1/domains/domainName:purchasePrivacy", None, 1)
 

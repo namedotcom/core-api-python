@@ -20,6 +20,10 @@ class CreateAccountResponse(UniversalBaseModel):
             alias="accountName", description="AccountName is the unique user-assigned name of newly created account."
         ),
     ]
+    """
+    AccountName is the unique user-assigned name of newly created account.
+    """
+
     api_token: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiToken"),
@@ -28,11 +32,18 @@ class CreateAccountResponse(UniversalBaseModel):
             description="The authentication token that should be used to access the API. This value is only returned once upon account creation.",
         ),
     ]
+    """
+    The authentication token that should be used to access the API. This value is only returned once upon account creation.
+    """
+
     api_token_name: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiTokenName"),
         pydantic.Field(alias="apiTokenName", description="ApiTokenName user assigned name of api token."),
     ]
+    """
+    ApiTokenName user assigned name of api token.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

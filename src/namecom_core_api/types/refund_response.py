@@ -27,6 +27,9 @@ class RefundResponse(UniversalBaseModel):
             alias="totalRefundAmount", description="The total amount refunded across all order items in USD."
         ),
     ]
+    """
+    The total amount refunded across all order items in USD.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

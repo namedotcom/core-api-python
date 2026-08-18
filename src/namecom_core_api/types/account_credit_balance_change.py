@@ -15,11 +15,19 @@ class AccountCreditBalanceChange(UniversalBaseModel):
         FieldMetadata(alias="eventName"),
         pydantic.Field(alias="eventName", description="The name of the subscription event"),
     ] = None
+    """
+    The name of the subscription event
+    """
+
     account_id: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="accountId"),
         pydantic.Field(alias="accountId", description="The account ID the subscription is for"),
     ] = None
+    """
+    The account ID the subscription is for
+    """
+
     balance: typing.Optional[float] = pydantic.Field(default=None)
     """
     The remaining balance of account credit
