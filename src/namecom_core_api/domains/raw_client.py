@@ -22,6 +22,7 @@ from ..errors.not_acceptable_error import NotAcceptableError
 from ..errors.not_found_error import NotFoundError
 from ..errors.not_implemented_error import NotImplementedError
 from ..errors.payment_required_error import PaymentRequiredError
+from ..errors.service_unavailable_error import ServiceUnavailableError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..errors.unavailable_for_legal_reasons_error import UnavailableForLegalReasonsError
@@ -47,7 +48,6 @@ from ..types.unavailable_for_legal451 import UnavailableForLegal451
 from ..types.unprocessable_entity422 import UnprocessableEntity422
 from ..types.unsupported_media415 import UnsupportedMedia415
 from ..types.zone_check_response import ZoneCheckResponse
-from .types.update_domain_request_body import UpdateDomainRequestBody
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -260,6 +260,17 @@ class RawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -284,13 +295,13 @@ class RawDomainsClient:
         self,
         *,
         domain: DomainCreatePayload,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         purchase_type: typing.Optional[str] = OMIT,
         tld_requirements: typing.Optional[typing.Dict[str, str]] = OMIT,
         claims: typing.Optional[DomainClaimsInfo] = OMIT,
         years: typing.Optional[int] = OMIT,
         promo_code: typing.Optional[str] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateDomainResponse]:
         """
@@ -336,11 +347,8 @@ class RawDomainsClient:
         ----------
         domain : DomainCreatePayload
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
-
         purchase_price : typing.Optional[float]
-            PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. If privacyEnabled is set, the regular price for Whois Privacy protection will be added automatically. If VAT tax applies, it will also be added automatically.
+            PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. Whois Privacy is free and does not affect purchasePrice. If privacyEnabled is omitted, the account default from account settings is used. If VAT tax applies, it will also be added automatically.
 
         purchase_type : typing.Optional[str]
             PurchaseType indicates what kind of purchase this domain create is for. Defaults to `registration` if omitted. **Recommended:** Use `registration` unless you support acquisition types (aftermarket, expiring, backorder) — see the [Domain purchase pricing guide](/guides/domain-pricing). This value should be copied from the [Search](/api/v1/reference/domains/search) or [Check Availability](/api/v1/reference/domains/check-availability) result. The value `registration` covers both standard and **registry premium** domains — use the `premium` flag from the discovery result to tell them apart. Aftermarket, expiring, and backorder types use flat acquisition fees from Search or Check Availability; see the [Domain pricing guide](/guides/domain-pricing).
@@ -357,7 +365,9 @@ class RawDomainsClient:
             Years specifies the registration term in years. **Only affects price and registration length for `purchaseType: registration`.** Defaults to each TLD's minimum if omitted (usually 1; 2 for `.ai`). Must be a supported registration term for the TLD when `purchaseType` is `registration` (commonly 1–10 years). For `purchaseType: registration` when `purchasePrice` is required, call [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) with the same `years` value. For aftermarket, expiring, and backorder types: pass the TLD default — it does **not** multiply `purchasePrice` and does **not** guarantee a multi-year registration. Check `domain.expireDate` in the create response for actual expiry. To add registration time after acquisition, use [Renew Domain](/api/v1/reference/domains/renew-domain).
 
         promo_code : typing.Optional[str]
-            PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request.
+            PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request. Promo codes specify eligibility criteria, including duration. If the supplied promo applies no discount, the request fails with `400` and `"Promo code does not apply a discount to this purchase"`. The order is not created.
+
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -385,7 +395,7 @@ class RawDomainsClient:
             },
             headers={
                 "content-type": "application/json",
-                "X-Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -554,6 +564,17 @@ class RawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -685,6 +706,17 @@ class RawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -709,7 +741,9 @@ class RawDomainsClient:
         self,
         domain_name: str,
         *,
-        request: UpdateDomainRequestBody,
+        autorenew_enabled: typing.Optional[bool] = OMIT,
+        privacy_enabled: typing.Optional[bool] = OMIT,
+        locked: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DomainResponsePayload]:
         """
@@ -720,7 +754,14 @@ class RawDomainsClient:
         domain_name : str
             DomainName is the domain to update.
 
-        request : UpdateDomainRequestBody
+        autorenew_enabled : typing.Optional[bool]
+            Enable or disable automatic renewal for the domain.
+
+        privacy_enabled : typing.Optional[bool]
+            Enable or disable Whois privacy for the domain.
+
+        locked : typing.Optional[bool]
+            Set the transfer lock status for the domain
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -733,9 +774,11 @@ class RawDomainsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}",
             method="PATCH",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=UpdateDomainRequestBody, direction="write"
-            ),
+            json={
+                "autorenewEnabled": autorenew_enabled,
+                "privacyEnabled": privacy_enabled,
+                "locked": locked,
+            },
             headers={
                 "content-type": "application/json",
             },
@@ -862,6 +905,17 @@ class RawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -886,7 +940,7 @@ class RawDomainsClient:
         self, domain_name: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Domain]:
         """
-        Turns off automatic renewal for a domain.  **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
+        Turns off automatic renewal for a domain. **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
 
         Parameters
         ----------
@@ -904,7 +958,12 @@ class RawDomainsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:disableAutorenew",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -1006,6 +1065,17 @@ class RawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -1057,7 +1127,12 @@ class RawDomainsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:disableWhoisPrivacy",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -1159,6 +1234,17 @@ class RawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -1210,7 +1296,12 @@ class RawDomainsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:enableAutorenew",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -1312,6 +1403,17 @@ class RawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -1363,7 +1465,12 @@ class RawDomainsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:enableWhoisPrivacy",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -1465,6 +1572,17 @@ class RawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -1607,6 +1725,17 @@ class RawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -1791,6 +1920,17 @@ class RawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -1833,7 +1973,12 @@ class RawDomainsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:lock",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -1944,6 +2089,17 @@ class RawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -1968,27 +2124,26 @@ class RawDomainsClient:
         self,
         domain_name: str,
         *,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         years: typing.Optional[int] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PrivacyResponse]:
         """
-        Adds or renews WHOIS privacy protection for a domain. This is used to ensure personal contact details remain hidden from public WHOIS lookups.  If WHOIS privacy is already enabled, this will extend the protection. If it’s not yet active, this will both purchase and enable the service.  This is a billable action unless covered by a bundled privacy plan.
+        Adds or renews WHOIS privacy protection for a domain. This is used to ensure personal contact details remain hidden from public WHOIS lookups.  If WHOIS privacy is already enabled, this will extend the protection. If it’s not yet active, this will enable the service.  WHOIS privacy is free for API users and does not add a fee.
 
         Parameters
         ----------
         domain_name : str
-            DomainName is the domain to purchase Whois Privacy for.
-
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+            DomainName is the domain to enable or extend Whois Privacy for.
 
         purchase_price : typing.Optional[float]
-            PurchasePrice is the (prorated) amount you expect to pay.
+            WHOIS privacy is free for API users. This field does not add a privacy fee.
 
         years : typing.Optional[int]
-            Years is the number of years you wish to purchase Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
+            Years is the number of years to enable or extend Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
+
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2007,7 +2162,7 @@ class RawDomainsClient:
             },
             headers={
                 "content-type": "application/json",
-                "X-Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -2134,6 +2289,17 @@ class RawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -2326,6 +2492,17 @@ class RawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -2347,11 +2524,7 @@ class RawDomainsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def set_contacts(
-        self,
-        domain_name: str,
-        *,
-        contacts: typing.Optional[ContactsRequest] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, domain_name: str, *, contacts: ContactsRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DomainResponsePayload]:
         """
         Updates WHOIS contact information for a domain. This includes the registrant, administrative, technical, and billing contacts.  All contact objects must be complete — partial updates are not supported.  You should fetch the existing contact data first (e.g., via [GetDomain](/api/v1/reference/domains/get-domain) and modify only the values you wish to change.  This call replaces all four contact sets at once.
@@ -2363,7 +2536,7 @@ class RawDomainsClient:
         domain_name : str
             DomainName is the domain name to set the contacts for.
 
-        contacts : typing.Optional[ContactsRequest]
+        contacts : ContactsRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2487,6 +2660,17 @@ class RawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -2663,6 +2847,17 @@ class RawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -2705,7 +2900,12 @@ class RawDomainsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:unlock",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -2807,6 +3007,17 @@ class RawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -2974,6 +3185,17 @@ class RawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -3163,6 +3385,17 @@ class RawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -3330,6 +3563,17 @@ class RawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -3566,6 +3810,17 @@ class AsyncRawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -3590,13 +3845,13 @@ class AsyncRawDomainsClient:
         self,
         *,
         domain: DomainCreatePayload,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         purchase_type: typing.Optional[str] = OMIT,
         tld_requirements: typing.Optional[typing.Dict[str, str]] = OMIT,
         claims: typing.Optional[DomainClaimsInfo] = OMIT,
         years: typing.Optional[int] = OMIT,
         promo_code: typing.Optional[str] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateDomainResponse]:
         """
@@ -3642,11 +3897,8 @@ class AsyncRawDomainsClient:
         ----------
         domain : DomainCreatePayload
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
-
         purchase_price : typing.Optional[float]
-            PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. If privacyEnabled is set, the regular price for Whois Privacy protection will be added automatically. If VAT tax applies, it will also be added automatically.
+            PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. Whois Privacy is free and does not affect purchasePrice. If privacyEnabled is omitted, the account default from account settings is used. If VAT tax applies, it will also be added automatically.
 
         purchase_type : typing.Optional[str]
             PurchaseType indicates what kind of purchase this domain create is for. Defaults to `registration` if omitted. **Recommended:** Use `registration` unless you support acquisition types (aftermarket, expiring, backorder) — see the [Domain purchase pricing guide](/guides/domain-pricing). This value should be copied from the [Search](/api/v1/reference/domains/search) or [Check Availability](/api/v1/reference/domains/check-availability) result. The value `registration` covers both standard and **registry premium** domains — use the `premium` flag from the discovery result to tell them apart. Aftermarket, expiring, and backorder types use flat acquisition fees from Search or Check Availability; see the [Domain pricing guide](/guides/domain-pricing).
@@ -3663,7 +3915,9 @@ class AsyncRawDomainsClient:
             Years specifies the registration term in years. **Only affects price and registration length for `purchaseType: registration`.** Defaults to each TLD's minimum if omitted (usually 1; 2 for `.ai`). Must be a supported registration term for the TLD when `purchaseType` is `registration` (commonly 1–10 years). For `purchaseType: registration` when `purchasePrice` is required, call [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) with the same `years` value. For aftermarket, expiring, and backorder types: pass the TLD default — it does **not** multiply `purchasePrice` and does **not** guarantee a multi-year registration. Check `domain.expireDate` in the create response for actual expiry. To add registration time after acquisition, use [Renew Domain](/api/v1/reference/domains/renew-domain).
 
         promo_code : typing.Optional[str]
-            PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request.
+            PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request. Promo codes specify eligibility criteria, including duration. If the supplied promo applies no discount, the request fails with `400` and `"Promo code does not apply a discount to this purchase"`. The order is not created.
+
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -3691,7 +3945,7 @@ class AsyncRawDomainsClient:
             },
             headers={
                 "content-type": "application/json",
-                "X-Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -3860,6 +4114,17 @@ class AsyncRawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -3991,6 +4256,17 @@ class AsyncRawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -4015,7 +4291,9 @@ class AsyncRawDomainsClient:
         self,
         domain_name: str,
         *,
-        request: UpdateDomainRequestBody,
+        autorenew_enabled: typing.Optional[bool] = OMIT,
+        privacy_enabled: typing.Optional[bool] = OMIT,
+        locked: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DomainResponsePayload]:
         """
@@ -4026,7 +4304,14 @@ class AsyncRawDomainsClient:
         domain_name : str
             DomainName is the domain to update.
 
-        request : UpdateDomainRequestBody
+        autorenew_enabled : typing.Optional[bool]
+            Enable or disable automatic renewal for the domain.
+
+        privacy_enabled : typing.Optional[bool]
+            Enable or disable Whois privacy for the domain.
+
+        locked : typing.Optional[bool]
+            Set the transfer lock status for the domain
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -4039,9 +4324,11 @@ class AsyncRawDomainsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}",
             method="PATCH",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=UpdateDomainRequestBody, direction="write"
-            ),
+            json={
+                "autorenewEnabled": autorenew_enabled,
+                "privacyEnabled": privacy_enabled,
+                "locked": locked,
+            },
             headers={
                 "content-type": "application/json",
             },
@@ -4168,6 +4455,17 @@ class AsyncRawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -4192,7 +4490,7 @@ class AsyncRawDomainsClient:
         self, domain_name: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Domain]:
         """
-        Turns off automatic renewal for a domain.  **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
+        Turns off automatic renewal for a domain. **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
 
         Parameters
         ----------
@@ -4210,7 +4508,12 @@ class AsyncRawDomainsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:disableAutorenew",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -4312,6 +4615,17 @@ class AsyncRawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -4363,7 +4677,12 @@ class AsyncRawDomainsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:disableWhoisPrivacy",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -4465,6 +4784,17 @@ class AsyncRawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -4516,7 +4846,12 @@ class AsyncRawDomainsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:enableAutorenew",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -4618,6 +4953,17 @@ class AsyncRawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -4669,7 +5015,12 @@ class AsyncRawDomainsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:enableWhoisPrivacy",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -4771,6 +5122,17 @@ class AsyncRawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -4913,6 +5275,17 @@ class AsyncRawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -5097,6 +5470,17 @@ class AsyncRawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -5139,7 +5523,12 @@ class AsyncRawDomainsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:lock",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -5250,6 +5639,17 @@ class AsyncRawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -5274,27 +5674,26 @@ class AsyncRawDomainsClient:
         self,
         domain_name: str,
         *,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         years: typing.Optional[int] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PrivacyResponse]:
         """
-        Adds or renews WHOIS privacy protection for a domain. This is used to ensure personal contact details remain hidden from public WHOIS lookups.  If WHOIS privacy is already enabled, this will extend the protection. If it’s not yet active, this will both purchase and enable the service.  This is a billable action unless covered by a bundled privacy plan.
+        Adds or renews WHOIS privacy protection for a domain. This is used to ensure personal contact details remain hidden from public WHOIS lookups.  If WHOIS privacy is already enabled, this will extend the protection. If it’s not yet active, this will enable the service.  WHOIS privacy is free for API users and does not add a fee.
 
         Parameters
         ----------
         domain_name : str
-            DomainName is the domain to purchase Whois Privacy for.
-
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+            DomainName is the domain to enable or extend Whois Privacy for.
 
         purchase_price : typing.Optional[float]
-            PurchasePrice is the (prorated) amount you expect to pay.
+            WHOIS privacy is free for API users. This field does not add a privacy fee.
 
         years : typing.Optional[int]
-            Years is the number of years you wish to purchase Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
+            Years is the number of years to enable or extend Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
+
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -5313,7 +5712,7 @@ class AsyncRawDomainsClient:
             },
             headers={
                 "content-type": "application/json",
-                "X-Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -5440,6 +5839,17 @@ class AsyncRawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -5632,6 +6042,17 @@ class AsyncRawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -5653,11 +6074,7 @@ class AsyncRawDomainsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def set_contacts(
-        self,
-        domain_name: str,
-        *,
-        contacts: typing.Optional[ContactsRequest] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, domain_name: str, *, contacts: ContactsRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DomainResponsePayload]:
         """
         Updates WHOIS contact information for a domain. This includes the registrant, administrative, technical, and billing contacts.  All contact objects must be complete — partial updates are not supported.  You should fetch the existing contact data first (e.g., via [GetDomain](/api/v1/reference/domains/get-domain) and modify only the values you wish to change.  This call replaces all four contact sets at once.
@@ -5669,7 +6086,7 @@ class AsyncRawDomainsClient:
         domain_name : str
             DomainName is the domain name to set the contacts for.
 
-        contacts : typing.Optional[ContactsRequest]
+        contacts : ContactsRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -5793,6 +6210,17 @@ class AsyncRawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -5969,6 +6397,17 @@ class AsyncRawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -6011,7 +6450,12 @@ class AsyncRawDomainsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"core/v1/domains/{encode_path_param(domain_name)}:unlock",
             method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -6113,6 +6557,17 @@ class AsyncRawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -6280,6 +6735,17 @@ class AsyncRawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -6469,6 +6935,17 @@ class AsyncRawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -6636,6 +7113,17 @@ class AsyncRawDomainsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

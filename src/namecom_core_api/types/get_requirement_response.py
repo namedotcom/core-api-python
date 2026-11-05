@@ -26,6 +26,10 @@ class GetRequirementResponse(UniversalBaseModel):
             description="General information about a specific TLD. These are not registration requirements, but contain useful information for domain reseller and domain registrants in general.",
         ),
     ]
+    """
+    General information about a specific TLD. These are not registration requirements, but contain useful information for domain reseller and domain registrants in general.
+    """
+
     contacts: ContactsRequirement = pydantic.Field()
     """
     The registration requirements for the contacts for this TLD, including required fields, validation rules, and conditional logic.  This field will always be present but may be an empty object when no specific requirements exist for the TLD.

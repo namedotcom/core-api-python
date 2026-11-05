@@ -20,16 +20,27 @@ class EmailForwarding(UniversalBaseModel):
             alias="domainName", description="DomainName is the domain part of the email address to forward."
         ),
     ]
+    """
+    DomainName is the domain part of the email address to forward.
+    """
+
     email_box: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="emailBox"),
         pydantic.Field(alias="emailBox", description="EmailBox is the user portion of the email address to forward."),
     ]
+    """
+    EmailBox is the user portion of the email address to forward.
+    """
+
     email_to: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="emailTo"),
         pydantic.Field(alias="emailTo", description="EmailTo is the entire email address to forward email to."),
     ]
+    """
+    EmailTo is the entire email address to forward email to.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

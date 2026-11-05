@@ -9,6 +9,9 @@ if typing.TYPE_CHECKING:
     from .account import Account
     from .account_credit_balance_change import AccountCreditBalanceChange
     from .account_credit_balance_change_event_name import AccountCreditBalanceChangeEventName
+    from .account_domain_removal import AccountDomainRemoval
+    from .account_domain_removal_event_name import AccountDomainRemovalEventName
+    from .account_domain_removal_reason import AccountDomainRemovalReason
     from .account_request import AccountRequest
     from .auth_code_response import AuthCodeResponse
     from .autorenew_enabled import AutorenewEnabled
@@ -59,6 +62,9 @@ if typing.TYPE_CHECKING:
     from .domain_lock_status_change_event_name import DomainLockStatusChangeEventName
     from .domain_lock_status_change_lock_type import DomainLockStatusChangeLockType
     from .domain_name import DomainName
+    from .domain_registry_compliance_notice import DomainRegistryComplianceNotice
+    from .domain_registry_compliance_notice_event_name import DomainRegistryComplianceNoticeEventName
+    from .domain_registry_compliance_notice_policy import DomainRegistryComplianceNoticePolicy
     from .domain_registry_rejection import DomainRegistryRejection
     from .domain_registry_rejection_event_name import DomainRegistryRejectionEventName
     from .domain_response_payload import DomainResponsePayload
@@ -74,6 +80,7 @@ if typing.TYPE_CHECKING:
     from .domain_transfer_status_change import DomainTransferStatusChange
     from .domain_transfer_status_change_event_name import DomainTransferStatusChangeEventName
     from .email_forwarding import EmailForwarding
+    from .empty_object import EmptyObject
     from .expire_date import ExpireDate
     from .forbidden_error_body import ForbiddenErrorBody
     from .gateway_timeout504 import GatewayTimeout504
@@ -129,6 +136,7 @@ if typing.TYPE_CHECKING:
     from .search_purchase_type import SearchPurchaseType
     from .search_response import SearchResponse
     from .search_result import SearchResult
+    from .service_unavailable_error_body import ServiceUnavailableErrorBody
     from .subscribe_to_notification_response import SubscribeToNotificationResponse
     from .subscription_record import SubscriptionRecord
     from .tld_info_json_schema import TldInfoJsonSchema
@@ -147,10 +155,10 @@ if typing.TYPE_CHECKING:
     from .unverified_contact import UnverifiedContact
     from .unverified_contacts_response import UnverifiedContactsResponse
     from .url_forwarding import UrlForwarding
-    from .url_forwarding_input import UrlForwardingInput
-    from .url_forwarding_input_type import UrlForwardingInputType
     from .url_forwarding_response import UrlForwardingResponse
     from .url_forwarding_type import UrlForwardingType
+    from .url_forwarding_update import UrlForwardingUpdate
+    from .url_forwarding_update_type import UrlForwardingUpdateType
     from .vanity_nameserver import VanityNameserver
     from .vanity_nameserver_response import VanityNameserverResponse
     from .zone_check_response import ZoneCheckResponse
@@ -159,6 +167,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Account": ".account",
     "AccountCreditBalanceChange": ".account_credit_balance_change",
     "AccountCreditBalanceChangeEventName": ".account_credit_balance_change_event_name",
+    "AccountDomainRemoval": ".account_domain_removal",
+    "AccountDomainRemovalEventName": ".account_domain_removal_event_name",
+    "AccountDomainRemovalReason": ".account_domain_removal_reason",
     "AccountRequest": ".account_request",
     "AuthCodeResponse": ".auth_code_response",
     "AutorenewEnabled": ".autorenew_enabled",
@@ -203,6 +214,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DomainLockStatusChangeEventName": ".domain_lock_status_change_event_name",
     "DomainLockStatusChangeLockType": ".domain_lock_status_change_lock_type",
     "DomainName": ".domain_name",
+    "DomainRegistryComplianceNotice": ".domain_registry_compliance_notice",
+    "DomainRegistryComplianceNoticeEventName": ".domain_registry_compliance_notice_event_name",
+    "DomainRegistryComplianceNoticePolicy": ".domain_registry_compliance_notice_policy",
     "DomainRegistryRejection": ".domain_registry_rejection",
     "DomainRegistryRejectionEventName": ".domain_registry_rejection_event_name",
     "DomainResponsePayload": ".domain_response_payload",
@@ -218,6 +232,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DomainTransferStatusChange": ".domain_transfer_status_change",
     "DomainTransferStatusChangeEventName": ".domain_transfer_status_change_event_name",
     "EmailForwarding": ".email_forwarding",
+    "EmptyObject": ".empty_object",
     "ExpireDate": ".expire_date",
     "ForbiddenErrorBody": ".forbidden_error_body",
     "GatewayTimeout504": ".gateway_timeout504",
@@ -273,6 +288,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SearchPurchaseType": ".search_purchase_type",
     "SearchResponse": ".search_response",
     "SearchResult": ".search_result",
+    "ServiceUnavailableErrorBody": ".service_unavailable_error_body",
     "SubscribeToNotificationResponse": ".subscribe_to_notification_response",
     "SubscriptionRecord": ".subscription_record",
     "TldInfoJsonSchema": ".tld_info_json_schema",
@@ -291,10 +307,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnverifiedContact": ".unverified_contact",
     "UnverifiedContactsResponse": ".unverified_contacts_response",
     "UrlForwarding": ".url_forwarding",
-    "UrlForwardingInput": ".url_forwarding_input",
-    "UrlForwardingInputType": ".url_forwarding_input_type",
     "UrlForwardingResponse": ".url_forwarding_response",
     "UrlForwardingType": ".url_forwarding_type",
+    "UrlForwardingUpdate": ".url_forwarding_update",
+    "UrlForwardingUpdateType": ".url_forwarding_update_type",
     "VanityNameserver": ".vanity_nameserver",
     "VanityNameserverResponse": ".vanity_nameserver_response",
     "ZoneCheckResponse": ".zone_check_response",
@@ -327,6 +343,9 @@ __all__ = [
     "Account",
     "AccountCreditBalanceChange",
     "AccountCreditBalanceChangeEventName",
+    "AccountDomainRemoval",
+    "AccountDomainRemovalEventName",
+    "AccountDomainRemovalReason",
     "AccountRequest",
     "AuthCodeResponse",
     "AutorenewEnabled",
@@ -371,6 +390,9 @@ __all__ = [
     "DomainLockStatusChangeEventName",
     "DomainLockStatusChangeLockType",
     "DomainName",
+    "DomainRegistryComplianceNotice",
+    "DomainRegistryComplianceNoticeEventName",
+    "DomainRegistryComplianceNoticePolicy",
     "DomainRegistryRejection",
     "DomainRegistryRejectionEventName",
     "DomainResponsePayload",
@@ -386,6 +408,7 @@ __all__ = [
     "DomainTransferStatusChange",
     "DomainTransferStatusChangeEventName",
     "EmailForwarding",
+    "EmptyObject",
     "ExpireDate",
     "ForbiddenErrorBody",
     "GatewayTimeout504",
@@ -441,6 +464,7 @@ __all__ = [
     "SearchPurchaseType",
     "SearchResponse",
     "SearchResult",
+    "ServiceUnavailableErrorBody",
     "SubscribeToNotificationResponse",
     "SubscriptionRecord",
     "TldInfoJsonSchema",
@@ -459,10 +483,10 @@ __all__ = [
     "UnverifiedContact",
     "UnverifiedContactsResponse",
     "UrlForwarding",
-    "UrlForwardingInput",
-    "UrlForwardingInputType",
     "UrlForwardingResponse",
     "UrlForwardingType",
+    "UrlForwardingUpdate",
+    "UrlForwardingUpdateType",
     "VanityNameserver",
     "VanityNameserverResponse",
     "ZoneCheckResponse",

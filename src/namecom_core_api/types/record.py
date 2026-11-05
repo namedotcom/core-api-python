@@ -24,6 +24,10 @@ class Record(UniversalBaseModel):
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="DomainName is the zone that the record belongs to."),
     ] = None
+    """
+    DomainName is the zone that the record belongs to.
+    """
+
     fqdn: typing.Optional[str] = pydantic.Field(default=None)
     """
     FQDN is the Fully Qualified Domain Name. It is the combination of the host and the domain name. It always ends in a ".". FQDN is ignored in CreateRecord, specify via the Host field instead.

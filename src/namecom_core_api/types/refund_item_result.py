@@ -19,21 +19,37 @@ class RefundItemResult(UniversalBaseModel):
         FieldMetadata(alias="orderId"),
         pydantic.Field(alias="orderId", description="The unique identifier of the Order that was processed."),
     ]
+    """
+    The unique identifier of the Order that was processed.
+    """
+
     order_item_id: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="orderItemId"),
         pydantic.Field(alias="orderItemId", description="The unique identifier of the Order Item that was processed."),
     ]
+    """
+    The unique identifier of the Order Item that was processed.
+    """
+
     order_item_status: typing_extensions.Annotated[
         RefundItemResultOrderItemStatus,
         FieldMetadata(alias="orderItemStatus"),
         pydantic.Field(alias="orderItemStatus", description="The status of the refund operation for this item."),
     ]
+    """
+    The status of the refund operation for this item.
+    """
+
     refund_amount: typing_extensions.Annotated[
         float,
         FieldMetadata(alias="refundAmount"),
         pydantic.Field(alias="refundAmount", description="The amount refunded for this order item in USD."),
     ]
+    """
+    The amount refunded for this order item in USD.
+    """
+
     message: typing.Optional[str] = pydantic.Field(default=None)
     """
     Additional information about the refund result, especially useful for failed items.

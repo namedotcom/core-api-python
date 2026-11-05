@@ -3,7 +3,17 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fnamedotcom%2Fcore-api-python)
 [![pypi](https://img.shields.io/pypi/v/namecom-core-api)](https://pypi.python.org/pypi/namecom-core-api)
 
-The name.com Core API Python library provides convenient access to the name.com Core API APIs from Python.
+Official SDK for the name.com Core API.
+
+List endpoints are paginated: use the `page` and `perPage` query parameters.
+Responses include `totalCount`, `nextPage`, and `lastPage`, and most list
+endpoints also return a `Link` header with `next`/`prev`/`last` URLs.
+
+Write endpoints that accept an idempotency key are safe to retry — reusing
+the same key returns the original result instead of repeating the operation.
+
+See https://docs.name.com for full guides and the API reference.
+
 
 ## Table of Contents
 
@@ -48,6 +58,98 @@ client = Namecom(
 )
 
 client.hello()
+```
+
+```python
+from namecom_core_api import Namecom
+
+client = Namecom(
+    username="<username>",
+    password="<password>",
+)
+
+client.account_info.check_account_balance()
+```
+
+```python
+from namecom_core_api import Namecom
+
+client = Namecom(
+    username="<username>",
+    password="<password>",
+)
+
+client.domains.search(
+    keyword="mydomain",
+)
+```
+
+```python
+from namecom_core_api import Namecom, DomainCreatePayload
+
+client = Namecom(
+    username="<username>",
+    password="<password>",
+)
+
+client.domains.create_domain(
+    domain=DomainCreatePayload(
+        domain_name="example.com",
+    ),
+)
+```
+
+```python
+from namecom_core_api import Namecom
+
+client = Namecom(
+    username="<username>",
+    password="<password>",
+)
+
+client.domains.list_domains()
+```
+
+```python
+from namecom_core_api import Namecom
+
+client = Namecom(
+    username="<username>",
+    password="<password>",
+)
+
+client.domains.get_domain(
+    domain_name="example.com",
+)
+```
+
+```python
+from namecom_core_api import Namecom
+
+client = Namecom(
+    username="<username>",
+    password="<password>",
+)
+
+client.dns.list_records(
+    domain_name="domainName",
+)
+```
+
+```python
+from namecom_core_api import Namecom
+
+client = Namecom(
+    username="<username>",
+    password="<password>",
+)
+
+client.dns.create_record(
+    domain_name="domainName",
+    answer="answer",
+    host="host",
+    type="A",
+)
 ```
 
 ## Environments
@@ -158,7 +260,7 @@ client = Namecom(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.hello(request_options={
-    "timeout_in_seconds": 1
+    "timeout": 1
 })
 ```
 

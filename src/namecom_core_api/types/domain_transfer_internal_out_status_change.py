@@ -22,6 +22,10 @@ class DomainTransferInternalOutStatusChange(UniversalBaseModel):
         FieldMetadata(alias="eventName"),
         pydantic.Field(alias="eventName", description="The name of the subscription event."),
     ]
+    """
+    The name of the subscription event.
+    """
+
     transfer_id: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="transferId"),
@@ -30,6 +34,10 @@ class DomainTransferInternalOutStatusChange(UniversalBaseModel):
             description="The internal transfer ID for this move, when available. Omitted when no transfer ID has been assigned for the event.",
         ),
     ] = None
+    """
+    The internal transfer ID for this move, when available. Omitted when no transfer ID has been assigned for the event.
+    """
+
     source_account_id: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="sourceAccountId"),
@@ -37,6 +45,10 @@ class DomainTransferInternalOutStatusChange(UniversalBaseModel):
             alias="sourceAccountId", description="The account id that previously owned the domain (the losing account)."
         ),
     ]
+    """
+    The account id that previously owned the domain (the losing account).
+    """
+
     destination_account_id: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="destinationAccountId"),
@@ -44,12 +56,20 @@ class DomainTransferInternalOutStatusChange(UniversalBaseModel):
             alias="destinationAccountId", description="The account id that now owns the domain (the gaining account)."
         ),
     ]
+    """
+    The account id that now owns the domain (the gaining account).
+    """
+
     status: DomainTransferInternalOutStatusChangeStatus
     occurred_at: typing_extensions.Annotated[
         dt.datetime,
         FieldMetadata(alias="occurredAt"),
         pydantic.Field(alias="occurredAt", description="When the domain transfer out occurred."),
     ]
+    """
+    When the domain transfer out occurred.
+    """
+
     domain: DomainResponsePayload
 
     if IS_PYDANTIC_V2:

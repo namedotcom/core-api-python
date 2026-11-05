@@ -22,6 +22,10 @@ class ListUrlForwardingsResponse(UniversalBaseModel):
             description="LastPage is the identifier for the final page of results. It is only populated if there is another page of results after the current page.",
         ),
     ] = None
+    """
+    LastPage is the identifier for the final page of results. It is only populated if there is another page of results after the current page.
+    """
+
     next_page: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="nextPage"),
@@ -30,11 +34,18 @@ class ListUrlForwardingsResponse(UniversalBaseModel):
             description="NextPage is the identifier for the next page of results. It is only populated if there is another page of results after the current page.",
         ),
     ] = None
+    """
+    NextPage is the identifier for the next page of results. It is only populated if there is another page of results after the current page.
+    """
+
     url_forwarding: typing_extensions.Annotated[
         typing.List[UrlForwardingResponse],
         FieldMetadata(alias="urlForwarding"),
         pydantic.Field(alias="urlForwarding", description="URLForwarding is the list of URL forwarding entries."),
     ]
+    """
+    URLForwarding is the list of URL forwarding entries.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

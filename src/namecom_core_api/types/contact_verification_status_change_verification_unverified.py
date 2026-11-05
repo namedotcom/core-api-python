@@ -15,6 +15,9 @@ class ContactVerificationStatusChangeVerificationUnverified(UniversalBaseModel):
         FieldMetadata(alias="verifyBy"),
         pydantic.Field(alias="verifyBy", description="The date when the contact should be verified by."),
     ]
+    """
+    The date when the contact should be verified by.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -8,6 +8,9 @@ from ..types.contact_verification_resend_response import ContactVerificationRese
 from ..types.unverified_contacts_response import UnverifiedContactsResponse
 from .raw_client import AsyncRawContactVerificationClient, RawContactVerificationClient
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class ContactVerificationClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
@@ -73,7 +76,7 @@ class ContactVerificationClient:
         self,
         verification_id: int,
         *,
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -85,8 +88,7 @@ class ContactVerificationClient:
         verification_id : int
             The VerificationId required to verify a specific contact.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -105,11 +107,10 @@ class ContactVerificationClient:
         )
         client.contact_verification.verify_contact(
             verification_id=1,
-            idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
         )
         """
         _response = self._raw_client.verify_contact(
-            verification_id, idempotency_key=idempotency_key, request_options=request_options
+            verification_id, x_idempotency_key=x_idempotency_key, request_options=request_options
         )
         return _response.data
 
@@ -117,7 +118,7 @@ class ContactVerificationClient:
         self,
         verification_id: int,
         *,
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ContactVerificationResendResponse:
         """
@@ -137,8 +138,7 @@ class ContactVerificationClient:
         verification_id : int
             The verificationId for the pending contact verification record.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -158,11 +158,10 @@ class ContactVerificationClient:
         )
         client.contact_verification.resend_contact_verification_email(
             verification_id=1,
-            idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
         )
         """
         _response = self._raw_client.resend_contact_verification_email(
-            verification_id, idempotency_key=idempotency_key, request_options=request_options
+            verification_id, x_idempotency_key=x_idempotency_key, request_options=request_options
         )
         return _response.data
 
@@ -239,7 +238,7 @@ class AsyncContactVerificationClient:
         self,
         verification_id: int,
         *,
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -251,8 +250,7 @@ class AsyncContactVerificationClient:
         verification_id : int
             The VerificationId required to verify a specific contact.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -276,14 +274,13 @@ class AsyncContactVerificationClient:
         async def main() -> None:
             await client.contact_verification.verify_contact(
                 verification_id=1,
-                idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.verify_contact(
-            verification_id, idempotency_key=idempotency_key, request_options=request_options
+            verification_id, x_idempotency_key=x_idempotency_key, request_options=request_options
         )
         return _response.data
 
@@ -291,7 +288,7 @@ class AsyncContactVerificationClient:
         self,
         verification_id: int,
         *,
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ContactVerificationResendResponse:
         """
@@ -311,8 +308,7 @@ class AsyncContactVerificationClient:
         verification_id : int
             The verificationId for the pending contact verification record.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -337,13 +333,12 @@ class AsyncContactVerificationClient:
         async def main() -> None:
             await client.contact_verification.resend_contact_verification_email(
                 verification_id=1,
-                idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.resend_contact_verification_email(
-            verification_id, idempotency_key=idempotency_key, request_options=request_options
+            verification_id, x_idempotency_key=x_idempotency_key, request_options=request_options
         )
         return _response.data

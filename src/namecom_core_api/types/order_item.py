@@ -36,6 +36,10 @@ class OrderItem(UniversalBaseModel):
             alias="originalPrice", description="OriginalPrice is the original price of the item before discounts."
         ),
     ] = None
+    """
+    OriginalPrice is the original price of the item before discounts.
+    """
+
     price: float = pydantic.Field()
     """
     Price is the final price of the item.
@@ -48,6 +52,10 @@ class OrderItem(UniversalBaseModel):
             alias="priceNonUsd", description="PriceNonUsd is the price of the item if order has non-usd currency."
         ),
     ] = None
+    """
+    PriceNonUsd is the price of the item if order has non-usd currency.
+    """
+
     quantity: int = pydantic.Field()
     """
     Quantity is the number of items.
@@ -63,6 +71,10 @@ class OrderItem(UniversalBaseModel):
         FieldMetadata(alias="taxAmount"),
         pydantic.Field(alias="taxAmount", description="TaxAmount is the tax charged for this item, if applicable."),
     ] = None
+    """
+    TaxAmount is the tax charged for this item, if applicable.
+    """
+
     tld: typing.Optional[str] = pydantic.Field(default=None)
     """
     Tld is (optional) tld of domain name, if applicable ('ninja').
@@ -81,6 +93,9 @@ class OrderItem(UniversalBaseModel):
             description="IsRefundable indicates whether the item in your order is currently eligible for a refund through the refund endpoint based on name.com's refund rules. These refunds are only applicable for invalid or fraudulent orders within a few days or registration (usually 5).",
         ),
     ]
+    """
+    IsRefundable indicates whether the item in your order is currently eligible for a refund through the refund endpoint based on name.com's refund rules. These refunds are only applicable for invalid or fraudulent orders within a few days or registration (usually 5).
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

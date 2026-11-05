@@ -15,12 +15,28 @@ class DomainCreatePayload(UniversalBaseModel):
     The payload to be sent for when making a request to purchase a domain.
     """
 
+    privacy_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="privacyEnabled"),
+        pydantic.Field(
+            alias="privacyEnabled",
+            description="Whether to include Whois Privacy with the registration. Whois Privacy is free. If omitted, the account default from account settings is used. Privacy is only added when the TLD supports it.",
+        ),
+    ] = None
+    """
+    Whether to include Whois Privacy with the registration. Whois Privacy is free. If omitted, the account default from account settings is used. Privacy is only added when the TLD supports it.
+    """
+
     contacts: typing.Optional[ContactsRequest] = None
     domain_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="The punycode-encoded value of the domain name."),
     ] = None
+    """
+    The punycode-encoded value of the domain name.
+    """
+
     create_date: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="createDate"),
@@ -28,11 +44,19 @@ class DomainCreatePayload(UniversalBaseModel):
             alias="createDate", description="The date and time when the domain was created at the registry."
         ),
     ] = None
+    """
+    The date and time when the domain was created at the registry.
+    """
+
     expire_date: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="expireDate"),
         pydantic.Field(alias="expireDate", description="The date and time when the domain will expire."),
     ] = None
+    """
+    The date and time when the domain will expire.
+    """
+
     autorenew_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="autorenewEnabled"),
@@ -41,6 +65,10 @@ class DomainCreatePayload(UniversalBaseModel):
             description="Indicates whether the domain is set to renew automatically before expiration.",
         ),
     ] = None
+    """
+    Indicates whether the domain is set to renew automatically before expiration.
+    """
+
     locked: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Indicates if the domain is **transfer locked**, preventing transfers to another registrar.
@@ -59,11 +87,10 @@ class DomainCreatePayload(UniversalBaseModel):
             description="When present, the domain has an active ICANN-mandated transfer lock (new registration, transfer-in, or material registrant contact change) that blocks client unlock via the API until this time. When omitted, there is no active policy transfer lock with a known expiry — the domain may still be locked (`locked: true`) due to a voluntary user lock. Does not represent RegistrarLock, AccountLock, verification holds, trademark-claim locks, or admin TransferLock with no expiry date.",
         ),
     ] = None
-    privacy_enabled: typing_extensions.Annotated[
-        typing.Optional[bool],
-        FieldMetadata(alias="privacyEnabled"),
-        pydantic.Field(alias="privacyEnabled", description="Indicates if Whois Privacy is enabled for this domain."),
-    ] = None
+    """
+    When present, the domain has an active ICANN-mandated transfer lock (new registration, transfer-in, or material registrant contact change) that blocks client unlock via the API until this time. When omitted, there is no active policy transfer lock with a known expiry — the domain may still be locked (`locked: true`) due to a voluntary user lock. Does not represent RegistrarLock, AccountLock, verification holds, trademark-claim locks, or admin TransferLock with no expiry date.
+    """
+
     nameservers: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     The list of nameservers assigned to this domain. If unspecified, it defaults to the account's default nameservers.
@@ -77,6 +104,9 @@ class DomainCreatePayload(UniversalBaseModel):
             description="The cost to renew the domain. This may be required for the RenewDomain operation.",
         ),
     ] = None
+    """
+    The cost to renew the domain. This may be required for the RenewDomain operation.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

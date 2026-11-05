@@ -1,7 +1,6 @@
 from .conftest import get_client, verify_request_count
 
-from namecom_core_api import DomainCreatePayload
-from namecom_core_api.domains import UpdateDomainRequestBodyAutorenewEnabled
+from namecom_core_api import ContactsRequest, DomainCreatePayload
 
 
 def test_domains_list_domains() -> None:
@@ -17,7 +16,6 @@ def test_domains_create_domain() -> None:
     test_id = "domains.create_domain.0"
     client = get_client(test_id)
     client.domains.create_domain(
-        idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
         domain=DomainCreatePayload(
             domain_name="example.com",
         ),
@@ -41,9 +39,6 @@ def test_domains_update_domain() -> None:
     client = get_client(test_id)
     client.domains.update_domain(
         domain_name="domainName",
-        request=UpdateDomainRequestBodyAutorenewEnabled(
-            autorenew_enabled=True,
-        ),
     )
     verify_request_count(test_id, "PATCH", "/core/v1/domains/domainName", None, 1)
 
@@ -125,7 +120,6 @@ def test_domains_purchase_privacy() -> None:
     client = get_client(test_id)
     client.domains.purchase_privacy(
         domain_name="domainName",
-        idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
     )
     verify_request_count(test_id, "POST", "/core/v1/domains/domainName:purchasePrivacy", None, 1)
 
@@ -146,6 +140,7 @@ def test_domains_set_contacts() -> None:
     client = get_client(test_id)
     client.domains.set_contacts(
         domain_name="example.com",
+        contacts=ContactsRequest(),
     )
     verify_request_count(test_id, "POST", "/core/v1/domains/example.com:setContacts", None, 1)
 

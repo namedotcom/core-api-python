@@ -3,15 +3,19 @@
 import typing
 
 import pydantic
-import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...core.serialization import FieldMetadata
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class UpdateDomainRequestBodyAutorenewEnabled(UniversalBaseModel):
-    autorenew_enabled: typing_extensions.Annotated[
-        bool, FieldMetadata(alias="autorenewEnabled"), pydantic.Field(alias="autorenewEnabled")
-    ]
+class ServiceUnavailableErrorBody(UniversalBaseModel):
+    message: str = pydantic.Field()
+    """
+    A human-readable message providing more details about the error.
+    """
+
+    details: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Additional context or information about the error.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

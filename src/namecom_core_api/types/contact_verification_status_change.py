@@ -23,6 +23,10 @@ class ContactVerificationStatusChange(UniversalBaseModel):
             description="The id of the verification record for the contact. Please note, this is different than the `contact_id` that may be returned in other API contexts. This id specifically relates to the verification and will be different than an `contact_id` for the same contact record in other contexts.",
         ),
     ]
+    """
+    The id of the verification record for the contact. Please note, this is different than the `contact_id` that may be returned in other API contexts. This id specifically relates to the verification and will be different than an `contact_id` for the same contact record in other contexts.
+    """
+
     verification: ContactVerificationStatusChangeVerification
 
     if IS_PYDANTIC_V2:

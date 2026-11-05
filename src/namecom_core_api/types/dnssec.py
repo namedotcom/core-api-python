@@ -25,6 +25,10 @@ class Dnssec(UniversalBaseModel):
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="DomainName is the domain name."),
     ]
+    """
+    DomainName is the domain name.
+    """
+
     key_tag: typing_extensions.Annotated[int, FieldMetadata(alias="keyTag"), pydantic.Field(alias="keyTag")]
 
     if IS_PYDANTIC_V2:

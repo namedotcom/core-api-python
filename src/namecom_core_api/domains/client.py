@@ -19,7 +19,6 @@ from ..types.search_purchase_type import SearchPurchaseType
 from ..types.search_response import SearchResponse
 from ..types.zone_check_response import ZoneCheckResponse
 from .raw_client import AsyncRawDomainsClient, RawDomainsClient
-from .types.update_domain_request_body import UpdateDomainRequestBody
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -167,13 +166,13 @@ class DomainsClient:
         self,
         *,
         domain: DomainCreatePayload,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         purchase_type: typing.Optional[str] = OMIT,
         tld_requirements: typing.Optional[typing.Dict[str, str]] = OMIT,
         claims: typing.Optional[DomainClaimsInfo] = OMIT,
         years: typing.Optional[int] = OMIT,
         promo_code: typing.Optional[str] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateDomainResponse:
         """
@@ -219,11 +218,8 @@ class DomainsClient:
         ----------
         domain : DomainCreatePayload
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
-
         purchase_price : typing.Optional[float]
-            PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. If privacyEnabled is set, the regular price for Whois Privacy protection will be added automatically. If VAT tax applies, it will also be added automatically.
+            PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. Whois Privacy is free and does not affect purchasePrice. If privacyEnabled is omitted, the account default from account settings is used. If VAT tax applies, it will also be added automatically.
 
         purchase_type : typing.Optional[str]
             PurchaseType indicates what kind of purchase this domain create is for. Defaults to `registration` if omitted. **Recommended:** Use `registration` unless you support acquisition types (aftermarket, expiring, backorder) — see the [Domain purchase pricing guide](/guides/domain-pricing). This value should be copied from the [Search](/api/v1/reference/domains/search) or [Check Availability](/api/v1/reference/domains/check-availability) result. The value `registration` covers both standard and **registry premium** domains — use the `premium` flag from the discovery result to tell them apart. Aftermarket, expiring, and backorder types use flat acquisition fees from Search or Check Availability; see the [Domain pricing guide](/guides/domain-pricing).
@@ -240,7 +236,9 @@ class DomainsClient:
             Years specifies the registration term in years. **Only affects price and registration length for `purchaseType: registration`.** Defaults to each TLD's minimum if omitted (usually 1; 2 for `.ai`). Must be a supported registration term for the TLD when `purchaseType` is `registration` (commonly 1–10 years). For `purchaseType: registration` when `purchasePrice` is required, call [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) with the same `years` value. For aftermarket, expiring, and backorder types: pass the TLD default — it does **not** multiply `purchasePrice` and does **not** guarantee a multi-year registration. Check `domain.expireDate` in the create response for actual expiry. To add registration time after acquisition, use [Renew Domain](/api/v1/reference/domains/renew-domain).
 
         promo_code : typing.Optional[str]
-            PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request.
+            PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request. Promo codes specify eligibility criteria, including duration. If the supplied promo applies no discount, the request fails with `400` and `"Promo code does not apply a discount to this purchase"`. The order is not created.
+
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -259,7 +257,6 @@ class DomainsClient:
             password="YOUR_PASSWORD",
         )
         client.domains.create_domain(
-            idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
             domain=DomainCreatePayload(
                 domain_name="example.com",
             ),
@@ -267,13 +264,13 @@ class DomainsClient:
         """
         _response = self._raw_client.create_domain(
             domain=domain,
-            idempotency_key=idempotency_key,
             purchase_price=purchase_price,
             purchase_type=purchase_type,
             tld_requirements=tld_requirements,
             claims=claims,
             years=years,
             promo_code=promo_code,
+            x_idempotency_key=x_idempotency_key,
             request_options=request_options,
         )
         return _response.data
@@ -316,7 +313,9 @@ class DomainsClient:
         self,
         domain_name: str,
         *,
-        request: UpdateDomainRequestBody,
+        autorenew_enabled: typing.Optional[bool] = OMIT,
+        privacy_enabled: typing.Optional[bool] = OMIT,
+        locked: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DomainResponsePayload:
         """
@@ -327,7 +326,14 @@ class DomainsClient:
         domain_name : str
             DomainName is the domain to update.
 
-        request : UpdateDomainRequestBody
+        autorenew_enabled : typing.Optional[bool]
+            Enable or disable automatic renewal for the domain.
+
+        privacy_enabled : typing.Optional[bool]
+            Enable or disable Whois privacy for the domain.
+
+        locked : typing.Optional[bool]
+            Set the transfer lock status for the domain
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -340,7 +346,6 @@ class DomainsClient:
         Examples
         --------
         from namecom_core_api import Namecom
-        from namecom_core_api.domains import UpdateDomainRequestBodyAutorenewEnabled
 
         client = Namecom(
             username="YOUR_USERNAME",
@@ -348,17 +353,20 @@ class DomainsClient:
         )
         client.domains.update_domain(
             domain_name="domainName",
-            request=UpdateDomainRequestBodyAutorenewEnabled(
-                autorenew_enabled=True,
-            ),
         )
         """
-        _response = self._raw_client.update_domain(domain_name, request=request, request_options=request_options)
+        _response = self._raw_client.update_domain(
+            domain_name,
+            autorenew_enabled=autorenew_enabled,
+            privacy_enabled=privacy_enabled,
+            locked=locked,
+            request_options=request_options,
+        )
         return _response.data
 
     def disable_autorenew(self, domain_name: str, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
         """
-        Turns off automatic renewal for a domain.  **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
+        Turns off automatic renewal for a domain. **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
 
         Parameters
         ----------
@@ -612,27 +620,26 @@ class DomainsClient:
         self,
         domain_name: str,
         *,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         years: typing.Optional[int] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PrivacyResponse:
         """
-        Adds or renews WHOIS privacy protection for a domain. This is used to ensure personal contact details remain hidden from public WHOIS lookups.  If WHOIS privacy is already enabled, this will extend the protection. If it’s not yet active, this will both purchase and enable the service.  This is a billable action unless covered by a bundled privacy plan.
+        Adds or renews WHOIS privacy protection for a domain. This is used to ensure personal contact details remain hidden from public WHOIS lookups.  If WHOIS privacy is already enabled, this will extend the protection. If it’s not yet active, this will enable the service.  WHOIS privacy is free for API users and does not add a fee.
 
         Parameters
         ----------
         domain_name : str
-            DomainName is the domain to purchase Whois Privacy for.
-
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+            DomainName is the domain to enable or extend Whois Privacy for.
 
         purchase_price : typing.Optional[float]
-            PurchasePrice is the (prorated) amount you expect to pay.
+            WHOIS privacy is free for API users. This field does not add a privacy fee.
 
         years : typing.Optional[int]
-            Years is the number of years you wish to purchase Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
+            Years is the number of years to enable or extend Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
+
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -652,14 +659,13 @@ class DomainsClient:
         )
         client.domains.purchase_privacy(
             domain_name="domainName",
-            idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
         )
         """
         _response = self._raw_client.purchase_privacy(
             domain_name,
-            idempotency_key=idempotency_key,
             purchase_price=purchase_price,
             years=years,
+            x_idempotency_key=x_idempotency_key,
             request_options=request_options,
         )
         return _response.data
@@ -712,11 +718,7 @@ class DomainsClient:
         return _response.data
 
     def set_contacts(
-        self,
-        domain_name: str,
-        *,
-        contacts: typing.Optional[ContactsRequest] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, domain_name: str, *, contacts: ContactsRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> DomainResponsePayload:
         """
         Updates WHOIS contact information for a domain. This includes the registrant, administrative, technical, and billing contacts.  All contact objects must be complete — partial updates are not supported.  You should fetch the existing contact data first (e.g., via [GetDomain](/api/v1/reference/domains/get-domain) and modify only the values you wish to change.  This call replaces all four contact sets at once.
@@ -728,7 +730,7 @@ class DomainsClient:
         domain_name : str
             DomainName is the domain name to set the contacts for.
 
-        contacts : typing.Optional[ContactsRequest]
+        contacts : ContactsRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -740,7 +742,7 @@ class DomainsClient:
 
         Examples
         --------
-        from namecom_core_api import Namecom
+        from namecom_core_api import ContactsRequest, Namecom
 
         client = Namecom(
             username="YOUR_USERNAME",
@@ -748,6 +750,7 @@ class DomainsClient:
         )
         client.domains.set_contacts(
             domain_name="example.com",
+            contacts=ContactsRequest(),
         )
         """
         _response = self._raw_client.set_contacts(domain_name, contacts=contacts, request_options=request_options)
@@ -1151,13 +1154,13 @@ class AsyncDomainsClient:
         self,
         *,
         domain: DomainCreatePayload,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         purchase_type: typing.Optional[str] = OMIT,
         tld_requirements: typing.Optional[typing.Dict[str, str]] = OMIT,
         claims: typing.Optional[DomainClaimsInfo] = OMIT,
         years: typing.Optional[int] = OMIT,
         promo_code: typing.Optional[str] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateDomainResponse:
         """
@@ -1203,11 +1206,8 @@ class AsyncDomainsClient:
         ----------
         domain : DomainCreatePayload
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
-
         purchase_price : typing.Optional[float]
-            PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. If privacyEnabled is set, the regular price for Whois Privacy protection will be added automatically. If VAT tax applies, it will also be added automatically.
+            PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. Whois Privacy is free and does not affect purchasePrice. If privacyEnabled is omitted, the account default from account settings is used. If VAT tax applies, it will also be added automatically.
 
         purchase_type : typing.Optional[str]
             PurchaseType indicates what kind of purchase this domain create is for. Defaults to `registration` if omitted. **Recommended:** Use `registration` unless you support acquisition types (aftermarket, expiring, backorder) — see the [Domain purchase pricing guide](/guides/domain-pricing). This value should be copied from the [Search](/api/v1/reference/domains/search) or [Check Availability](/api/v1/reference/domains/check-availability) result. The value `registration` covers both standard and **registry premium** domains — use the `premium` flag from the discovery result to tell them apart. Aftermarket, expiring, and backorder types use flat acquisition fees from Search or Check Availability; see the [Domain pricing guide](/guides/domain-pricing).
@@ -1224,7 +1224,9 @@ class AsyncDomainsClient:
             Years specifies the registration term in years. **Only affects price and registration length for `purchaseType: registration`.** Defaults to each TLD's minimum if omitted (usually 1; 2 for `.ai`). Must be a supported registration term for the TLD when `purchaseType` is `registration` (commonly 1–10 years). For `purchaseType: registration` when `purchasePrice` is required, call [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) with the same `years` value. For aftermarket, expiring, and backorder types: pass the TLD default — it does **not** multiply `purchasePrice` and does **not** guarantee a multi-year registration. Check `domain.expireDate` in the create response for actual expiry. To add registration time after acquisition, use [Renew Domain](/api/v1/reference/domains/renew-domain).
 
         promo_code : typing.Optional[str]
-            PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request.
+            PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request. Promo codes specify eligibility criteria, including duration. If the supplied promo applies no discount, the request fails with `400` and `"Promo code does not apply a discount to this purchase"`. The order is not created.
+
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1248,7 +1250,6 @@ class AsyncDomainsClient:
 
         async def main() -> None:
             await client.domains.create_domain(
-                idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
                 domain=DomainCreatePayload(
                     domain_name="example.com",
                 ),
@@ -1259,13 +1260,13 @@ class AsyncDomainsClient:
         """
         _response = await self._raw_client.create_domain(
             domain=domain,
-            idempotency_key=idempotency_key,
             purchase_price=purchase_price,
             purchase_type=purchase_type,
             tld_requirements=tld_requirements,
             claims=claims,
             years=years,
             promo_code=promo_code,
+            x_idempotency_key=x_idempotency_key,
             request_options=request_options,
         )
         return _response.data
@@ -1316,7 +1317,9 @@ class AsyncDomainsClient:
         self,
         domain_name: str,
         *,
-        request: UpdateDomainRequestBody,
+        autorenew_enabled: typing.Optional[bool] = OMIT,
+        privacy_enabled: typing.Optional[bool] = OMIT,
+        locked: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DomainResponsePayload:
         """
@@ -1327,7 +1330,14 @@ class AsyncDomainsClient:
         domain_name : str
             DomainName is the domain to update.
 
-        request : UpdateDomainRequestBody
+        autorenew_enabled : typing.Optional[bool]
+            Enable or disable automatic renewal for the domain.
+
+        privacy_enabled : typing.Optional[bool]
+            Enable or disable Whois privacy for the domain.
+
+        locked : typing.Optional[bool]
+            Set the transfer lock status for the domain
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1342,7 +1352,6 @@ class AsyncDomainsClient:
         import asyncio
 
         from namecom_core_api import AsyncNamecom
-        from namecom_core_api.domains import UpdateDomainRequestBodyAutorenewEnabled
 
         client = AsyncNamecom(
             username="YOUR_USERNAME",
@@ -1353,22 +1362,25 @@ class AsyncDomainsClient:
         async def main() -> None:
             await client.domains.update_domain(
                 domain_name="domainName",
-                request=UpdateDomainRequestBodyAutorenewEnabled(
-                    autorenew_enabled=True,
-                ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update_domain(domain_name, request=request, request_options=request_options)
+        _response = await self._raw_client.update_domain(
+            domain_name,
+            autorenew_enabled=autorenew_enabled,
+            privacy_enabled=privacy_enabled,
+            locked=locked,
+            request_options=request_options,
+        )
         return _response.data
 
     async def disable_autorenew(
         self, domain_name: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Domain:
         """
-        Turns off automatic renewal for a domain.  **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
+        Turns off automatic renewal for a domain. **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
 
         Parameters
         ----------
@@ -1682,27 +1694,26 @@ class AsyncDomainsClient:
         self,
         domain_name: str,
         *,
-        idempotency_key: typing.Optional[str] = None,
         purchase_price: typing.Optional[float] = OMIT,
         years: typing.Optional[int] = OMIT,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PrivacyResponse:
         """
-        Adds or renews WHOIS privacy protection for a domain. This is used to ensure personal contact details remain hidden from public WHOIS lookups.  If WHOIS privacy is already enabled, this will extend the protection. If it’s not yet active, this will both purchase and enable the service.  This is a billable action unless covered by a bundled privacy plan.
+        Adds or renews WHOIS privacy protection for a domain. This is used to ensure personal contact details remain hidden from public WHOIS lookups.  If WHOIS privacy is already enabled, this will extend the protection. If it’s not yet active, this will enable the service.  WHOIS privacy is free for API users and does not add a fee.
 
         Parameters
         ----------
         domain_name : str
-            DomainName is the domain to purchase Whois Privacy for.
-
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+            DomainName is the domain to enable or extend Whois Privacy for.
 
         purchase_price : typing.Optional[float]
-            PurchasePrice is the (prorated) amount you expect to pay.
+            WHOIS privacy is free for API users. This field does not add a privacy fee.
 
         years : typing.Optional[int]
-            Years is the number of years you wish to purchase Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
+            Years is the number of years to enable or extend Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
+
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1727,7 +1738,6 @@ class AsyncDomainsClient:
         async def main() -> None:
             await client.domains.purchase_privacy(
                 domain_name="domainName",
-                idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
             )
 
 
@@ -1735,9 +1745,9 @@ class AsyncDomainsClient:
         """
         _response = await self._raw_client.purchase_privacy(
             domain_name,
-            idempotency_key=idempotency_key,
             purchase_price=purchase_price,
             years=years,
+            x_idempotency_key=x_idempotency_key,
             request_options=request_options,
         )
         return _response.data
@@ -1798,11 +1808,7 @@ class AsyncDomainsClient:
         return _response.data
 
     async def set_contacts(
-        self,
-        domain_name: str,
-        *,
-        contacts: typing.Optional[ContactsRequest] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, domain_name: str, *, contacts: ContactsRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> DomainResponsePayload:
         """
         Updates WHOIS contact information for a domain. This includes the registrant, administrative, technical, and billing contacts.  All contact objects must be complete — partial updates are not supported.  You should fetch the existing contact data first (e.g., via [GetDomain](/api/v1/reference/domains/get-domain) and modify only the values you wish to change.  This call replaces all four contact sets at once.
@@ -1814,7 +1820,7 @@ class AsyncDomainsClient:
         domain_name : str
             DomainName is the domain name to set the contacts for.
 
-        contacts : typing.Optional[ContactsRequest]
+        contacts : ContactsRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1828,7 +1834,7 @@ class AsyncDomainsClient:
         --------
         import asyncio
 
-        from namecom_core_api import AsyncNamecom
+        from namecom_core_api import AsyncNamecom, ContactsRequest
 
         client = AsyncNamecom(
             username="YOUR_USERNAME",
@@ -1839,6 +1845,7 @@ class AsyncDomainsClient:
         async def main() -> None:
             await client.domains.set_contacts(
                 domain_name="example.com",
+                contacts=ContactsRequest(),
             )
 
 

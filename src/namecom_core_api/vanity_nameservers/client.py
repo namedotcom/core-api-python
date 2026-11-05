@@ -168,7 +168,7 @@ class VanityNameserversClient:
         domain_name: str,
         hostname: str,
         *,
-        ips: typing.Optional[typing.Sequence[str]] = OMIT,
+        ips: typing.Sequence[str],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VanityNameserverResponse:
         """
@@ -182,7 +182,7 @@ class VanityNameserversClient:
         hostname : str
             The hostname of the vanity nameserver to update.
 
-        ips : typing.Optional[typing.Sequence[str]]
+        ips : typing.Sequence[str]
             IPs is the updated list of IP addresses to be used for glue records for this vanity nameserver. Providing an empty array will remove all existing IPs.
 
         request_options : typing.Optional[RequestOptions]
@@ -204,6 +204,7 @@ class VanityNameserversClient:
         client.vanity_nameservers.update_vanity_nameserver(
             domain_name="example.com",
             hostname="ns1.example.com",
+            ips=["192.168.1.10", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"],
         )
         """
         _response = self._raw_client.update_vanity_nameserver(
@@ -429,7 +430,7 @@ class AsyncVanityNameserversClient:
         domain_name: str,
         hostname: str,
         *,
-        ips: typing.Optional[typing.Sequence[str]] = OMIT,
+        ips: typing.Sequence[str],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> VanityNameserverResponse:
         """
@@ -443,7 +444,7 @@ class AsyncVanityNameserversClient:
         hostname : str
             The hostname of the vanity nameserver to update.
 
-        ips : typing.Optional[typing.Sequence[str]]
+        ips : typing.Sequence[str]
             IPs is the updated list of IP addresses to be used for glue records for this vanity nameserver. Providing an empty array will remove all existing IPs.
 
         request_options : typing.Optional[RequestOptions]
@@ -470,6 +471,7 @@ class AsyncVanityNameserversClient:
             await client.vanity_nameservers.update_vanity_nameserver(
                 domain_name="example.com",
                 hostname="ns1.example.com",
+                ips=["192.168.1.10", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"],
             )
 
 

@@ -6,22 +6,26 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .url_forwarding_input_type import UrlForwardingInputType
+from .url_forwarding_update_type import UrlForwardingUpdateType
 
 
-class UrlForwardingInput(UniversalBaseModel):
+class UrlForwardingUpdate(UniversalBaseModel):
     """
-    Fields for creating or updating a URL forwarding entry.
+    Fields for updating a URL forwarding entry. Omit a property to leave it unchanged. An empty `host` string is the apex, not "unchanged". At least one property must be present; an empty body is rejected.
     """
 
     forwards_to: typing_extensions.Annotated[
-        str,
+        typing.Optional[str],
         FieldMetadata(alias="forwardsTo"),
         pydantic.Field(alias="forwardsTo", description="The destination URL to which this hostname will be forwarded."),
-    ]
-    host: str = pydantic.Field()
+    ] = None
     """
-    The subdomain portion of the hostname that is being forwarded.
+    The destination URL to which this hostname will be forwarded.
+    """
+
+    host: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The subdomain portion of the hostname that is being forwarded. Omit this field to keep the existing host. Send an empty string to move the forwarding to the apex.
     """
 
     meta: typing.Optional[str] = pydantic.Field(default=None)
@@ -37,7 +41,7 @@ class UrlForwardingInput(UniversalBaseModel):
     Ignored for other forwarding types.
     """
 
-    type: UrlForwardingInputType = pydantic.Field()
+    type: typing.Optional[UrlForwardingUpdateType] = pydantic.Field(default=None)
     """
     The type of URL forwarding. Valid values:
       - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.

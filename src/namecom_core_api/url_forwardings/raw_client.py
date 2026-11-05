@@ -18,14 +18,16 @@ from ..errors.gateway_timeout_error import GatewayTimeoutError
 from ..errors.internal_server_error import InternalServerError
 from ..errors.method_not_allowed_error import MethodNotAllowedError
 from ..errors.not_found_error import NotFoundError
+from ..errors.service_unavailable_error import ServiceUnavailableError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..errors.unsupported_media_type_error import UnsupportedMediaTypeError
 from ..types.list_url_forwardings_response import ListUrlForwardingsResponse
 from ..types.not_found404 import NotFound404
 from ..types.unsupported_media415 import UnsupportedMedia415
-from ..types.url_forwarding_input_type import UrlForwardingInputType
 from ..types.url_forwarding_response import UrlForwardingResponse
+from ..types.url_forwarding_update_type import UrlForwardingUpdateType
+from .types.url_forwarding_input_type import UrlForwardingInputType
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -173,6 +175,17 @@ class RawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -216,7 +229,7 @@ class RawUrlForwardingsClient:
             The destination URL to which this hostname will be forwarded.
 
         host : str
-            The subdomain portion of the hostname that is being forwarded.
+            The subdomain portion of the hostname that is being forwarded. Use an empty string for the apex.
 
         type : UrlForwardingInputType
             The type of URL forwarding. Valid values:
@@ -377,6 +390,17 @@ class RawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -522,6 +546,17 @@ class RawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -547,11 +582,11 @@ class RawUrlForwardingsClient:
         domain_name: str,
         host_: str,
         *,
-        forwards_to: str,
-        host: str,
-        type: UrlForwardingInputType,
+        forwards_to: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        type: typing.Optional[UrlForwardingUpdateType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UrlForwardingResponse]:
         """
@@ -565,17 +600,11 @@ class RawUrlForwardingsClient:
         host_ : str
             The full hostname, including subdomain.
 
-        forwards_to : str
+        forwards_to : typing.Optional[str]
             The destination URL to which this hostname will be forwarded.
 
-        host : str
-            The subdomain portion of the hostname that is being forwarded.
-
-        type : UrlForwardingInputType
-            The type of URL forwarding. Valid values:
-              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
-              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
-              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
+        host : typing.Optional[str]
+            The subdomain portion of the hostname that is being forwarded. Omit this field to keep the existing host. Send an empty string to move the forwarding to the apex.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -585,6 +614,12 @@ class RawUrlForwardingsClient:
         title : typing.Optional[str]
             The title to be used for the HTML page when using "masked" forwarding.
             Ignored for other forwarding types.
+
+        type : typing.Optional[UrlForwardingUpdateType]
+            The type of URL forwarding. Valid values:
+              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
+              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
+              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -719,6 +754,17 @@ class RawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -836,6 +882,17 @@ class RawUrlForwardingsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -1002,6 +1059,17 @@ class RawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -1147,6 +1215,17 @@ class RawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -1273,6 +1352,17 @@ class RawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -1298,11 +1388,11 @@ class RawUrlForwardingsClient:
         domain_name: str,
         id: int,
         *,
-        forwards_to: str,
-        host: str,
-        type: UrlForwardingInputType,
+        forwards_to: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        type: typing.Optional[UrlForwardingUpdateType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UrlForwardingResponse]:
         """
@@ -1316,17 +1406,11 @@ class RawUrlForwardingsClient:
         id : int
             ID is the server-assigned unique identifier for the URL forwarding record (returned in list responses).
 
-        forwards_to : str
+        forwards_to : typing.Optional[str]
             The destination URL to which this hostname will be forwarded.
 
-        host : str
-            The subdomain portion of the hostname that is being forwarded.
-
-        type : UrlForwardingInputType
-            The type of URL forwarding. Valid values:
-              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
-              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
-              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
+        host : typing.Optional[str]
+            The subdomain portion of the hostname that is being forwarded. Omit this field to keep the existing host. Send an empty string to move the forwarding to the apex.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -1336,6 +1420,12 @@ class RawUrlForwardingsClient:
         title : typing.Optional[str]
             The title to be used for the HTML page when using "masked" forwarding.
             Ignored for other forwarding types.
+
+        type : typing.Optional[UrlForwardingUpdateType]
+            The type of URL forwarding. Valid values:
+              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
+              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
+              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1461,6 +1551,17 @@ class RawUrlForwardingsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -1632,6 +1733,17 @@ class AsyncRawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -1675,7 +1787,7 @@ class AsyncRawUrlForwardingsClient:
             The destination URL to which this hostname will be forwarded.
 
         host : str
-            The subdomain portion of the hostname that is being forwarded.
+            The subdomain portion of the hostname that is being forwarded. Use an empty string for the apex.
 
         type : UrlForwardingInputType
             The type of URL forwarding. Valid values:
@@ -1836,6 +1948,17 @@ class AsyncRawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -1981,6 +2104,17 @@ class AsyncRawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -2006,11 +2140,11 @@ class AsyncRawUrlForwardingsClient:
         domain_name: str,
         host_: str,
         *,
-        forwards_to: str,
-        host: str,
-        type: UrlForwardingInputType,
+        forwards_to: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        type: typing.Optional[UrlForwardingUpdateType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UrlForwardingResponse]:
         """
@@ -2024,17 +2158,11 @@ class AsyncRawUrlForwardingsClient:
         host_ : str
             The full hostname, including subdomain.
 
-        forwards_to : str
+        forwards_to : typing.Optional[str]
             The destination URL to which this hostname will be forwarded.
 
-        host : str
-            The subdomain portion of the hostname that is being forwarded.
-
-        type : UrlForwardingInputType
-            The type of URL forwarding. Valid values:
-              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
-              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
-              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
+        host : typing.Optional[str]
+            The subdomain portion of the hostname that is being forwarded. Omit this field to keep the existing host. Send an empty string to move the forwarding to the apex.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -2044,6 +2172,12 @@ class AsyncRawUrlForwardingsClient:
         title : typing.Optional[str]
             The title to be used for the HTML page when using "masked" forwarding.
             Ignored for other forwarding types.
+
+        type : typing.Optional[UrlForwardingUpdateType]
+            The type of URL forwarding. Valid values:
+              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
+              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
+              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2178,6 +2312,17 @@ class AsyncRawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -2295,6 +2440,17 @@ class AsyncRawUrlForwardingsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -2461,6 +2617,17 @@ class AsyncRawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -2606,6 +2773,17 @@ class AsyncRawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -2732,6 +2910,17 @@ class AsyncRawUrlForwardingsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -2757,11 +2946,11 @@ class AsyncRawUrlForwardingsClient:
         domain_name: str,
         id: int,
         *,
-        forwards_to: str,
-        host: str,
-        type: UrlForwardingInputType,
+        forwards_to: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        type: typing.Optional[UrlForwardingUpdateType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UrlForwardingResponse]:
         """
@@ -2775,17 +2964,11 @@ class AsyncRawUrlForwardingsClient:
         id : int
             ID is the server-assigned unique identifier for the URL forwarding record (returned in list responses).
 
-        forwards_to : str
+        forwards_to : typing.Optional[str]
             The destination URL to which this hostname will be forwarded.
 
-        host : str
-            The subdomain portion of the hostname that is being forwarded.
-
-        type : UrlForwardingInputType
-            The type of URL forwarding. Valid values:
-              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
-              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
-              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
+        host : typing.Optional[str]
+            The subdomain portion of the hostname that is being forwarded. Omit this field to keep the existing host. Send an empty string to move the forwarding to the apex.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -2795,6 +2978,12 @@ class AsyncRawUrlForwardingsClient:
         title : typing.Optional[str]
             The title to be used for the HTML page when using "masked" forwarding.
             Ignored for other forwarding types.
+
+        type : typing.Optional[UrlForwardingUpdateType]
+            The type of URL forwarding. Valid values:
+              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
+              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
+              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2920,6 +3109,17 @@ class AsyncRawUrlForwardingsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

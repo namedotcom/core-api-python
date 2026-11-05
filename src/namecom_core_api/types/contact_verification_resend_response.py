@@ -24,6 +24,10 @@ class ContactVerificationResendResponse(UniversalBaseModel):
         FieldMetadata(alias="verificationId"),
         pydantic.Field(alias="verificationId", description="The verificationId for the contact verification record."),
     ]
+    """
+    The verificationId for the contact verification record.
+    """
+
     next_eligible_at: typing_extensions.Annotated[
         dt.datetime,
         FieldMetadata(alias="nextEligibleAt"),
@@ -32,6 +36,9 @@ class ContactVerificationResendResponse(UniversalBaseModel):
             description="When the client can attempt to resend again, as an RFC3339/ISO-8601 UTC timestamp. This field is always returned, including when throttling applies.",
         ),
     ]
+    """
+    When the client can attempt to resend again, as an RFC3339/ISO-8601 UTC timestamp. This field is always returned, including when throttling applies.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

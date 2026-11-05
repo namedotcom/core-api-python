@@ -10,7 +10,6 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.bad_gateway_error import BadGatewayError
 from ..errors.bad_request_error import BadRequestError
 from ..errors.conflict_error import ConflictError
@@ -19,6 +18,7 @@ from ..errors.gateway_timeout_error import GatewayTimeoutError
 from ..errors.internal_server_error import InternalServerError
 from ..errors.method_not_allowed_error import MethodNotAllowedError
 from ..errors.not_found_error import NotFoundError
+from ..errors.service_unavailable_error import ServiceUnavailableError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..errors.unsupported_media_type_error import UnsupportedMediaTypeError
@@ -28,7 +28,6 @@ from ..types.modify_subscription_response import ModifySubscriptionResponse
 from ..types.not_found404 import NotFound404
 from ..types.subscribe_to_notification_response import SubscribeToNotificationResponse
 from ..types.unsupported_media415 import UnsupportedMedia415
-from .types.modify_subscription_request_body import ModifySubscriptionRequestBody
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -136,6 +135,17 @@ class RawWebhookNotificationsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -168,13 +178,15 @@ class RawWebhookNotificationsClient:
         Creates a webhook subscription to receive real-time notifications about specific domain or account events (e.g. transfer completions, renewals). Pass the callback URL and event types. This allows external systems to stay in sync with name.com changes.
         Supported webhook event names:
         - `account.credit.balance_change` – account credit balance changes (increases or decreases).
+        - `account.domain.removal` – domain removed from the subscribing account.
         - `domain.lock.status_change` – domain lock added or removed.
         - `domain.transfer.status_change` – domain transfer IN to name.com; status updates while name.com is the gaining registrar.
-        - `domain.transfer_out.status_change` – domain transfer OUT from name.com to another registrar; fires when the domain is removed from the account.
+        - `domain.transfer_out.status_change` – domain transfer OUT from name.com; `initiated`, `completed` (domain removed), or `canceled` (no longer pending at the registry).
         - `domain.transfer.internal_in` - name.com domain transfers in to the subscribing account via internal transfer.
         - `domain.transfer.internal_out` - name.com domain transfers out of the subscribing account via internal transfer.
         - `contact.verification.status_change` - contact verification status changes (verified or unverified).
         - `domain.registry.rejection` – domain **create** failed after asynchronous registry processing (uncommon; most creates succeed at request time).
+        - `domain.registry.compliance_notice` – a registry requires policy remediation for a domain. Default is a registrant email (whitelabeled when configured); subscribe to send it yourself. If you have signed an addendum to assume all email responsibility, name.com does not send this email and the webhook is the only delivery path.
         - `domain.expiration` – domain has expired and entered the post-expiry grace period. This is informational only.
 
         Parameters
@@ -318,6 +330,17 @@ class RawWebhookNotificationsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -342,7 +365,8 @@ class RawWebhookNotificationsClient:
         self,
         id: int,
         *,
-        request: ModifySubscriptionRequestBody,
+        url: typing.Optional[str] = OMIT,
+        active: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ModifySubscriptionResponse]:
         """
@@ -353,7 +377,11 @@ class RawWebhookNotificationsClient:
         id : int
             ID of the subscription to update.
 
-        request : ModifySubscriptionRequestBody
+        url : typing.Optional[str]
+            Optionally update the URL we send the webhook data to
+
+        active : typing.Optional[bool]
+            Optionally update if the subscription is currently active
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -366,9 +394,10 @@ class RawWebhookNotificationsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"core/v1/notifications/{encode_path_param(id)}",
             method="PUT",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ModifySubscriptionRequestBody, direction="write"
-            ),
+            json={
+                "url": url,
+                "active": active,
+            },
             headers={
                 "content-type": "application/json",
             },
@@ -464,6 +493,17 @@ class RawWebhookNotificationsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -596,6 +636,17 @@ class RawWebhookNotificationsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -718,6 +769,17 @@ class AsyncRawWebhookNotificationsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -750,13 +812,15 @@ class AsyncRawWebhookNotificationsClient:
         Creates a webhook subscription to receive real-time notifications about specific domain or account events (e.g. transfer completions, renewals). Pass the callback URL and event types. This allows external systems to stay in sync with name.com changes.
         Supported webhook event names:
         - `account.credit.balance_change` – account credit balance changes (increases or decreases).
+        - `account.domain.removal` – domain removed from the subscribing account.
         - `domain.lock.status_change` – domain lock added or removed.
         - `domain.transfer.status_change` – domain transfer IN to name.com; status updates while name.com is the gaining registrar.
-        - `domain.transfer_out.status_change` – domain transfer OUT from name.com to another registrar; fires when the domain is removed from the account.
+        - `domain.transfer_out.status_change` – domain transfer OUT from name.com; `initiated`, `completed` (domain removed), or `canceled` (no longer pending at the registry).
         - `domain.transfer.internal_in` - name.com domain transfers in to the subscribing account via internal transfer.
         - `domain.transfer.internal_out` - name.com domain transfers out of the subscribing account via internal transfer.
         - `contact.verification.status_change` - contact verification status changes (verified or unverified).
         - `domain.registry.rejection` – domain **create** failed after asynchronous registry processing (uncommon; most creates succeed at request time).
+        - `domain.registry.compliance_notice` – a registry requires policy remediation for a domain. Default is a registrant email (whitelabeled when configured); subscribe to send it yourself. If you have signed an addendum to assume all email responsibility, name.com does not send this email and the webhook is the only delivery path.
         - `domain.expiration` – domain has expired and entered the post-expiry grace period. This is informational only.
 
         Parameters
@@ -900,6 +964,17 @@ class AsyncRawWebhookNotificationsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -924,7 +999,8 @@ class AsyncRawWebhookNotificationsClient:
         self,
         id: int,
         *,
-        request: ModifySubscriptionRequestBody,
+        url: typing.Optional[str] = OMIT,
+        active: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ModifySubscriptionResponse]:
         """
@@ -935,7 +1011,11 @@ class AsyncRawWebhookNotificationsClient:
         id : int
             ID of the subscription to update.
 
-        request : ModifySubscriptionRequestBody
+        url : typing.Optional[str]
+            Optionally update the URL we send the webhook data to
+
+        active : typing.Optional[bool]
+            Optionally update if the subscription is currently active
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -948,9 +1028,10 @@ class AsyncRawWebhookNotificationsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"core/v1/notifications/{encode_path_param(id)}",
             method="PUT",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ModifySubscriptionRequestBody, direction="write"
-            ),
+            json={
+                "url": url,
+                "active": active,
+            },
             headers={
                 "content-type": "application/json",
             },
@@ -1046,6 +1127,17 @@ class AsyncRawWebhookNotificationsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
@@ -1169,6 +1261,17 @@ class AsyncRawWebhookNotificationsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

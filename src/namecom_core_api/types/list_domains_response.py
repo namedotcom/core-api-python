@@ -24,6 +24,10 @@ class ListDomainsResponse(UniversalBaseModel):
         FieldMetadata(alias="from"),
         pydantic.Field(alias="from", description="From is starting record count for current page."),
     ]
+    """
+    From is starting record count for current page.
+    """
+
     last_page: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="lastPage"),
@@ -32,6 +36,10 @@ class ListDomainsResponse(UniversalBaseModel):
             description="LastPage is the identifier for the final page of results. It is only populated if there is another page of results after the current page.",
         ),
     ] = None
+    """
+    LastPage is the identifier for the final page of results. It is only populated if there is another page of results after the current page.
+    """
+
     next_page: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="nextPage"),
@@ -40,6 +48,10 @@ class ListDomainsResponse(UniversalBaseModel):
             description="NextPage is the identifier for the next page of results. It is only populated if there is another page of results after the current page.",
         ),
     ] = None
+    """
+    NextPage is the identifier for the next page of results. It is only populated if there is another page of results after the current page.
+    """
+
     to: int = pydantic.Field()
     """
     To is ending record count for current page.
@@ -50,6 +62,9 @@ class ListDomainsResponse(UniversalBaseModel):
         FieldMetadata(alias="totalCount"),
         pydantic.Field(alias="totalCount", description="TotalCount is total number of domains returned for request."),
     ]
+    """
+    TotalCount is total number of domains returned for request.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

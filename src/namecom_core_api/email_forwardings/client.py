@@ -85,7 +85,7 @@ class EmailForwardingsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmailForwarding:
         """
-        Creates a new email forwarding rule for a domain, such as redirecting info@example.com to an external inbox.  If this is the first email forwarding rule created for the domain, the API may also update your MX records automatically to enable mail routing.  The alias must not conflict with existing email services or MX records.  To modify a forwarding rule later, use [UpdateEmailForwarding](/api/v1/reference/email-forwardings/update-email-forwarding).
+        Creates a new email forwarding rule for a domain, such as redirecting info@example.com to an external inbox.  If this is the first email forwarding rule created for the domain, the API may also update your MX records automatically to enable mail routing.  The alias must not conflict with existing email services or MX records.  Wildcard and catch-all forwarding is not supported, so an `emailBox` containing `*` is rejected with a `400 Bad Request`.  To modify a forwarding rule later, use [UpdateEmailForwarding](/api/v1/reference/email-forwardings/update-email-forwarding).
 
         Parameters
         ----------
@@ -93,7 +93,7 @@ class EmailForwardingsClient:
             DomainName is the domain part of the email address to forward.
 
         email_box : str
-            EmailBox is the user portion of the email address to forward. If your email is "admin@example.com", it would just be "admin"
+            EmailBox is the user portion of the email address to forward. If your email is "admin@example.com", it would just be "admin". Wildcard and catch-all values (such as "*") are not supported.
 
         email_to : str
             EmailTo is the entire email address to forward email to.
@@ -168,7 +168,7 @@ class EmailForwardingsClient:
         domain_name: str,
         email_box: str,
         *,
-        email_to: typing.Optional[str] = OMIT,
+        email_to: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmailForwarding:
         """
@@ -182,7 +182,7 @@ class EmailForwardingsClient:
         email_box : str
             EmailBox is the user portion of the email address to forward.
 
-        email_to : typing.Optional[str]
+        email_to : str
             EmailTo is the entire email address to forward email to.
 
         request_options : typing.Optional[RequestOptions]
@@ -204,6 +204,7 @@ class EmailForwardingsClient:
         client.email_forwardings.update_email_forwarding(
             domain_name="domainName",
             email_box="emailBox",
+            email_to="emailTo",
         )
         """
         _response = self._raw_client.update_email_forwarding(
@@ -330,7 +331,7 @@ class AsyncEmailForwardingsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmailForwarding:
         """
-        Creates a new email forwarding rule for a domain, such as redirecting info@example.com to an external inbox.  If this is the first email forwarding rule created for the domain, the API may also update your MX records automatically to enable mail routing.  The alias must not conflict with existing email services or MX records.  To modify a forwarding rule later, use [UpdateEmailForwarding](/api/v1/reference/email-forwardings/update-email-forwarding).
+        Creates a new email forwarding rule for a domain, such as redirecting info@example.com to an external inbox.  If this is the first email forwarding rule created for the domain, the API may also update your MX records automatically to enable mail routing.  The alias must not conflict with existing email services or MX records.  Wildcard and catch-all forwarding is not supported, so an `emailBox` containing `*` is rejected with a `400 Bad Request`.  To modify a forwarding rule later, use [UpdateEmailForwarding](/api/v1/reference/email-forwardings/update-email-forwarding).
 
         Parameters
         ----------
@@ -338,7 +339,7 @@ class AsyncEmailForwardingsClient:
             DomainName is the domain part of the email address to forward.
 
         email_box : str
-            EmailBox is the user portion of the email address to forward. If your email is "admin@example.com", it would just be "admin"
+            EmailBox is the user portion of the email address to forward. If your email is "admin@example.com", it would just be "admin". Wildcard and catch-all values (such as "*") are not supported.
 
         email_to : str
             EmailTo is the entire email address to forward email to.
@@ -429,7 +430,7 @@ class AsyncEmailForwardingsClient:
         domain_name: str,
         email_box: str,
         *,
-        email_to: typing.Optional[str] = OMIT,
+        email_to: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EmailForwarding:
         """
@@ -443,7 +444,7 @@ class AsyncEmailForwardingsClient:
         email_box : str
             EmailBox is the user portion of the email address to forward.
 
-        email_to : typing.Optional[str]
+        email_to : str
             EmailTo is the entire email address to forward email to.
 
         request_options : typing.Optional[RequestOptions]
@@ -470,6 +471,7 @@ class AsyncEmailForwardingsClient:
             await client.email_forwardings.update_email_forwarding(
                 domain_name="domainName",
                 email_box="emailBox",
+                email_to="emailTo",
             )
 
 

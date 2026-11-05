@@ -21,11 +21,19 @@ class HelloResponse(UniversalBaseModel):
             alias="serverName", description="ServerName is an identfier for which server is being accessed."
         ),
     ]
+    """
+    ServerName is an identfier for which server is being accessed.
+    """
+
     server_time: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="serverTime"),
         pydantic.Field(alias="serverTime", description="ServerTime is the current date/time at the server."),
     ]
+    """
+    ServerTime is the current date/time at the server.
+    """
+
     username: str = pydantic.Field()
     """
     Username is the account name you are currently logged into.
