@@ -46,6 +46,7 @@ def get_client(test_id: str) -> Namecom:
         return Namecom(
             base_url=base_url,
             headers=test_headers,
+            max_retries=0,
             username="test-username",
             password="test-password",
         )
@@ -53,6 +54,7 @@ def get_client(test_id: str) -> Namecom:
     return Namecom(
         base_url=base_url,
         httpx_client=httpx.Client(headers=test_headers),
+        max_retries=0,
         username="test-username",
         password="test-password",
     )

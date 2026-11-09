@@ -1,6 +1,8 @@
 [project]
 name = "namecom-core-api"
 dynamic = ["version"]
+license = "MIT"
+license-files = ["LICENSE"]
 
 [tool.poetry]
 name = "namecom-core-api"
@@ -26,8 +28,7 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Operating System :: Microsoft :: Windows",
     "Topic :: Software Development :: Libraries :: Python Modules",
-    "Typing :: Typed",
-    "License :: OSI Approved :: MIT License"
+    "Typing :: Typed"
 ]
 packages = [
     { include = "namecom_core_api", from = "src"}

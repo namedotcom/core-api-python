@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/namecom_core_api/client.py">hello</a>() -> HelloResponse</code></summary>
+<details><summary><code>client.<a href="src/namecom_core_api/client.py#L151-L176">hello</a>() -> HelloResponse</code></summary>
 <dl>
 <dd>
 
@@ -64,7 +64,7 @@ client.hello()
 </details>
 
 ## Account Info
-<details><summary><code>client.account_info.<a href="src/namecom_core_api/account_info/client.py">check_account_balance</a>() -> CheckAccountBalanceResponse</code></summary>
+<details><summary><code>client.account_info.<a href="src/namecom_core_api/account_info/client.py#L26-L53">check_account_balance</a>() -> CheckAccountBalanceResponse</code></summary>
 <dl>
 <dd>
 
@@ -129,7 +129,7 @@ client.account_info.check_account_balance()
 </details>
 
 ## Accounts
-<details><summary><code>client.accounts.<a href="src/namecom_core_api/accounts/client.py">create_account</a>(...) -> CreateAccountResponse</code></summary>
+<details><summary><code>client.accounts.<a href="src/namecom_core_api/accounts/client.py#L30-L98">create_account</a>(...) -> CreateAccountResponse</code></summary>
 <dl>
 <dd>
 
@@ -238,7 +238,7 @@ client.accounts.create_account(
 </details>
 
 ## Domains
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">list_domains</a>(...) -> ListDomainsResponse</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L42-L163">list_domains</a>(...) -> ListDomainsResponse</code></summary>
 <dl>
 <dd>
 
@@ -446,7 +446,7 @@ client.domains.list_domains()
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">create_domain</a>(...) -> CreateDomainResponse</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L165-L276">create_domain</a>(...) -> CreateDomainResponse</code></summary>
 <dl>
 <dd>
 
@@ -611,7 +611,7 @@ This parameter is required for registering domains that contain non-ASCII charac
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">get_domain</a>(...) -> DomainResponsePayload</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L278-L310">get_domain</a>(...) -> DomainResponsePayload</code></summary>
 <dl>
 <dd>
 
@@ -685,7 +685,7 @@ client.domains.get_domain(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">update_domain</a>(...) -> DomainResponsePayload</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L312-L365">update_domain</a>(...) -> DomainResponsePayload</code></summary>
 <dl>
 <dd>
 
@@ -783,7 +783,7 @@ client.domains.update_domain(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">disable_autorenew</a>(...) -> Domain</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L367-L397">disable_autorenew</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -865,7 +865,7 @@ client.domains.disable_autorenew(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">disable_whois_privacy</a>(...) -> Domain</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L399-L431">disable_whois_privacy</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -947,7 +947,7 @@ client.domains.disable_whois_privacy(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">enable_autorenew</a>(...) -> Domain</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L433-L463">enable_autorenew</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -1029,7 +1029,7 @@ client.domains.enable_autorenew(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">enable_whois_privacy</a>(...) -> Domain</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L465-L497">enable_whois_privacy</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -1111,7 +1111,7 @@ client.domains.enable_whois_privacy(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">get_auth_code_for_domain</a>(...) -> AuthCodeResponse</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L499-L531">get_auth_code_for_domain</a>(...) -> AuthCodeResponse</code></summary>
 <dl>
 <dd>
 
@@ -1185,7 +1185,7 @@ client.domains.get_auth_code_for_domain(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">get_pricing_for_domain</a>(...) -> PricingResponse</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L533-L585">get_pricing_for_domain</a>(...) -> PricingResponse</code></summary>
 <dl>
 <dd>
 
@@ -1280,7 +1280,7 @@ client.domains.get_pricing_for_domain(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">lock_domain</a>(...) -> Domain</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L587-L617">lock_domain</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -1362,7 +1362,7 @@ client.domains.lock_domain(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">purchase_privacy</a>(...) -> PrivacyResponse</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L619-L671">purchase_privacy</a>(...) -> PrivacyResponse</code></summary>
 <dl>
 <dd>
 
@@ -1452,7 +1452,7 @@ client.domains.purchase_privacy(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">renew_domain</a>(...) -> RenewDomainResponse</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L673-L718">renew_domain</a>(...) -> RenewDomainResponse</code></summary>
 <dl>
 <dd>
 
@@ -1542,7 +1542,7 @@ client.domains.renew_domain(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">set_contacts</a>(...) -> DomainResponsePayload</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L720-L757">set_contacts</a>(...) -> DomainResponsePayload</code></summary>
 <dl>
 <dd>
 
@@ -1627,7 +1627,7 @@ client.domains.set_contacts(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">set_nameservers</a>(...) -> DomainResponsePayload</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L759-L801">set_nameservers</a>(...) -> DomainResponsePayload</code></summary>
 <dl>
 <dd>
 
@@ -1713,7 +1713,7 @@ client.domains.set_nameservers(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">unlock_domain</a>(...) -> Domain</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L803-L833">unlock_domain</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -1795,7 +1795,7 @@ client.domains.unlock_domain(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">check_availability</a>(...) -> SearchResponse</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L835-L886">check_availability</a>(...) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -1889,7 +1889,7 @@ client.domains.check_availability(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">search</a>(...) -> SearchResponse</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L888-L954">search</a>(...) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -2002,7 +2002,7 @@ Since some additional processing is performed on the results, a response may tak
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py">zone_check</a>(...) -> ZoneCheckResponse</code></summary>
+<details><summary><code>client.domains.<a href="src/namecom_core_api/domains/client.py#L956-L1004">zone_check</a>(...) -> ZoneCheckResponse</code></summary>
 <dl>
 <dd>
 
@@ -2099,7 +2099,7 @@ Array of domain names to check. Each entry is normalized and validated before zo
 </details>
 
 ## DNSSECs
-<details><summary><code>client.dnsse_cs.<a href="src/namecom_core_api/dnsse_cs/client.py">list_dnsse_cs</a>(...) -> ListDnsseCsResponse</code></summary>
+<details><summary><code>client.dnsse_cs.<a href="src/namecom_core_api/dnsse_cs/client.py#L30-L62">list_dnsse_cs</a>(...) -> ListDnsseCsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2173,7 +2173,7 @@ client.dnsse_cs.list_dnsse_cs(
 </dl>
 </details>
 
-<details><summary><code>client.dnsse_cs.<a href="src/namecom_core_api/dnsse_cs/client.py">create_dnssec</a>(...) -> Dnssec</code></summary>
+<details><summary><code>client.dnsse_cs.<a href="src/namecom_core_api/dnsse_cs/client.py#L64-L123">create_dnssec</a>(...) -> Dnssec</code></summary>
 <dl>
 <dd>
 
@@ -2283,7 +2283,7 @@ client.dnsse_cs.create_dnssec(
 </dl>
 </details>
 
-<details><summary><code>client.dnsse_cs.<a href="src/namecom_core_api/dnsse_cs/client.py">get_dnssec</a>(...) -> Dnssec</code></summary>
+<details><summary><code>client.dnsse_cs.<a href="src/namecom_core_api/dnsse_cs/client.py#L125-L161">get_dnssec</a>(...) -> Dnssec</code></summary>
 <dl>
 <dd>
 
@@ -2366,7 +2366,7 @@ client.dnsse_cs.get_dnssec(
 </dl>
 </details>
 
-<details><summary><code>client.dnsse_cs.<a href="src/namecom_core_api/dnsse_cs/client.py">delete_dnssec</a>(...)</code></summary>
+<details><summary><code>client.dnsse_cs.<a href="src/namecom_core_api/dnsse_cs/client.py#L163-L198">delete_dnssec</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2450,7 +2450,7 @@ client.dnsse_cs.delete_dnssec(
 </details>
 
 ## Email Forwardings
-<details><summary><code>client.email_forwardings.<a href="src/namecom_core_api/email_forwardings/client.py">list_email_forwardings</a>(...) -> ListEmailForwardingsResponse</code></summary>
+<details><summary><code>client.email_forwardings.<a href="src/namecom_core_api/email_forwardings/client.py#L30-L77">list_email_forwardings</a>(...) -> ListEmailForwardingsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2542,7 +2542,7 @@ client.email_forwardings.list_email_forwardings(
 </dl>
 </details>
 
-<details><summary><code>client.email_forwardings.<a href="src/namecom_core_api/email_forwardings/client.py">create_email_forwarding</a>(...) -> EmailForwarding</code></summary>
+<details><summary><code>client.email_forwardings.<a href="src/namecom_core_api/email_forwardings/client.py#L79-L126">create_email_forwarding</a>(...) -> EmailForwarding</code></summary>
 <dl>
 <dd>
 
@@ -2634,7 +2634,7 @@ client.email_forwardings.create_email_forwarding(
 </dl>
 </details>
 
-<details><summary><code>client.email_forwardings.<a href="src/namecom_core_api/email_forwardings/client.py">get_email_forwarding</a>(...) -> EmailForwarding</code></summary>
+<details><summary><code>client.email_forwardings.<a href="src/namecom_core_api/email_forwardings/client.py#L128-L164">get_email_forwarding</a>(...) -> EmailForwarding</code></summary>
 <dl>
 <dd>
 
@@ -2717,7 +2717,7 @@ client.email_forwardings.get_email_forwarding(
 </dl>
 </details>
 
-<details><summary><code>client.email_forwardings.<a href="src/namecom_core_api/email_forwardings/client.py">update_email_forwarding</a>(...) -> EmailForwarding</code></summary>
+<details><summary><code>client.email_forwardings.<a href="src/namecom_core_api/email_forwardings/client.py#L166-L213">update_email_forwarding</a>(...) -> EmailForwarding</code></summary>
 <dl>
 <dd>
 
@@ -2809,7 +2809,7 @@ client.email_forwardings.update_email_forwarding(
 </dl>
 </details>
 
-<details><summary><code>client.email_forwardings.<a href="src/namecom_core_api/email_forwardings/client.py">delete_email_forwarding</a>(...)</code></summary>
+<details><summary><code>client.email_forwardings.<a href="src/namecom_core_api/email_forwardings/client.py#L215-L250">delete_email_forwarding</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2893,7 +2893,7 @@ client.email_forwardings.delete_email_forwarding(
 </details>
 
 ## DNS
-<details><summary><code>client.dns.<a href="src/namecom_core_api/dns/client.py">list_records</a>(...) -> ListRecordsResponse</code></summary>
+<details><summary><code>client.dns.<a href="src/namecom_core_api/dns/client.py#L32-L77">list_records</a>(...) -> ListRecordsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2983,7 +2983,7 @@ client.dns.list_records(
 </dl>
 </details>
 
-<details><summary><code>client.dns.<a href="src/namecom_core_api/dns/client.py">create_record</a>(...) -> Record</code></summary>
+<details><summary><code>client.dns.<a href="src/namecom_core_api/dns/client.py#L79-L158">create_record</a>(...) -> Record</code></summary>
 <dl>
 <dd>
 
@@ -3123,7 +3123,7 @@ A SRV record would be specified by "_{service}._{protocol}.{host}": e.g. "_sip._
 </dl>
 </details>
 
-<details><summary><code>client.dns.<a href="src/namecom_core_api/dns/client.py">get_record</a>(...) -> Record</code></summary>
+<details><summary><code>client.dns.<a href="src/namecom_core_api/dns/client.py#L160-L196">get_record</a>(...) -> Record</code></summary>
 <dl>
 <dd>
 
@@ -3206,7 +3206,7 @@ client.dns.get_record(
 </dl>
 </details>
 
-<details><summary><code>client.dns.<a href="src/namecom_core_api/dns/client.py">update_record</a>(...) -> Record</code></summary>
+<details><summary><code>client.dns.<a href="src/namecom_core_api/dns/client.py#L198-L277">update_record</a>(...) -> Record</code></summary>
 <dl>
 <dd>
 
@@ -3346,7 +3346,7 @@ A SRV record would be specified by "_{service}._{protocol}.{host}": e.g. "_sip._
 </dl>
 </details>
 
-<details><summary><code>client.dns.<a href="src/namecom_core_api/dns/client.py">delete_record</a>(...)</code></summary>
+<details><summary><code>client.dns.<a href="src/namecom_core_api/dns/client.py#L279-L314">delete_record</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3430,7 +3430,7 @@ client.dns.delete_record(
 </details>
 
 ## URL Forwardings
-<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py">list_url_forwardings</a>(...) -> ListUrlForwardingsResponse</code></summary>
+<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py#L32-L79">list_url_forwardings</a>(...) -> ListUrlForwardingsResponse</code></summary>
 <dl>
 <dd>
 
@@ -3522,7 +3522,7 @@ client.url_forwardings.list_url_forwardings(
 </dl>
 </details>
 
-<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py">create_url_forwarding</a>(...) -> UrlForwardingResponse</code></summary>
+<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py#L81-L153">create_url_forwarding</a>(...) -> UrlForwardingResponse</code></summary>
 <dl>
 <dd>
 
@@ -3651,7 +3651,7 @@ Ignored for other forwarding types.
 </dl>
 </details>
 
-<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py">get_url_forwarding</a>(...) -> UrlForwardingResponse</code></summary>
+<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py#L155-L191">get_url_forwarding</a>(...) -> UrlForwardingResponse</code></summary>
 <dl>
 <dd>
 
@@ -3734,7 +3734,7 @@ client.url_forwardings.get_url_forwarding(
 </dl>
 </details>
 
-<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py">update_url_forwarding</a>(...) -> UrlForwardingResponse</code></summary>
+<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py#L193-L268">update_url_forwarding</a>(...) -> UrlForwardingResponse</code></summary>
 <dl>
 <dd>
 
@@ -3825,7 +3825,7 @@ client.url_forwardings.update_url_forwarding(
 </dl>
 </details>
 
-<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py">delete_url_forwarding</a>(...)</code></summary>
+<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py#L270-L305">delete_url_forwarding</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3908,7 +3908,7 @@ client.url_forwardings.delete_url_forwarding(
 </dl>
 </details>
 
-<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py">list_url_forwardings_by_domain</a>(...) -> ListUrlForwardingsResponse</code></summary>
+<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py#L307-L354">list_url_forwardings_by_domain</a>(...) -> ListUrlForwardingsResponse</code></summary>
 <dl>
 <dd>
 
@@ -4000,7 +4000,7 @@ client.url_forwardings.list_url_forwardings_by_domain(
 </dl>
 </details>
 
-<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py">get_url_forwarding_by_id</a>(...) -> UrlForwardingResponse</code></summary>
+<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py#L356-L392">get_url_forwarding_by_id</a>(...) -> UrlForwardingResponse</code></summary>
 <dl>
 <dd>
 
@@ -4083,7 +4083,7 @@ client.url_forwardings.get_url_forwarding_by_id(
 </dl>
 </details>
 
-<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py">delete_url_forwarding_by_id</a>(...)</code></summary>
+<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py#L394-L429">delete_url_forwarding_by_id</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4166,7 +4166,7 @@ client.url_forwardings.delete_url_forwarding_by_id(
 </dl>
 </details>
 
-<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py">update_url_forwarding_by_id</a>(...) -> UrlForwardingResponse</code></summary>
+<details><summary><code>client.url_forwardings.<a href="src/namecom_core_api/url_forwardings/client.py#L431-L506">update_url_forwarding_by_id</a>(...) -> UrlForwardingResponse</code></summary>
 <dl>
 <dd>
 
@@ -4258,7 +4258,7 @@ client.url_forwardings.update_url_forwarding_by_id(
 </details>
 
 ## Vanity Nameservers
-<details><summary><code>client.vanity_nameservers.<a href="src/namecom_core_api/vanity_nameservers/client.py">list_vanity_nameservers</a>(...) -> ListVanityNameserversResponse</code></summary>
+<details><summary><code>client.vanity_nameservers.<a href="src/namecom_core_api/vanity_nameservers/client.py#L30-L77">list_vanity_nameservers</a>(...) -> ListVanityNameserversResponse</code></summary>
 <dl>
 <dd>
 
@@ -4350,7 +4350,7 @@ client.vanity_nameservers.list_vanity_nameservers(
 </dl>
 </details>
 
-<details><summary><code>client.vanity_nameservers.<a href="src/namecom_core_api/vanity_nameservers/client.py">create_vanity_nameserver</a>(...) -> VanityNameserverResponse</code></summary>
+<details><summary><code>client.vanity_nameservers.<a href="src/namecom_core_api/vanity_nameservers/client.py#L79-L126">create_vanity_nameserver</a>(...) -> VanityNameserverResponse</code></summary>
 <dl>
 <dd>
 
@@ -4445,7 +4445,7 @@ client.vanity_nameservers.create_vanity_nameserver(
 </dl>
 </details>
 
-<details><summary><code>client.vanity_nameservers.<a href="src/namecom_core_api/vanity_nameservers/client.py">get_vanity_nameserver</a>(...) -> VanityNameserverResponse</code></summary>
+<details><summary><code>client.vanity_nameservers.<a href="src/namecom_core_api/vanity_nameservers/client.py#L128-L164">get_vanity_nameserver</a>(...) -> VanityNameserverResponse</code></summary>
 <dl>
 <dd>
 
@@ -4528,7 +4528,7 @@ client.vanity_nameservers.get_vanity_nameserver(
 </dl>
 </details>
 
-<details><summary><code>client.vanity_nameservers.<a href="src/namecom_core_api/vanity_nameservers/client.py">update_vanity_nameserver</a>(...) -> VanityNameserverResponse</code></summary>
+<details><summary><code>client.vanity_nameservers.<a href="src/namecom_core_api/vanity_nameservers/client.py#L166-L213">update_vanity_nameserver</a>(...) -> VanityNameserverResponse</code></summary>
 <dl>
 <dd>
 
@@ -4623,7 +4623,7 @@ client.vanity_nameservers.update_vanity_nameserver(
 </dl>
 </details>
 
-<details><summary><code>client.vanity_nameservers.<a href="src/namecom_core_api/vanity_nameservers/client.py">delete_vanity_nameserver</a>(...)</code></summary>
+<details><summary><code>client.vanity_nameservers.<a href="src/namecom_core_api/vanity_nameservers/client.py#L215-L250">delete_vanity_nameserver</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4707,7 +4707,7 @@ client.vanity_nameservers.delete_vanity_nameserver(
 </details>
 
 ## Webhook Notifications
-<details><summary><code>client.webhook_notifications.<a href="src/namecom_core_api/webhook_notifications/client.py">get_subscribed_notifications</a>() -> ListSubscribedWebhooksResponse</code></summary>
+<details><summary><code>client.webhook_notifications.<a href="src/namecom_core_api/webhook_notifications/client.py#L32-L59">get_subscribed_notifications</a>() -> ListSubscribedWebhooksResponse</code></summary>
 <dl>
 <dd>
 
@@ -4771,7 +4771,7 @@ client.webhook_notifications.get_subscribed_notifications()
 </dl>
 </details>
 
-<details><summary><code>client.webhook_notifications.<a href="src/namecom_core_api/webhook_notifications/client.py">subscribe_to_notification</a>(...) -> SubscribeToNotificationResponse</code></summary>
+<details><summary><code>client.webhook_notifications.<a href="src/namecom_core_api/webhook_notifications/client.py#L61-L119">subscribe_to_notification</a>(...) -> SubscribeToNotificationResponse</code></summary>
 <dl>
 <dd>
 
@@ -4875,7 +4875,7 @@ client.webhook_notifications.subscribe_to_notification(
 </dl>
 </details>
 
-<details><summary><code>client.webhook_notifications.<a href="src/namecom_core_api/webhook_notifications/client.py">modify_subscription</a>(...) -> ModifySubscriptionResponse</code></summary>
+<details><summary><code>client.webhook_notifications.<a href="src/namecom_core_api/webhook_notifications/client.py#L121-L164">modify_subscription</a>(...) -> ModifySubscriptionResponse</code></summary>
 <dl>
 <dd>
 
@@ -4965,7 +4965,7 @@ client.webhook_notifications.modify_subscription(
 </dl>
 </details>
 
-<details><summary><code>client.webhook_notifications.<a href="src/namecom_core_api/webhook_notifications/client.py">delete_subscription</a>(...)</code></summary>
+<details><summary><code>client.webhook_notifications.<a href="src/namecom_core_api/webhook_notifications/client.py#L166-L195">delete_subscription</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5040,7 +5040,7 @@ client.webhook_notifications.delete_subscription(
 </details>
 
 ## Orders
-<details><summary><code>client.orders.<a href="src/namecom_core_api/orders/client.py">list_orders</a>(...) -> ListOrdersResponse</code></summary>
+<details><summary><code>client.orders.<a href="src/namecom_core_api/orders/client.py#L28-L104">list_orders</a>(...) -> ListOrdersResponse</code></summary>
 <dl>
 <dd>
 
@@ -5176,7 +5176,7 @@ client.orders.list_orders()
 </dl>
 </details>
 
-<details><summary><code>client.orders.<a href="src/namecom_core_api/orders/client.py">get_order</a>(...) -> Order</code></summary>
+<details><summary><code>client.orders.<a href="src/namecom_core_api/orders/client.py#L106-L136">get_order</a>(...) -> Order</code></summary>
 <dl>
 <dd>
 
@@ -5251,7 +5251,7 @@ client.orders.get_order(
 </details>
 
 ## Refunds
-<details><summary><code>client.refunds.<a href="src/namecom_core_api/refunds/client.py">process_refund</a>(...) -> RefundResponse</code></summary>
+<details><summary><code>client.refunds.<a href="src/namecom_core_api/refunds/client.py#L29-L95">process_refund</a>(...) -> RefundResponse</code></summary>
 <dl>
 <dd>
 
@@ -5355,7 +5355,7 @@ client.refunds.process_refund(
 </details>
 
 ## Transfers
-<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py">list_transfers</a>(...) -> ListTransfersResponse</code></summary>
+<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py#L35-L72">list_transfers</a>(...) -> ListTransfersResponse</code></summary>
 <dl>
 <dd>
 
@@ -5435,7 +5435,7 @@ client.transfers.list_transfers()
 </dl>
 </details>
 
-<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py">create_transfer</a>(...) -> CreateTransferResponse</code></summary>
+<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py#L74-L135">create_transfer</a>(...) -> CreateTransferResponse</code></summary>
 <dl>
 <dd>
 
@@ -5544,7 +5544,7 @@ client.transfers.create_transfer(
 </dl>
 </details>
 
-<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py">get_transfer</a>(...) -> Transfer</code></summary>
+<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py#L137-L167">get_transfer</a>(...) -> Transfer</code></summary>
 <dl>
 <dd>
 
@@ -5618,7 +5618,7 @@ client.transfers.get_transfer(
 </dl>
 </details>
 
-<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py">cancel_transfer</a>(...) -> Transfer</code></summary>
+<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py#L169-L216">cancel_transfer</a>(...) -> Transfer</code></summary>
 <dl>
 <dd>
 
@@ -5717,7 +5717,7 @@ client.transfers.cancel_transfer(
 </dl>
 </details>
 
-<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py">cancel_outbound_transfer</a>(...) -> CancelTransferOutResponse</code></summary>
+<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py#L218-L252">cancel_outbound_transfer</a>(...) -> CancelTransferOutResponse</code></summary>
 <dl>
 <dd>
 
@@ -5801,7 +5801,7 @@ client.transfers.cancel_outbound_transfer(
 </dl>
 </details>
 
-<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py">create_internal_transfer_in</a>(...) -> DomainResponsePayload</code></summary>
+<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py#L254-L310">create_internal_transfer_in</a>(...) -> DomainResponsePayload</code></summary>
 <dl>
 <dd>
 
@@ -5902,7 +5902,7 @@ client.transfers.create_internal_transfer_in(
 </dl>
 </details>
 
-<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py">get_transfer_eligibility</a>(...) -> TransferEligibilityResponse</code></summary>
+<details><summary><code>client.transfers.<a href="src/namecom_core_api/transfers/client.py#L312-L354">get_transfer_eligibility</a>(...) -> TransferEligibilityResponse</code></summary>
 <dl>
 <dd>
 
@@ -5987,7 +5987,7 @@ client.transfers.get_transfer_eligibility(
 </details>
 
 ## Domain Info
-<details><summary><code>client.domain_info.<a href="src/namecom_core_api/domain_info/client.py">get_requirement</a>(...) -> GetRequirementResponse</code></summary>
+<details><summary><code>client.domain_info.<a href="src/namecom_core_api/domain_info/client.py#L32-L64">get_requirement</a>(...) -> GetRequirementResponse</code></summary>
 <dl>
 <dd>
 
@@ -6061,7 +6061,7 @@ client.domain_info.get_requirement(
 </dl>
 </details>
 
-<details><summary><code>client.domain_info.<a href="src/namecom_core_api/domain_info/client.py">check_domain_claims</a>(...) -> DomainClaimsCheckResponse</code></summary>
+<details><summary><code>client.domain_info.<a href="src/namecom_core_api/domain_info/client.py#L66-L107">check_domain_claims</a>(...) -> DomainClaimsCheckResponse</code></summary>
 <dl>
 <dd>
 
@@ -6143,7 +6143,7 @@ client.domain_info.check_domain_claims(
 </dl>
 </details>
 
-<details><summary><code>client.domain_info.<a href="src/namecom_core_api/domain_info/client.py">get_tld_requirements_v2</a>(...) -> RequirementsJsonSchema</code></summary>
+<details><summary><code>client.domain_info.<a href="src/namecom_core_api/domain_info/client.py#L109-L141">get_tld_requirements_v2</a>(...) -> RequirementsJsonSchema</code></summary>
 <dl>
 <dd>
 
@@ -6218,7 +6218,7 @@ client.domain_info.get_tld_requirements_v2(
 </details>
 
 ## TLD Pricing
-<details><summary><code>client.tld_pricing.<a href="src/namecom_core_api/tld_pricing/client.py">tld_price_list</a>(...) -> TldPriceListResponse</code></summary>
+<details><summary><code>client.tld_pricing.<a href="src/namecom_core_api/tld_pricing/client.py#L26-L84">tld_price_list</a>(...) -> TldPriceListResponse</code></summary>
 <dl>
 <dd>
 
@@ -6326,7 +6326,7 @@ client.tld_pricing.tld_price_list(
 </details>
 
 ## Premium Domains
-<details><summary><code>client.premium_domains.<a href="src/namecom_core_api/premium_domains/client.py">premium_domain_lists</a>() -> PremiumDomainsDownloadResponse</code></summary>
+<details><summary><code>client.premium_domains.<a href="src/namecom_core_api/premium_domains/client.py#L26-L54">premium_domain_lists</a>() -> PremiumDomainsDownloadResponse</code></summary>
 <dl>
 <dd>
 
@@ -6392,7 +6392,7 @@ client.premium_domains.premium_domain_lists()
 </details>
 
 ## Contact Verification
-<details><summary><code>client.contact_verification.<a href="src/namecom_core_api/contact_verification/client.py">unverified_contacts_list</a>(...) -> UnverifiedContactsResponse</code></summary>
+<details><summary><code>client.contact_verification.<a href="src/namecom_core_api/contact_verification/client.py#L30-L73">unverified_contacts_list</a>(...) -> UnverifiedContactsResponse</code></summary>
 <dl>
 <dd>
 
@@ -6476,7 +6476,7 @@ client.contact_verification.unverified_contacts_list(
 </dl>
 </details>
 
-<details><summary><code>client.contact_verification.<a href="src/namecom_core_api/contact_verification/client.py">verify_contact</a>(...)</code></summary>
+<details><summary><code>client.contact_verification.<a href="src/namecom_core_api/contact_verification/client.py#L75-L115">verify_contact</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -6559,7 +6559,7 @@ client.contact_verification.verify_contact(
 </dl>
 </details>
 
-<details><summary><code>client.contact_verification.<a href="src/namecom_core_api/contact_verification/client.py">resend_contact_verification_email</a>(...) -> ContactVerificationResendResponse</code></summary>
+<details><summary><code>client.contact_verification.<a href="src/namecom_core_api/contact_verification/client.py#L117-L166">resend_contact_verification_email</a>(...) -> ContactVerificationResendResponse</code></summary>
 <dl>
 <dd>
 

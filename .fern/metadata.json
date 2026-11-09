@@ -1,14 +1,15 @@
 {
   "cliVersion": "5.111.0",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "5.29.1",
+  "generatorVersion": "5.41.26",
   "generatorConfig": {
     "client_class_name": "Namecom",
     "package_name": "namecom_core_api",
     "enable_wire_tests": true
   },
-  "invokedBy": "ci",
+  "originGitCommit": "016dfdfe860eea6d6077ce29d8d09f65521b8fa9",
+  "originGitCommitIsDirty": false,
+  "invokedBy": "manual",
   "requestedVersion": "1.36.3",
-  "ciProvider": "gitlab",
   "sdkVersion": "1.36.3"
 }
