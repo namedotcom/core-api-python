@@ -22,6 +22,10 @@ class ListOrdersResponse(UniversalBaseModel):
             description="LastPage is the identifier for the final page of results. It is only populated if there is another page of results after the current page.",
         ),
     ] = None
+    """
+    LastPage is the identifier for the final page of results. It is only populated if there is another page of results after the current page.
+    """
+
     next_page: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="nextPage"),
@@ -30,16 +34,28 @@ class ListOrdersResponse(UniversalBaseModel):
             description="NextPage is the identifier for the next page of results. It is only populated if there is another page of results after the current page.",
         ),
     ] = None
+    """
+    NextPage is the identifier for the next page of results. It is only populated if there is another page of results after the current page.
+    """
+
     total_count: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="totalCount"),
         pydantic.Field(alias="totalCount", description="TotalCount is total number of results."),
     ]
+    """
+    TotalCount is total number of results.
+    """
+
     from_: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="from"),
         pydantic.Field(alias="from", description="From specifies starting record number on current page."),
     ]
+    """
+    From specifies starting record number on current page.
+    """
+
     to: int = pydantic.Field()
     """
     To specifies ending record number on current page.
@@ -58,6 +74,9 @@ class ListOrdersResponse(UniversalBaseModel):
             description="ParentAccountId field is populated when requesting account has a parent account id.",
         ),
     ] = None
+    """
+    ParentAccountId field is populated when requesting account has a parent account id.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

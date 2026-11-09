@@ -18,6 +18,7 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.locked_error import LockedError
 from ..errors.method_not_allowed_error import MethodNotAllowedError
 from ..errors.not_found_error import NotFoundError
+from ..errors.service_unavailable_error import ServiceUnavailableError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..errors.unsupported_media_type_error import UnsupportedMediaTypeError
@@ -40,7 +41,7 @@ class RawRefundsClient:
         *,
         order_id: int,
         order_item_ids: typing.Sequence[int],
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[RefundResponse]:
         """
@@ -72,8 +73,7 @@ class RawRefundsClient:
         order_item_ids : typing.Sequence[int]
             An array of order item IDs to be refunded. All items must belong to the specified order. Use the List Orders endpoint to retrieve order item IDs.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result. Idempotency keys are valid for 12 hours.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -92,7 +92,7 @@ class RawRefundsClient:
             },
             headers={
                 "content-type": "application/json",
-                "X-Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -228,6 +228,17 @@ class RawRefundsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -258,7 +269,7 @@ class AsyncRawRefundsClient:
         *,
         order_id: int,
         order_item_ids: typing.Sequence[int],
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[RefundResponse]:
         """
@@ -290,8 +301,7 @@ class AsyncRawRefundsClient:
         order_item_ids : typing.Sequence[int]
             An array of order item IDs to be refunded. All items must belong to the specified order. Use the List Orders endpoint to retrieve order item IDs.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result. Idempotency keys are valid for 12 hours.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -310,7 +320,7 @@ class AsyncRawRefundsClient:
             },
             headers={
                 "content-type": "application/json",
-                "X-Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -437,6 +447,17 @@ class AsyncRawRefundsClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

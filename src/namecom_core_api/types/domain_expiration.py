@@ -20,16 +20,27 @@ class DomainExpiration(UniversalBaseModel):
         FieldMetadata(alias="eventName"),
         pydantic.Field(alias="eventName", description="The name of the subscription event."),
     ]
+    """
+    The name of the subscription event.
+    """
+
     domain_name: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="The name of the expired domain."),
     ]
+    """
+    The name of the expired domain.
+    """
+
     expiration_date: typing_extensions.Annotated[
         dt.datetime,
         FieldMetadata(alias="expirationDate"),
         pydantic.Field(alias="expirationDate", description="The date and time when the domain expired."),
     ]
+    """
+    The date and time when the domain expired.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

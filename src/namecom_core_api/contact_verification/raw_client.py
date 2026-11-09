@@ -11,12 +11,14 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.bad_gateway_error import BadGatewayError
+from ..errors.bad_request_error import BadRequestError
 from ..errors.conflict_error import ConflictError
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.gateway_timeout_error import GatewayTimeoutError
 from ..errors.internal_server_error import InternalServerError
 from ..errors.method_not_allowed_error import MethodNotAllowedError
 from ..errors.not_found_error import NotFoundError
+from ..errors.service_unavailable_error import ServiceUnavailableError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..errors.unsupported_media_type_error import UnsupportedMediaTypeError
@@ -25,6 +27,9 @@ from ..types.not_found404 import NotFound404
 from ..types.unsupported_media415 import UnsupportedMedia415
 from ..types.unverified_contacts_response import UnverifiedContactsResponse
 from pydantic import ValidationError
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class RawContactVerificationClient:
@@ -77,6 +82,17 @@ class RawContactVerificationClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
@@ -143,6 +159,17 @@ class RawContactVerificationClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -167,7 +194,7 @@ class RawContactVerificationClient:
         self,
         verification_id: int,
         *,
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -179,8 +206,7 @@ class RawContactVerificationClient:
         verification_id : int
             The VerificationId required to verify a specific contact.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -192,10 +218,13 @@ class RawContactVerificationClient:
         _response = self._client_wrapper.httpx_client.request(
             f"core/v1/contacts/verify/{encode_path_param(verification_id)}",
             method="POST",
+            json={},
             headers={
-                "X-Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
+                "content-type": "application/json",
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
             },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -299,6 +328,17 @@ class RawContactVerificationClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -323,7 +363,7 @@ class RawContactVerificationClient:
         self,
         verification_id: int,
         *,
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ContactVerificationResendResponse]:
         """
@@ -343,8 +383,7 @@ class RawContactVerificationClient:
         verification_id : int
             The verificationId for the pending contact verification record.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -357,10 +396,13 @@ class RawContactVerificationClient:
         _response = self._client_wrapper.httpx_client.request(
             f"core/v1/contacts/verify/{encode_path_param(verification_id)}:resend",
             method="POST",
+            json={},
             headers={
-                "X-Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
+                "content-type": "application/json",
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
             },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -471,6 +513,17 @@ class RawContactVerificationClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -542,6 +595,17 @@ class AsyncRawContactVerificationClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
@@ -608,6 +672,17 @@ class AsyncRawContactVerificationClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -632,7 +707,7 @@ class AsyncRawContactVerificationClient:
         self,
         verification_id: int,
         *,
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -644,8 +719,7 @@ class AsyncRawContactVerificationClient:
         verification_id : int
             The VerificationId required to verify a specific contact.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -657,10 +731,13 @@ class AsyncRawContactVerificationClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"core/v1/contacts/verify/{encode_path_param(verification_id)}",
             method="POST",
+            json={},
             headers={
-                "X-Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
+                "content-type": "application/json",
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
             },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -764,6 +841,17 @@ class AsyncRawContactVerificationClient:
                         ),
                     ),
                 )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 504:
                 raise GatewayTimeoutError(
                     headers=dict(_response.headers),
@@ -788,7 +876,7 @@ class AsyncRawContactVerificationClient:
         self,
         verification_id: int,
         *,
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ContactVerificationResendResponse]:
         """
@@ -808,8 +896,7 @@ class AsyncRawContactVerificationClient:
         verification_id : int
             The verificationId for the pending contact verification record.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -822,10 +909,13 @@ class AsyncRawContactVerificationClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"core/v1/contacts/verify/{encode_path_param(verification_id)}:resend",
             method="POST",
+            json={},
             headers={
-                "X-Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
+                "content-type": "application/json",
+                "X-Idempotency-Key": str(x_idempotency_key) if x_idempotency_key is not None else None,
             },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -927,6 +1017,17 @@ class AsyncRawContactVerificationClient:
                 )
             if _response.status_code == 502:
                 raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,

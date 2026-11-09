@@ -20,11 +20,19 @@ class DomainRegistryRejection(UniversalBaseModel):
         FieldMetadata(alias="eventName"),
         pydantic.Field(alias="eventName", description="The name of the subscription event."),
     ]
+    """
+    The name of the subscription event.
+    """
+
     domain_name: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="The domain name that failed to register."),
     ]
+    """
+    The domain name that failed to register.
+    """
+
     order_id: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="orderId"),
@@ -33,6 +41,10 @@ class DomainRegistryRejection(UniversalBaseModel):
             description="The unique identifier of the order for the failed domain create. Use the List Orders endpoint to retrieve order details.",
         ),
     ]
+    """
+    The unique identifier of the order for the failed domain create. Use the List Orders endpoint to retrieve order details.
+    """
+
     order_item_id: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="orderItemId"),
@@ -41,11 +53,19 @@ class DomainRegistryRejection(UniversalBaseModel):
             description="The unique identifier of the order line item for the failed domain create. Use the List Orders endpoint to retrieve order item details.",
         ),
     ]
+    """
+    The unique identifier of the order line item for the failed domain create. Use the List Orders endpoint to retrieve order item details.
+    """
+
     occurred_at: typing_extensions.Annotated[
         dt.datetime,
         FieldMetadata(alias="occurredAt"),
         pydantic.Field(alias="occurredAt", description="When the asynchronous registration failure was recorded."),
     ]
+    """
+    When the asynchronous registration failure was recorded.
+    """
+
     reason: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional human-readable or registry-provided detail about the failure, when available.

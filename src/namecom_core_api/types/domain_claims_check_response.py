@@ -32,11 +32,19 @@ class DomainClaimsCheckResponse(UniversalBaseModel):
             alias="claimsProcessActive", description="Whether the TLD of this domain requires claims checking"
         ),
     ] = None
+    """
+    Whether the TLD of this domain requires claims checking
+    """
+
     claim_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="claimId"),
         pydantic.Field(alias="claimId", description="The claim identifier from TMCH (null if no claims found)"),
     ] = None
+    """
+    The claim identifier from TMCH (null if no claims found)
+    """
+
     not_before: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="notBefore"),
@@ -45,6 +53,10 @@ class DomainClaimsCheckResponse(UniversalBaseModel):
             description="The date before which the claim acknowledgment is not valid (null if no claims found)",
         ),
     ] = None
+    """
+    The date before which the claim acknowledgment is not valid (null if no claims found)
+    """
+
     not_after: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="notAfter"),
@@ -53,6 +65,10 @@ class DomainClaimsCheckResponse(UniversalBaseModel):
             description="The date after which the claim acknowledgment expires (null if no claims found)",
         ),
     ] = None
+    """
+    The date after which the claim acknowledgment expires (null if no claims found)
+    """
+
     claims_notice: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="claimsNotice"),
@@ -60,6 +76,9 @@ class DomainClaimsCheckResponse(UniversalBaseModel):
             alias="claimsNotice", description="Markdown content to display about this specific trademark claim"
         ),
     ] = None
+    """
+    Markdown content to display about this specific trademark claim
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

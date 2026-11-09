@@ -9,7 +9,6 @@ from ..types.list_subscribed_webhooks_response import ListSubscribedWebhooksResp
 from ..types.modify_subscription_response import ModifySubscriptionResponse
 from ..types.subscribe_to_notification_response import SubscribeToNotificationResponse
 from .raw_client import AsyncRawWebhookNotificationsClient, RawWebhookNotificationsClient
-from .types.modify_subscription_request_body import ModifySubscriptionRequestBody
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -71,13 +70,15 @@ class WebhookNotificationsClient:
         Creates a webhook subscription to receive real-time notifications about specific domain or account events (e.g. transfer completions, renewals). Pass the callback URL and event types. This allows external systems to stay in sync with name.com changes.
         Supported webhook event names:
         - `account.credit.balance_change` – account credit balance changes (increases or decreases).
+        - `account.domain.removal` – domain removed from the subscribing account.
         - `domain.lock.status_change` – domain lock added or removed.
         - `domain.transfer.status_change` – domain transfer IN to name.com; status updates while name.com is the gaining registrar.
-        - `domain.transfer_out.status_change` – domain transfer OUT from name.com to another registrar; fires when the domain is removed from the account.
+        - `domain.transfer_out.status_change` – domain transfer OUT from name.com; `initiated`, `completed` (domain removed), or `canceled` (no longer pending at the registry).
         - `domain.transfer.internal_in` - name.com domain transfers in to the subscribing account via internal transfer.
         - `domain.transfer.internal_out` - name.com domain transfers out of the subscribing account via internal transfer.
         - `contact.verification.status_change` - contact verification status changes (verified or unverified).
         - `domain.registry.rejection` – domain **create** failed after asynchronous registry processing (uncommon; most creates succeed at request time).
+        - `domain.registry.compliance_notice` – a registry requires policy remediation for a domain. Default is a registrant email (whitelabeled when configured); subscribe to send it yourself. If you have signed an addendum to assume all email responsibility, name.com does not send this email and the webhook is the only delivery path.
         - `domain.expiration` – domain has expired and entered the post-expiry grace period. This is informational only.
 
         Parameters
@@ -121,7 +122,8 @@ class WebhookNotificationsClient:
         self,
         id: int,
         *,
-        request: ModifySubscriptionRequestBody,
+        url: typing.Optional[str] = OMIT,
+        active: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModifySubscriptionResponse:
         """
@@ -132,7 +134,11 @@ class WebhookNotificationsClient:
         id : int
             ID of the subscription to update.
 
-        request : ModifySubscriptionRequestBody
+        url : typing.Optional[str]
+            Optionally update the URL we send the webhook data to
+
+        active : typing.Optional[bool]
+            Optionally update if the subscription is currently active
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -145,9 +151,6 @@ class WebhookNotificationsClient:
         Examples
         --------
         from namecom_core_api import Namecom
-        from namecom_core_api.webhook_notifications import (
-            ModifySubscriptionRequestBodyUrl,
-        )
 
         client = Namecom(
             username="YOUR_USERNAME",
@@ -155,12 +158,9 @@ class WebhookNotificationsClient:
         )
         client.webhook_notifications.modify_subscription(
             id=1,
-            request=ModifySubscriptionRequestBodyUrl(
-                url="url",
-            ),
         )
         """
-        _response = self._raw_client.modify_subscription(id, request=request, request_options=request_options)
+        _response = self._raw_client.modify_subscription(id, url=url, active=active, request_options=request_options)
         return _response.data
 
     def delete_subscription(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -259,13 +259,15 @@ class AsyncWebhookNotificationsClient:
         Creates a webhook subscription to receive real-time notifications about specific domain or account events (e.g. transfer completions, renewals). Pass the callback URL and event types. This allows external systems to stay in sync with name.com changes.
         Supported webhook event names:
         - `account.credit.balance_change` – account credit balance changes (increases or decreases).
+        - `account.domain.removal` – domain removed from the subscribing account.
         - `domain.lock.status_change` – domain lock added or removed.
         - `domain.transfer.status_change` – domain transfer IN to name.com; status updates while name.com is the gaining registrar.
-        - `domain.transfer_out.status_change` – domain transfer OUT from name.com to another registrar; fires when the domain is removed from the account.
+        - `domain.transfer_out.status_change` – domain transfer OUT from name.com; `initiated`, `completed` (domain removed), or `canceled` (no longer pending at the registry).
         - `domain.transfer.internal_in` - name.com domain transfers in to the subscribing account via internal transfer.
         - `domain.transfer.internal_out` - name.com domain transfers out of the subscribing account via internal transfer.
         - `contact.verification.status_change` - contact verification status changes (verified or unverified).
         - `domain.registry.rejection` – domain **create** failed after asynchronous registry processing (uncommon; most creates succeed at request time).
+        - `domain.registry.compliance_notice` – a registry requires policy remediation for a domain. Default is a registrant email (whitelabeled when configured); subscribe to send it yourself. If you have signed an addendum to assume all email responsibility, name.com does not send this email and the webhook is the only delivery path.
         - `domain.expiration` – domain has expired and entered the post-expiry grace period. This is informational only.
 
         Parameters
@@ -317,7 +319,8 @@ class AsyncWebhookNotificationsClient:
         self,
         id: int,
         *,
-        request: ModifySubscriptionRequestBody,
+        url: typing.Optional[str] = OMIT,
+        active: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModifySubscriptionResponse:
         """
@@ -328,7 +331,11 @@ class AsyncWebhookNotificationsClient:
         id : int
             ID of the subscription to update.
 
-        request : ModifySubscriptionRequestBody
+        url : typing.Optional[str]
+            Optionally update the URL we send the webhook data to
+
+        active : typing.Optional[bool]
+            Optionally update if the subscription is currently active
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -343,9 +350,6 @@ class AsyncWebhookNotificationsClient:
         import asyncio
 
         from namecom_core_api import AsyncNamecom
-        from namecom_core_api.webhook_notifications import (
-            ModifySubscriptionRequestBodyUrl,
-        )
 
         client = AsyncNamecom(
             username="YOUR_USERNAME",
@@ -356,15 +360,14 @@ class AsyncWebhookNotificationsClient:
         async def main() -> None:
             await client.webhook_notifications.modify_subscription(
                 id=1,
-                request=ModifySubscriptionRequestBodyUrl(
-                    url="url",
-                ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.modify_subscription(id, request=request, request_options=request_options)
+        _response = await self._raw_client.modify_subscription(
+            id, url=url, active=active, request_options=request_options
+        )
         return _response.data
 
     async def delete_subscription(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:

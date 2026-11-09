@@ -24,6 +24,10 @@ class UnverifiedContactsResponse(UniversalBaseModel):
         FieldMetadata(alias="from"),
         pydantic.Field(alias="from", description="From is the starting record for the current page."),
     ]
+    """
+    From is the starting record for the current page.
+    """
+
     to: int = pydantic.Field()
     """
     To is the ending record for the current page.
@@ -37,6 +41,10 @@ class UnverifiedContactsResponse(UniversalBaseModel):
             description="LastPage is the identifier for the final page of results. This value will be null if there is not a previous result page.",
         ),
     ]
+    """
+    LastPage is the identifier for the final page of results. This value will be null if there is not a previous result page.
+    """
+
     next_page: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="nextPage"),
@@ -45,11 +53,18 @@ class UnverifiedContactsResponse(UniversalBaseModel):
             description="NextPage is the identifier for the next page of results. This value will be null if there is not a next page of results.",
         ),
     ] = None
+    """
+    NextPage is the identifier for the next page of results. This value will be null if there is not a next page of results.
+    """
+
     total_count: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="totalCount"),
         pydantic.Field(alias="totalCount", description="TotalCount is total number of domains returned for request."),
     ]
+    """
+    TotalCount is total number of domains returned for request.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

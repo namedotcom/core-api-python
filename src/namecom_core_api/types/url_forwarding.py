@@ -19,11 +19,19 @@ class UrlForwarding(UniversalBaseModel):
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="The domain name (without subdomains) that is being forwarded."),
     ] = None
+    """
+    The domain name (without subdomains) that is being forwarded.
+    """
+
     forwards_to: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="forwardsTo"),
         pydantic.Field(alias="forwardsTo", description="The destination URL to which this hostname will be forwarded."),
     ]
+    """
+    The destination URL to which this hostname will be forwarded.
+    """
+
     host: str = pydantic.Field()
     """
     The subdomain portion of the hostname that is being forwarded.

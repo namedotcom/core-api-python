@@ -22,6 +22,10 @@ class RequirementsJsonSchemaProperties(UniversalBaseModel):
             description="General information about a TLD and it's various requirements. This is not a comprehensive list of all information related to a TLD.  The structure matches ResellerTldInfo schema. In JSON Schema document examples, this property will contain a schema definition object  with `allOf` referencing ResellerTldInfo and `readOnly: true`.",
         ),
     ] = None
+    """
+    General information about a TLD and it's various requirements. This is not a comprehensive list of all information related to a TLD.  The structure matches ResellerTldInfo schema. In JSON Schema document examples, this property will contain a schema definition object  with `allOf` referencing ResellerTldInfo and `readOnly: true`.
+    """
+
     contacts: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     An object defining contact field requirements. May be an empty object if no contact requirements exist for the TLD.
@@ -35,6 +39,9 @@ class RequirementsJsonSchemaProperties(UniversalBaseModel):
             description="An object defining TLD-specific registration fields. May be an empty object if no TLD-specific requirements exist.",
         ),
     ] = None
+    """
+    An object defining TLD-specific registration fields. May be an empty object if no TLD-specific requirements exist.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

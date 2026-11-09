@@ -31,7 +31,7 @@ class RefundsClient:
         *,
         order_id: int,
         order_item_ids: typing.Sequence[int],
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefundResponse:
         """
@@ -63,8 +63,7 @@ class RefundsClient:
         order_item_ids : typing.Sequence[int]
             An array of order item IDs to be refunded. All items must belong to the specified order. Use the List Orders endpoint to retrieve order item IDs.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result. Idempotency keys are valid for 12 hours.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -83,7 +82,6 @@ class RefundsClient:
             password="YOUR_PASSWORD",
         )
         client.refunds.process_refund(
-            idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
             order_id=123456,
             order_item_ids=[987654],
         )
@@ -91,7 +89,7 @@ class RefundsClient:
         _response = self._raw_client.process_refund(
             order_id=order_id,
             order_item_ids=order_item_ids,
-            idempotency_key=idempotency_key,
+            x_idempotency_key=x_idempotency_key,
             request_options=request_options,
         )
         return _response.data
@@ -117,7 +115,7 @@ class AsyncRefundsClient:
         *,
         order_id: int,
         order_item_ids: typing.Sequence[int],
-        idempotency_key: typing.Optional[str] = None,
+        x_idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefundResponse:
         """
@@ -149,8 +147,7 @@ class AsyncRefundsClient:
         order_item_ids : typing.Sequence[int]
             An array of order item IDs to be refunded. All items must belong to the specified order. Use the List Orders endpoint to retrieve order item IDs.
 
-        idempotency_key : typing.Optional[str]
-            A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result. Idempotency keys are valid for 12 hours.
+        x_idempotency_key : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -174,7 +171,6 @@ class AsyncRefundsClient:
 
         async def main() -> None:
             await client.refunds.process_refund(
-                idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
                 order_id=123456,
                 order_item_ids=[987654],
             )
@@ -185,7 +181,7 @@ class AsyncRefundsClient:
         _response = await self._raw_client.process_refund(
             order_id=order_id,
             order_item_ids=order_item_ids,
-            idempotency_key=idempotency_key,
+            x_idempotency_key=x_idempotency_key,
             request_options=request_options,
         )
         return _response.data

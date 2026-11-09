@@ -21,6 +21,10 @@ class SearchResult(UniversalBaseModel):
             alias="domainName", description="DomainName is the punycode encoding of the result domain name."
         ),
     ]
+    """
+    DomainName is the punycode encoding of the result domain name.
+    """
+
     premium: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Premium indicates whether this discovery result has premium or non-standard pricing. Only returned for purchasable domains. When `true` with `purchaseType: registration` → registry premium (use [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) for multi-year totals). When `true` with aftermarket, expiring, or backorder `purchaseType` values → flat acquisition fee (use discovery `purchasePrice`; `years` on create does not multiply price or guarantee registration length). When `true`, `purchasePrice` must be passed on Create Domain.
@@ -39,6 +43,10 @@ class SearchResult(UniversalBaseModel):
             description="PurchasePrice is the minimum-term list or flat acquisition price from discovery, in USD. Only returned for purchasable domains. For `purchaseType: registration` when `purchasePrice` is required on create, use [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) with matching `years` instead. For aftermarket, expiring, and backorder types, pass this flat acquisition fee on Create Domain — not affected by `years`. Get Pricing does not return these acquisition prices. Recommended to re-check with Check Availability immediately before create for all types — prices can change.",
         ),
     ] = None
+    """
+    PurchasePrice is the minimum-term list or flat acquisition price from discovery, in USD. Only returned for purchasable domains. For `purchaseType: registration` when `purchasePrice` is required on create, use [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) with matching `years` instead. For aftermarket, expiring, and backorder types, pass this flat acquisition fee on Create Domain — not affected by `years`. Get Pricing does not return these acquisition prices. Recommended to re-check with Check Availability immediately before create for all types — prices can change.
+    """
+
     purchase_type: typing_extensions.Annotated[
         typing.Optional[SearchPurchaseType],
         FieldMetadata(alias="purchaseType"),
@@ -47,6 +55,10 @@ class SearchResult(UniversalBaseModel):
             description="PurchaseType indicates what kind of purchase this discovery result is for. Only returned for purchasable domains. Pass to Create Domain as `purchaseType`. See [SearchPurchaseType](#/components/schemas/SearchPurchaseType) for pricing behavior per value. When `premium: true` or the type is not `registration`, follow the [Domain pricing guide](/guides/domain-pricing).",
         ),
     ] = None
+    """
+    PurchaseType indicates what kind of purchase this discovery result is for. Only returned for purchasable domains. Pass to Create Domain as `purchaseType`. See [SearchPurchaseType](#/components/schemas/SearchPurchaseType) for pricing behavior per value. When `premium: true` or the type is not `registration`, follow the [Domain pricing guide](/guides/domain-pricing).
+    """
+
     renewal_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="renewalPrice"),
@@ -55,6 +67,10 @@ class SearchResult(UniversalBaseModel):
             description="RenewalPrice is the minimum-term renewal total for this domain (typically 1 year; varies by TLD). Only returned for purchasable domains. Informational for standard [Renew Domain](/api/v1/reference/domains/renew-domain) flows — do **not** use to calculate Create Domain `purchasePrice` or multi-year create totals. For premium renewals, use `renewalPrice` from [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) with matching `years`, not this discovery value.",
         ),
     ] = None
+    """
+    RenewalPrice is the minimum-term renewal total for this domain (typically 1 year; varies by TLD). Only returned for purchasable domains. Informational for standard [Renew Domain](/api/v1/reference/domains/renew-domain) flows — do **not** use to calculate Create Domain `purchasePrice` or multi-year create totals. For premium renewals, use `renewalPrice` from [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) with matching `years`, not this discovery value.
+    """
+
     sld: str = pydantic.Field()
     """
     SLD is first portion of the domain_name.

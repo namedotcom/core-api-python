@@ -13,19 +13,49 @@ class RegistrantContactRequest(UniversalBaseModel):
     Contact contains all relevant contact data for a domain registrant.  This schema is used for creating and updating contacts (POST/PUT requests) and includes all validation requirements. All fields listed in the `required` array must be provided and cannot be null or empty.
     """
 
+    fax: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Fax number of the contact. Should follow the E.164 international format: "+[country code][number]".
+    """
+
     first_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="firstName"),
         pydantic.Field(alias="firstName", description="First name of the contact."),
     ] = None
+    """
+    First name of the contact.
+    """
+
     last_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="lastName"),
         pydantic.Field(alias="lastName", description="Last name of the contact."),
     ] = None
+    """
+    Last name of the contact.
+    """
+
+    company_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="companyName"),
+        pydantic.Field(
+            alias="companyName",
+            description='Company name of the contact. Leave blank if the contact is an individual. Please be advised that ICANN policy links the "Company Name" field (Organization) in your domain\'s contact details to its legal ownership. If this field contains information, the listed organization is considered the legal "Registered Name Holder" (domain owner).',
+        ),
+    ] = None
+    """
+    Company name of the contact. Leave blank if the contact is an individual. Please be advised that ICANN policy links the "Company Name" field (Organization) in your domain's contact details to its legal ownership. If this field contains information, the listed organization is considered the legal "Registered Name Holder" (domain owner).
+    """
+
     address1: typing.Optional[str] = pydantic.Field(default=None)
     """
     The first line of the contact's address.
+    """
+
+    address2: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The second line of the contact's address (optional).
     """
 
     city: typing.Optional[str] = pydantic.Field(default=None)
@@ -40,7 +70,7 @@ class RegistrantContactRequest(UniversalBaseModel):
 
     zip: typing.Optional[str] = pydantic.Field(default=None)
     """
-    ZIP or Postal Code of the contact's address. This field is required and must be a non-empty string.
+    ZIP or Postal Code of the contact's address.
     """
 
     country: typing.Optional[str] = pydantic.Field(default=None)
@@ -58,24 +88,6 @@ class RegistrantContactRequest(UniversalBaseModel):
     Phone number of the contact. Should follow the E.164 international format: "+[country code][number]".
     """
 
-    fax: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Fax number of the contact. Should follow the E.164 international format: "+[country code][number]".
-    """
-
-    company_name: typing_extensions.Annotated[
-        typing.Optional[str],
-        FieldMetadata(alias="companyName"),
-        pydantic.Field(
-            alias="companyName",
-            description='Company name of the contact. Leave blank if the contact is an individual. Please be advised that ICANN policy links the "Company Name" field (Organization) in your domain\'s contact details to its legal ownership. If this field contains information, the listed organization is considered the legal "Registered Name Holder" (domain owner).',
-        ),
-    ] = None
-    address2: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    The second line of the contact's address (optional).
-    """
-
     is_verified: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="isVerified"),
@@ -84,6 +96,10 @@ class RegistrantContactRequest(UniversalBaseModel):
             description="Indicates if the contact has been verified as per ICANN requirements. If the value is `false` it indicates that the contact has not completed the required verification process. This property is read-only and will be included in responses but should not be included in requests.",
         ),
     ] = None
+    """
+    Indicates if the contact has been verified as per ICANN requirements. If the value is `false` it indicates that the contact has not completed the required verification process. This property is read-only and will be included in responses but should not be included in requests.
+    """
+
     verification_id: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="verificationId"),
@@ -92,6 +108,9 @@ class RegistrantContactRequest(UniversalBaseModel):
             description="When the contact is unverified, this is the ID of the pending verification record. Use this ID with the resend verification email and verify contact endpoints. Omitted or null when the contact is verified.",
         ),
     ] = None
+    """
+    When the contact is unverified, this is the ID of the pending verification record. Use this ID with the resend verification email and verify contact endpoints. Omitted or null when the contact is verified.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -20,17 +20,28 @@ class DomainLockStatusChange(UniversalBaseModel):
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="Fully-qualified domain name"),
     ]
+    """
+    Fully-qualified domain name
+    """
+
     action: DomainLockStatusChangeAction
     lock_type: typing_extensions.Annotated[
         DomainLockStatusChangeLockType,
         FieldMetadata(alias="lockType"),
         pydantic.Field(alias="lockType", description="The lock type affected by this event (added or removed)"),
     ]
+    """
+    The lock type affected by this event (added or removed)
+    """
+
     registry_statuses: typing_extensions.Annotated[
         typing.List[str],
         FieldMetadata(alias="registryStatuses"),
         pydantic.Field(alias="registryStatuses", description="Current registry statuses after the change"),
     ]
+    """
+    Current registry statuses after the change
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

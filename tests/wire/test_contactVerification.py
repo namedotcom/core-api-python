@@ -18,7 +18,6 @@ def test_contactVerification_verify_contact() -> None:
     client = get_client(test_id)
     client.contact_verification.verify_contact(
         verification_id=1,
-        idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
     )
     verify_request_count(test_id, "POST", "/core/v1/contacts/verify/1", None, 1)
 
@@ -29,6 +28,5 @@ def test_contactVerification_resend_contact_verification_email() -> None:
     client = get_client(test_id)
     client.contact_verification.resend_contact_verification_email(
         verification_id=1,
-        idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
     )
     verify_request_count(test_id, "POST", "/core/v1/contacts/verify/1:resend", None, 1)

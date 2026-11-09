@@ -19,16 +19,27 @@ class DomainClaimsInfo(UniversalBaseModel):
         FieldMetadata(alias="claimId"),
         pydantic.Field(alias="claimId", description="The claim identifier from TMCH (Trademark Clearinghouse)"),
     ] = None
+    """
+    The claim identifier from TMCH (Trademark Clearinghouse)
+    """
+
     not_before: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="notBefore"),
         pydantic.Field(alias="notBefore", description="The date before which the claim acknowledgment is not valid"),
     ] = None
+    """
+    The date before which the claim acknowledgment is not valid
+    """
+
     not_after: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="notAfter"),
         pydantic.Field(alias="notAfter", description="The date after which the claim acknowledgment expires"),
     ] = None
+    """
+    The date after which the claim acknowledgment expires
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -20,12 +20,24 @@ class DomainTransferStatusChange(UniversalBaseModel):
         FieldMetadata(alias="eventName"),
         pydantic.Field(alias="eventName", description="The name of the subscription event"),
     ]
+    """
+    The name of the subscription event
+    """
+
     domain_name: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="domainName"),
         pydantic.Field(alias="domainName", description="The domain that the transfer status has changed for"),
     ]
+    """
+    The domain that the transfer status has changed for
+    """
+
     status: TransferStatus
+    warning: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Included only when `status` is `completed` and one or more submitted contacts could not be applied and were replaced by account default contacts.  Omitted otherwise.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

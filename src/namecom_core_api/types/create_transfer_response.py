@@ -24,9 +24,14 @@ class CreateTransferResponse(UniversalBaseModel):
         float,
         FieldMetadata(alias="totalPaid"),
         pydantic.Field(
-            alias="totalPaid", description="TotalPaid is the total amount paid, including VAT and Whois Privacy."
+            alias="totalPaid",
+            description="TotalPaid is the total amount paid, including VAT when applicable. Whois Privacy is free and is not included in this amount.",
         ),
     ]
+    """
+    TotalPaid is the total amount paid, including VAT when applicable. Whois Privacy is free and is not included in this amount.
+    """
+
     transfer: Transfer
     warnings: typing.Optional[CreateTransferResponseWarnings] = pydantic.Field(default=None)
     """

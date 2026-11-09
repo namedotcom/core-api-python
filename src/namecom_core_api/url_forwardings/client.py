@@ -5,9 +5,10 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.list_url_forwardings_response import ListUrlForwardingsResponse
-from ..types.url_forwarding_input_type import UrlForwardingInputType
 from ..types.url_forwarding_response import UrlForwardingResponse
+from ..types.url_forwarding_update_type import UrlForwardingUpdateType
 from .raw_client import AsyncRawUrlForwardingsClient, RawUrlForwardingsClient
+from .types.url_forwarding_input_type import UrlForwardingInputType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -100,7 +101,7 @@ class UrlForwardingsClient:
             The destination URL to which this hostname will be forwarded.
 
         host : str
-            The subdomain portion of the hostname that is being forwarded.
+            The subdomain portion of the hostname that is being forwarded. Use an empty string for the apex.
 
         type : UrlForwardingInputType
             The type of URL forwarding. Valid values:
@@ -194,11 +195,11 @@ class UrlForwardingsClient:
         domain_name: str,
         host_: str,
         *,
-        forwards_to: str,
-        host: str,
-        type: UrlForwardingInputType,
+        forwards_to: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        type: typing.Optional[UrlForwardingUpdateType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UrlForwardingResponse:
         """
@@ -212,17 +213,11 @@ class UrlForwardingsClient:
         host_ : str
             The full hostname, including subdomain.
 
-        forwards_to : str
+        forwards_to : typing.Optional[str]
             The destination URL to which this hostname will be forwarded.
 
-        host : str
-            The subdomain portion of the hostname that is being forwarded.
-
-        type : UrlForwardingInputType
-            The type of URL forwarding. Valid values:
-              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
-              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
-              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
+        host : typing.Optional[str]
+            The subdomain portion of the hostname that is being forwarded. Omit this field to keep the existing host. Send an empty string to move the forwarding to the apex.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -232,6 +227,12 @@ class UrlForwardingsClient:
         title : typing.Optional[str]
             The title to be used for the HTML page when using "masked" forwarding.
             Ignored for other forwarding types.
+
+        type : typing.Optional[UrlForwardingUpdateType]
+            The type of URL forwarding. Valid values:
+              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
+              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
+              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -252,9 +253,6 @@ class UrlForwardingsClient:
         client.url_forwardings.update_url_forwarding(
             domain_name="example.com",
             host_="www.example.org",
-            forwards_to="https://destination-site.com",
-            host="www",
-            type="masked",
         )
         """
         _response = self._raw_client.update_url_forwarding(
@@ -262,9 +260,9 @@ class UrlForwardingsClient:
             host_,
             forwards_to=forwards_to,
             host=host,
-            type=type,
             meta=meta,
             title=title,
+            type=type,
             request_options=request_options,
         )
         return _response.data
@@ -435,11 +433,11 @@ class UrlForwardingsClient:
         domain_name: str,
         id: int,
         *,
-        forwards_to: str,
-        host: str,
-        type: UrlForwardingInputType,
+        forwards_to: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        type: typing.Optional[UrlForwardingUpdateType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UrlForwardingResponse:
         """
@@ -453,17 +451,11 @@ class UrlForwardingsClient:
         id : int
             ID is the server-assigned unique identifier for the URL forwarding record (returned in list responses).
 
-        forwards_to : str
+        forwards_to : typing.Optional[str]
             The destination URL to which this hostname will be forwarded.
 
-        host : str
-            The subdomain portion of the hostname that is being forwarded.
-
-        type : UrlForwardingInputType
-            The type of URL forwarding. Valid values:
-              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
-              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
-              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
+        host : typing.Optional[str]
+            The subdomain portion of the hostname that is being forwarded. Omit this field to keep the existing host. Send an empty string to move the forwarding to the apex.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -473,6 +465,12 @@ class UrlForwardingsClient:
         title : typing.Optional[str]
             The title to be used for the HTML page when using "masked" forwarding.
             Ignored for other forwarding types.
+
+        type : typing.Optional[UrlForwardingUpdateType]
+            The type of URL forwarding. Valid values:
+              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
+              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
+              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -493,9 +491,6 @@ class UrlForwardingsClient:
         client.url_forwardings.update_url_forwarding_by_id(
             domain_name="example.com",
             id=12345,
-            forwards_to="https://destination-site.com",
-            host="www",
-            type="masked",
         )
         """
         _response = self._raw_client.update_url_forwarding_by_id(
@@ -503,9 +498,9 @@ class UrlForwardingsClient:
             id,
             forwards_to=forwards_to,
             host=host,
-            type=type,
             meta=meta,
             title=title,
+            type=type,
             request_options=request_options,
         )
         return _response.data
@@ -606,7 +601,7 @@ class AsyncUrlForwardingsClient:
             The destination URL to which this hostname will be forwarded.
 
         host : str
-            The subdomain portion of the hostname that is being forwarded.
+            The subdomain portion of the hostname that is being forwarded. Use an empty string for the apex.
 
         type : UrlForwardingInputType
             The type of URL forwarding. Valid values:
@@ -716,11 +711,11 @@ class AsyncUrlForwardingsClient:
         domain_name: str,
         host_: str,
         *,
-        forwards_to: str,
-        host: str,
-        type: UrlForwardingInputType,
+        forwards_to: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        type: typing.Optional[UrlForwardingUpdateType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UrlForwardingResponse:
         """
@@ -734,17 +729,11 @@ class AsyncUrlForwardingsClient:
         host_ : str
             The full hostname, including subdomain.
 
-        forwards_to : str
+        forwards_to : typing.Optional[str]
             The destination URL to which this hostname will be forwarded.
 
-        host : str
-            The subdomain portion of the hostname that is being forwarded.
-
-        type : UrlForwardingInputType
-            The type of URL forwarding. Valid values:
-              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
-              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
-              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
+        host : typing.Optional[str]
+            The subdomain portion of the hostname that is being forwarded. Omit this field to keep the existing host. Send an empty string to move the forwarding to the apex.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -754,6 +743,12 @@ class AsyncUrlForwardingsClient:
         title : typing.Optional[str]
             The title to be used for the HTML page when using "masked" forwarding.
             Ignored for other forwarding types.
+
+        type : typing.Optional[UrlForwardingUpdateType]
+            The type of URL forwarding. Valid values:
+              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
+              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
+              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -779,9 +774,6 @@ class AsyncUrlForwardingsClient:
             await client.url_forwardings.update_url_forwarding(
                 domain_name="example.com",
                 host_="www.example.org",
-                forwards_to="https://destination-site.com",
-                host="www",
-                type="masked",
             )
 
 
@@ -792,9 +784,9 @@ class AsyncUrlForwardingsClient:
             host_,
             forwards_to=forwards_to,
             host=host,
-            type=type,
             meta=meta,
             title=title,
+            type=type,
             request_options=request_options,
         )
         return _response.data
@@ -997,11 +989,11 @@ class AsyncUrlForwardingsClient:
         domain_name: str,
         id: int,
         *,
-        forwards_to: str,
-        host: str,
-        type: UrlForwardingInputType,
+        forwards_to: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         meta: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        type: typing.Optional[UrlForwardingUpdateType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UrlForwardingResponse:
         """
@@ -1015,17 +1007,11 @@ class AsyncUrlForwardingsClient:
         id : int
             ID is the server-assigned unique identifier for the URL forwarding record (returned in list responses).
 
-        forwards_to : str
+        forwards_to : typing.Optional[str]
             The destination URL to which this hostname will be forwarded.
 
-        host : str
-            The subdomain portion of the hostname that is being forwarded.
-
-        type : UrlForwardingInputType
-            The type of URL forwarding. Valid values:
-              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
-              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
-              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
+        host : typing.Optional[str]
+            The subdomain portion of the hostname that is being forwarded. Omit this field to keep the existing host. Send an empty string to move the forwarding to the apex.
 
         meta : typing.Optional[str]
             Meta tags to include in the HTML page when using "masked" forwarding.
@@ -1035,6 +1021,12 @@ class AsyncUrlForwardingsClient:
         title : typing.Optional[str]
             The title to be used for the HTML page when using "masked" forwarding.
             Ignored for other forwarding types.
+
+        type : typing.Optional[UrlForwardingUpdateType]
+            The type of URL forwarding. Valid values:
+              - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
+              - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
+              - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1060,9 +1052,6 @@ class AsyncUrlForwardingsClient:
             await client.url_forwardings.update_url_forwarding_by_id(
                 domain_name="example.com",
                 id=12345,
-                forwards_to="https://destination-site.com",
-                host="www",
-                type="masked",
             )
 
 
@@ -1073,9 +1062,9 @@ class AsyncUrlForwardingsClient:
             id,
             forwards_to=forwards_to,
             host=host,
-            type=type,
             meta=meta,
             title=title,
+            type=type,
             request_options=request_options,
         )
         return _response.data

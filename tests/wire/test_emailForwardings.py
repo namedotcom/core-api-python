@@ -45,6 +45,7 @@ def test_emailForwardings_update_email_forwarding() -> None:
     client.email_forwardings.update_email_forwarding(
         domain_name="domainName",
         email_box="emailBox",
+        email_to="emailTo",
     )
     verify_request_count(test_id, "PUT", "/core/v1/domains/domainName/email/forwarding/emailBox", None, 1)
 

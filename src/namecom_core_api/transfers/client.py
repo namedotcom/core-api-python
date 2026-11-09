@@ -78,11 +78,13 @@ class TransfersClient:
         domain_name: str,
         privacy_enabled: typing.Optional[bool] = OMIT,
         purchase_price: typing.Optional[float] = OMIT,
+        contacts: typing.Optional[ContactsRequest] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateTransferResponse:
         """
         Initiates a domain transfer into your name.com account from another registrar. You must provide the domain name and its valid transfer authorization code (EPP code). The domain must not be locked or under any transfer restrictions (e.g. clientTransferProhibited). If successful, the transfer is submitted and tracked through the ICANN transfer process. Once a transfer has been created, you can track its progress via the [GetTransfer](/api/v1/reference/transfers/get-transfer) endpoint.
         **Transfer pricing:** Omit `purchasePrice` for standard (non-premium) transfers. For premium transfers, pass `transferPrice` from [Get Pricing For Domain](/api/v1/reference/domains/get-pricing-for-domain) as `purchasePrice`. If sent, it must match Get Pricing `transferPrice` exactly or the request will fail. Premium transfers without `purchasePrice` will fail. See the [Domain pricing guide](/guides/domain-pricing) for how [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) `transferPrice` relates to the `years` query parameter.
+        **Optional `contacts`** - Omit for account defaults; provided roles override; omitted roles use defaults.
 
         Parameters
         ----------
@@ -93,10 +95,13 @@ class TransfersClient:
             DomainName is the domain you want to transfer to name.com.
 
         privacy_enabled : typing.Optional[bool]
-            PrivacyEnabled is a flag on whether to purchase Whois Privacy with the transfer. If this flag is omitted from the request, the system will check the account's Whois Privacy auto-add settings. If auto-add is enabled in your account settings, Whois Privacy will be added by default, provided the TLD supports it.
+            Whether to include Whois Privacy with the transfer. Whois Privacy is free. If omitted, the account default from account settings is used. Privacy is only added when the TLD supports it.
 
         purchase_price : typing.Optional[float]
             PurchasePrice is the USD inbound transfer fee, before VAT. VAT is applied when applicable and must not be included here. If sent, must match Get Pricing `transferPrice` exactly or the request will fail.. **Omit** for standard (non-premium) transfers. **Required** for premium transfers — use `transferPrice` from [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain).
+
+        contacts : typing.Optional[ContactsRequest]
+            WHOIS contacts to apply when the domain lands in the account. If omitted, the gaining account's default contacts are applied. If provided, include any roles to override; omitted roles use the gaining account's default contacts. Each supplied role must include complete contact fields. A registrar contact-change transfer lock may apply according to the gaining account's settings.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -124,6 +129,7 @@ class TransfersClient:
             domain_name=domain_name,
             privacy_enabled=privacy_enabled,
             purchase_price=purchase_price,
+            contacts=contacts,
             request_options=request_options,
         )
         return _response.data
@@ -214,6 +220,7 @@ class TransfersClient:
     ) -> CancelTransferOutResponse:
         """
         Cancels an outbound transfer for the given domain. Use this when the domain is being transferred out of name.com (losing registrar) to another (gaining) registrar and the registrant or reseller wants to cancel that transfer.
+        On success, subscribers receive `domain.transfer_out.status_change` with status `canceled`.
         The endpoint validates that the domain exists and belongs to the authenticated account. Only domains in a pending transfer (out) state can be canceled.
 
         Parameters
@@ -416,11 +423,13 @@ class AsyncTransfersClient:
         domain_name: str,
         privacy_enabled: typing.Optional[bool] = OMIT,
         purchase_price: typing.Optional[float] = OMIT,
+        contacts: typing.Optional[ContactsRequest] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateTransferResponse:
         """
         Initiates a domain transfer into your name.com account from another registrar. You must provide the domain name and its valid transfer authorization code (EPP code). The domain must not be locked or under any transfer restrictions (e.g. clientTransferProhibited). If successful, the transfer is submitted and tracked through the ICANN transfer process. Once a transfer has been created, you can track its progress via the [GetTransfer](/api/v1/reference/transfers/get-transfer) endpoint.
         **Transfer pricing:** Omit `purchasePrice` for standard (non-premium) transfers. For premium transfers, pass `transferPrice` from [Get Pricing For Domain](/api/v1/reference/domains/get-pricing-for-domain) as `purchasePrice`. If sent, it must match Get Pricing `transferPrice` exactly or the request will fail. Premium transfers without `purchasePrice` will fail. See the [Domain pricing guide](/guides/domain-pricing) for how [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) `transferPrice` relates to the `years` query parameter.
+        **Optional `contacts`** - Omit for account defaults; provided roles override; omitted roles use defaults.
 
         Parameters
         ----------
@@ -431,10 +440,13 @@ class AsyncTransfersClient:
             DomainName is the domain you want to transfer to name.com.
 
         privacy_enabled : typing.Optional[bool]
-            PrivacyEnabled is a flag on whether to purchase Whois Privacy with the transfer. If this flag is omitted from the request, the system will check the account's Whois Privacy auto-add settings. If auto-add is enabled in your account settings, Whois Privacy will be added by default, provided the TLD supports it.
+            Whether to include Whois Privacy with the transfer. Whois Privacy is free. If omitted, the account default from account settings is used. Privacy is only added when the TLD supports it.
 
         purchase_price : typing.Optional[float]
             PurchasePrice is the USD inbound transfer fee, before VAT. VAT is applied when applicable and must not be included here. If sent, must match Get Pricing `transferPrice` exactly or the request will fail.. **Omit** for standard (non-premium) transfers. **Required** for premium transfers — use `transferPrice` from [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain).
+
+        contacts : typing.Optional[ContactsRequest]
+            WHOIS contacts to apply when the domain lands in the account. If omitted, the gaining account's default contacts are applied. If provided, include any roles to override; omitted roles use the gaining account's default contacts. Each supplied role must include complete contact fields. A registrar contact-change transfer lock may apply according to the gaining account's settings.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -470,6 +482,7 @@ class AsyncTransfersClient:
             domain_name=domain_name,
             privacy_enabled=privacy_enabled,
             purchase_price=purchase_price,
+            contacts=contacts,
             request_options=request_options,
         )
         return _response.data
@@ -580,6 +593,7 @@ class AsyncTransfersClient:
     ) -> CancelTransferOutResponse:
         """
         Cancels an outbound transfer for the given domain. Use this when the domain is being transferred out of name.com (losing registrar) to another (gaining) registrar and the registrant or reseller wants to cancel that transfer.
+        On success, subscribers receive `domain.transfer_out.status_change` with status `canceled`.
         The endpoint validates that the domain exists and belongs to the authenticated account. Only domains in a pending transfer (out) state can be canceled.
 
         Parameters

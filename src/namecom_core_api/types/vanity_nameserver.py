@@ -21,6 +21,10 @@ class VanityNameserver(UniversalBaseModel):
             description="DomainName is the root domain for which this vanity nameserver is created. For example, if the hostname is 'ns1.example.com', the domainName would be 'example.com'.",
         ),
     ]
+    """
+    DomainName is the root domain for which this vanity nameserver is created. For example, if the hostname is 'ns1.example.com', the domainName would be 'example.com'.
+    """
+
     hostname: str = pydantic.Field()
     """
     Hostname is the fully qualified domain name (FQDN) of the vanity nameserver. It must be a subdomain of the domain specified in 'domainName'.

@@ -519,7 +519,6 @@ client = Namecom(
 )
 
 client.domains.create_domain(
-    idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
     domain=DomainCreatePayload(
         domain_name="example.com",
     ),
@@ -547,15 +546,7 @@ client.domains.create_domain(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**purchase_price:** `typing.Optional[float]` — PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. If privacyEnabled is set, the regular price for Whois Privacy protection will be added automatically. If VAT tax applies, it will also be added automatically.
+**purchase_price:** `typing.Optional[float]` — PurchasePrice is the price in USD for purchasing this domain for the minimum time period (typically 1 year). PurchasePrice is required if purchaseType is not "registration" or if it is a premium domain. Whois Privacy is free and does not affect purchasePrice. If privacyEnabled is omitted, the account default from account settings is used. If VAT tax applies, it will also be added automatically.
     
 </dd>
 </dl>
@@ -600,7 +591,7 @@ This parameter is required for registering domains that contain non-ASCII charac
 <dl>
 <dd>
 
-**promo_code:** `typing.Optional[str]` — PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request.
+**promo_code:** `typing.Optional[str]` — PromoCode is an optional promotional code to apply to the domain purchase. Only one promo code can be applied per request. Promo codes specify eligibility criteria, including duration. If the supplied promo applies no discount, the request fails with `400` and `"Promo code does not apply a discount to this purchase"`. If discount checks reject the promo, the request fails with `400` and `"Promo code was rejected by discount checks"`. The order is not created.
     
 </dd>
 </dl>
@@ -723,7 +714,6 @@ Allows updating of the autorenew, WhoIs Privacy and lock status of the specified
 ```python
 from namecom_core_api import Namecom
 from namecom_core_api.environment import NamecomEnvironment
-from namecom_core_api.domains import UpdateDomainRequestBodyAutorenewEnabled
 
 client = Namecom(
     username="<username>",
@@ -733,9 +723,6 @@ client = Namecom(
 
 client.domains.update_domain(
     domain_name="domainName",
-    request=UpdateDomainRequestBodyAutorenewEnabled(
-        autorenew_enabled=True,
-    ),
 )
 
 ```
@@ -760,7 +747,23 @@ client.domains.update_domain(
 <dl>
 <dd>
 
-**request:** `UpdateDomainRequestBody` 
+**autorenew_enabled:** `typing.Optional[bool]` — Enable or disable automatic renewal for the domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**privacy_enabled:** `typing.Optional[bool]` — Enable or disable Whois privacy for the domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**locked:** `typing.Optional[bool]` — Set the transfer lock status for the domain
     
 </dd>
 </dl>
@@ -792,7 +795,7 @@ client.domains.update_domain(
 <dl>
 <dd>
 
-Turns off automatic renewal for a domain.  **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
+Turns off automatic renewal for a domain. **DEPRECATED** This endpoint is deprecated in favor of the new UpdateDomain API. This will be removed in a future release.
 </dd>
 </dl>
 </dd>
@@ -835,6 +838,14 @@ client.domains.disable_autorenew(
 <dd>
 
 **domain_name:** `str` — DomainName is the domain name to disable autorenew for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmptyObject` 
     
 </dd>
 </dl>
@@ -916,6 +927,14 @@ client.domains.disable_whois_privacy(
 <dl>
 <dd>
 
+**request:** `EmptyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -990,6 +1009,14 @@ client.domains.enable_autorenew(
 <dl>
 <dd>
 
+**request:** `EmptyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1057,6 +1084,14 @@ client.domains.enable_whois_privacy(
 <dd>
 
 **domain_name:** `str` — DomainName is the domain name to enable whoisprivacy for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmptyObject` 
     
 </dd>
 </dl>
@@ -1307,6 +1342,14 @@ client.domains.lock_domain(
 <dl>
 <dd>
 
+**request:** `EmptyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1331,7 +1374,7 @@ client.domains.lock_domain(
 <dl>
 <dd>
 
-Adds or renews WHOIS privacy protection for a domain. This is used to ensure personal contact details remain hidden from public WHOIS lookups.  If WHOIS privacy is already enabled, this will extend the protection. If it’s not yet active, this will both purchase and enable the service.  This is a billable action unless covered by a bundled privacy plan.
+Adds or renews WHOIS privacy protection for a domain. This is used to ensure personal contact details remain hidden from public WHOIS lookups.  If WHOIS privacy is already enabled, this will extend the protection. If it’s not yet active, this will enable the service.  WHOIS privacy is free for API users and does not add a fee.
 </dd>
 </dl>
 </dd>
@@ -1357,7 +1400,6 @@ client = Namecom(
 
 client.domains.purchase_privacy(
     domain_name="domainName",
-    idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
 )
 
 ```
@@ -1374,7 +1416,7 @@ client.domains.purchase_privacy(
 <dl>
 <dd>
 
-**domain_name:** `str` — DomainName is the domain to purchase Whois Privacy for.
+**domain_name:** `str` — DomainName is the domain to enable or extend Whois Privacy for.
     
 </dd>
 </dl>
@@ -1382,7 +1424,7 @@ client.domains.purchase_privacy(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+**purchase_price:** `typing.Optional[float]` — WHOIS privacy is free for API users. This field does not add a privacy fee.
     
 </dd>
 </dl>
@@ -1390,15 +1432,7 @@ client.domains.purchase_privacy(
 <dl>
 <dd>
 
-**purchase_price:** `typing.Optional[float]` — PurchasePrice is the (prorated) amount you expect to pay.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**years:** `typing.Optional[int]` — Years is the number of years you wish to purchase Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
+**years:** `typing.Optional[int]` — Years is the number of years to enable or extend Whois Privacy for. Years defaults to 1 and cannot be more then the domain expiration date.
     
 </dd>
 </dl>
@@ -1537,7 +1571,7 @@ When registrant contact information is updated, validation may be triggered if t
 <dd>
 
 ```python
-from namecom_core_api import Namecom
+from namecom_core_api import Namecom, ContactsRequest
 from namecom_core_api.environment import NamecomEnvironment
 
 client = Namecom(
@@ -1548,6 +1582,7 @@ client = Namecom(
 
 client.domains.set_contacts(
     domain_name="example.com",
+    contacts=ContactsRequest(),
 )
 
 ```
@@ -1572,7 +1607,7 @@ client.domains.set_contacts(
 <dl>
 <dd>
 
-**contacts:** `typing.Optional[ContactsRequest]` 
+**contacts:** `ContactsRequest` 
     
 </dd>
 </dl>
@@ -1733,6 +1768,14 @@ client.domains.unlock_domain(
 <dd>
 
 **domain_name:** `str` — DomainName is the domain name to unlock.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmptyObject` 
     
 </dd>
 </dl>
@@ -2511,7 +2554,7 @@ client.email_forwardings.list_email_forwardings(
 <dl>
 <dd>
 
-Creates a new email forwarding rule for a domain, such as redirecting info@example.com to an external inbox.  If this is the first email forwarding rule created for the domain, the API may also update your MX records automatically to enable mail routing.  The alias must not conflict with existing email services or MX records.  To modify a forwarding rule later, use [UpdateEmailForwarding](/api/v1/reference/email-forwardings/update-email-forwarding).
+Creates a new email forwarding rule for a domain, such as redirecting info@example.com to an external inbox.  If this is the first email forwarding rule created for the domain, the API may also update your MX records automatically to enable mail routing.  The alias must not conflict with existing email services or MX records.  Wildcard and catch-all forwarding is not supported, so an `emailBox` containing `*` is rejected with a `400 Bad Request`.  To modify a forwarding rule later, use [UpdateEmailForwarding](/api/v1/reference/email-forwardings/update-email-forwarding).
 </dd>
 </dl>
 </dd>
@@ -2563,7 +2606,7 @@ client.email_forwardings.create_email_forwarding(
 <dl>
 <dd>
 
-**email_box:** `str` — EmailBox is the user portion of the email address to forward. If your email is "admin@example.com", it would just be "admin"
+**email_box:** `str` — EmailBox is the user portion of the email address to forward. If your email is "admin@example.com", it would just be "admin". Wildcard and catch-all values (such as "*") are not supported.
     
 </dd>
 </dl>
@@ -2713,6 +2756,7 @@ client = Namecom(
 client.email_forwardings.update_email_forwarding(
     domain_name="domainName",
     email_box="emailBox",
+    email_to="emailTo",
 )
 
 ```
@@ -2745,7 +2789,7 @@ client.email_forwardings.update_email_forwarding(
 <dl>
 <dd>
 
-**email_to:** `typing.Optional[str]` — EmailTo is the entire email address to forward email to.
+**email_to:** `str` — EmailTo is the entire email address to forward email to.
     
 </dd>
 </dl>
@@ -3543,7 +3587,51 @@ client.url_forwardings.create_url_forwarding(
 <dl>
 <dd>
 
-**request:** `UrlForwardingInput` 
+**forwards_to:** `str` — The destination URL to which this hostname will be forwarded.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `str` — The subdomain portion of the hostname that is being forwarded. Use an empty string for the apex.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `UrlForwardingInputType` 
+
+The type of URL forwarding. Valid values:
+  - `masked`: Retains the original domain in the address bar, preventing the user from seeing the actual destination URL. Sometimes called iframe forwarding.
+  - `redirect`: Uses a standard HTTP redirect (301), which changes the address bar to the destination URL.
+  - `302`: Uses a temporary HTTP redirect (302), which changes the address bar to the destination URL but indicates the resource is temporarily located elsewhere.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[str]` 
+
+Meta tags to include in the HTML page when using "masked" forwarding.
+Ignored for other forwarding types.
+Example: `<meta name='keywords' content='fish, denver, platte'>`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` 
+
+The title to be used for the HTML page when using "masked" forwarding.
+Ignored for other forwarding types.
     
 </dd>
 </dl>
@@ -3685,9 +3773,6 @@ client = Namecom(
 client.url_forwardings.update_url_forwarding(
     domain_name="example.com",
     host_="www.example.org",
-    forwards_to="https://destination-site.com",
-    host="www",
-    type="masked",
 )
 
 ```
@@ -3720,7 +3805,7 @@ client.url_forwardings.update_url_forwarding(
 <dl>
 <dd>
 
-**request:** `UrlForwardingInput` 
+**request:** `UrlForwardingUpdate` 
     
 </dd>
 </dl>
@@ -4120,9 +4205,6 @@ client = Namecom(
 client.url_forwardings.update_url_forwarding_by_id(
     domain_name="example.com",
     id=12345,
-    forwards_to="https://destination-site.com",
-    host="www",
-    type="masked",
 )
 
 ```
@@ -4155,7 +4237,7 @@ client.url_forwardings.update_url_forwarding_by_id(
 <dl>
 <dd>
 
-**request:** `UrlForwardingInput` 
+**request:** `UrlForwardingUpdate` 
     
 </dd>
 </dl>
@@ -4485,6 +4567,10 @@ client = Namecom(
 client.vanity_nameservers.update_vanity_nameserver(
     domain_name="example.com",
     hostname="ns1.example.com",
+    ips=[
+        "192.168.1.10",
+        "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+    ],
 )
 
 ```
@@ -4517,7 +4603,7 @@ client.vanity_nameservers.update_vanity_nameserver(
 <dl>
 <dd>
 
-**ips:** `typing.Optional[typing.List[str]]` — IPs is the updated list of IP addresses to be used for glue records for this vanity nameserver. Providing an empty array will remove all existing IPs.
+**ips:** `typing.List[str]` — IPs is the updated list of IP addresses to be used for glue records for this vanity nameserver. Providing an empty array will remove all existing IPs.
     
 </dd>
 </dl>
@@ -4700,13 +4786,15 @@ client.webhook_notifications.get_subscribed_notifications()
 Creates a webhook subscription to receive real-time notifications about specific domain or account events (e.g. transfer completions, renewals). Pass the callback URL and event types. This allows external systems to stay in sync with name.com changes.
 Supported webhook event names:
 - `account.credit.balance_change` – account credit balance changes (increases or decreases).
+- `account.domain.removal` – domain removed from the subscribing account.
 - `domain.lock.status_change` – domain lock added or removed.
 - `domain.transfer.status_change` – domain transfer IN to name.com; status updates while name.com is the gaining registrar.
-- `domain.transfer_out.status_change` – domain transfer OUT from name.com to another registrar; fires when the domain is removed from the account.
+- `domain.transfer_out.status_change` – domain transfer OUT from name.com; `initiated`, `completed` (domain removed), or `canceled` (no longer pending at the registry).
 - `domain.transfer.internal_in` - name.com domain transfers in to the subscribing account via internal transfer.
 - `domain.transfer.internal_out` - name.com domain transfers out of the subscribing account via internal transfer.
 - `contact.verification.status_change` - contact verification status changes (verified or unverified).
 - `domain.registry.rejection` – domain **create** failed after asynchronous registry processing (uncommon; most creates succeed at request time).
+- `domain.registry.compliance_notice` – a registry requires policy remediation for a domain. Default is a registrant email (whitelabeled when configured); subscribe to send it yourself. If you have signed an addendum to assume all email responsibility, name.com does not send this email and the webhook is the only delivery path.
 - `domain.expiration` – domain has expired and entered the post-expiry grace period. This is informational only.
 </dd>
 </dl>
@@ -4816,7 +4904,6 @@ Updates an existing webhook’s configuration.  This may include changing the ca
 ```python
 from namecom_core_api import Namecom
 from namecom_core_api.environment import NamecomEnvironment
-from namecom_core_api.webhook_notifications import ModifySubscriptionRequestBodyUrl
 
 client = Namecom(
     username="<username>",
@@ -4826,9 +4913,6 @@ client = Namecom(
 
 client.webhook_notifications.modify_subscription(
     id=1,
-    request=ModifySubscriptionRequestBodyUrl(
-        url="url",
-    ),
 )
 
 ```
@@ -4853,7 +4937,15 @@ client.webhook_notifications.modify_subscription(
 <dl>
 <dd>
 
-**request:** `ModifySubscriptionRequestBody` 
+**url:** `typing.Optional[str]` — Optionally update the URL we send the webhook data to
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**active:** `typing.Optional[bool]` — Optionally update if the subscription is currently active
     
 </dd>
 </dl>
@@ -5214,7 +5306,6 @@ client = Namecom(
 )
 
 client.refunds.process_refund(
-    idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
     order_id=123456,
     order_item_ids=[
         987654
@@ -5244,14 +5335,6 @@ client.refunds.process_refund(
 <dd>
 
 **order_item_ids:** `typing.List[int]` — An array of order item IDs to be refunded. All items must belong to the specified order. Use the List Orders endpoint to retrieve order item IDs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_key:** `typing.Optional[str]` — A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result. Idempotency keys are valid for 12 hours.
     
 </dd>
 </dl>
@@ -5366,6 +5449,7 @@ client.transfers.list_transfers()
 
 Initiates a domain transfer into your name.com account from another registrar. You must provide the domain name and its valid transfer authorization code (EPP code). The domain must not be locked or under any transfer restrictions (e.g. clientTransferProhibited). If successful, the transfer is submitted and tracked through the ICANN transfer process. Once a transfer has been created, you can track its progress via the [GetTransfer](/api/v1/reference/transfers/get-transfer) endpoint.
 **Transfer pricing:** Omit `purchasePrice` for standard (non-premium) transfers. For premium transfers, pass `transferPrice` from [Get Pricing For Domain](/api/v1/reference/domains/get-pricing-for-domain) as `purchasePrice`. If sent, it must match Get Pricing `transferPrice` exactly or the request will fail. Premium transfers without `purchasePrice` will fail. See the [Domain pricing guide](/guides/domain-pricing) for how [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain) `transferPrice` relates to the `years` query parameter.
+**Optional `contacts`** - Omit for account defaults; provided roles override; omitted roles use defaults.
 </dd>
 </dl>
 </dd>
@@ -5424,7 +5508,7 @@ client.transfers.create_transfer(
 <dl>
 <dd>
 
-**privacy_enabled:** `typing.Optional[bool]` — PrivacyEnabled is a flag on whether to purchase Whois Privacy with the transfer. If this flag is omitted from the request, the system will check the account's Whois Privacy auto-add settings. If auto-add is enabled in your account settings, Whois Privacy will be added by default, provided the TLD supports it.
+**privacy_enabled:** `typing.Optional[bool]` — Whether to include Whois Privacy with the transfer. Whois Privacy is free. If omitted, the account default from account settings is used. Privacy is only added when the TLD supports it.
     
 </dd>
 </dl>
@@ -5433,6 +5517,14 @@ client.transfers.create_transfer(
 <dd>
 
 **purchase_price:** `typing.Optional[float]` — PurchasePrice is the USD inbound transfer fee, before VAT. VAT is applied when applicable and must not be included here. If sent, must match Get Pricing `transferPrice` exactly or the request will fail.. **Omit** for standard (non-premium) transfers. **Required** for premium transfers — use `transferPrice` from [Get Pricing](/api/v1/reference/domains/get-pricing-for-domain).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**contacts:** `typing.Optional[ContactsRequest]` — WHOIS contacts to apply when the domain lands in the account. If omitted, the gaining account's default contacts are applied. If provided, include any roles to override; omitted roles use the gaining account's default contacts. Each supplied role must include complete contact fields. A registrar contact-change transfer lock may apply according to the gaining account's settings.
     
 </dd>
 </dl>
@@ -5605,6 +5697,14 @@ client.transfers.cancel_transfer(
 <dl>
 <dd>
 
+**request:** `EmptyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5630,6 +5730,7 @@ client.transfers.cancel_transfer(
 <dd>
 
 Cancels an outbound transfer for the given domain. Use this when the domain is being transferred out of name.com (losing registrar) to another (gaining) registrar and the registrant or reseller wants to cancel that transfer.
+On success, subscribers receive `domain.transfer_out.status_change` with status `canceled`.
 The endpoint validates that the domain exists and belongs to the authenticated account. Only domains in a pending transfer (out) state can be canceled.
 </dd>
 </dl>
@@ -5673,6 +5774,14 @@ client.transfers.cancel_outbound_transfer(
 <dd>
 
 **domain_name:** `str` — DomainName is the domain whose transfer out should be canceled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `EmptyObject` 
     
 </dd>
 </dl>
@@ -6406,7 +6515,6 @@ client = Namecom(
 
 client.contact_verification.verify_contact(
     verification_id=1,
-    idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
 )
 
 ```
@@ -6431,7 +6539,7 @@ client.contact_verification.verify_contact(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+**request:** `EmptyObject` 
     
 </dd>
 </dl>
@@ -6498,7 +6606,6 @@ client = Namecom(
 
 client.contact_verification.resend_contact_verification_email(
     verification_id=1,
-    idempotency_key="083910ef-04e4-4bd1-a0bf-3737fe005ca8",
 )
 
 ```
@@ -6523,7 +6630,7 @@ client.contact_verification.resend_contact_verification_email(
 <dl>
 <dd>
 
-**idempotency_key:** `typing.Optional[str]` — A unique string (e.g., a UUID v4) to make the request idempotent. This key ensures that if the request is retried, the operation will not be performed multiple times. Subsequent requests with the same key will return the original result.
+**request:** `EmptyObject` 
     
 </dd>
 </dl>

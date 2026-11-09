@@ -33,6 +33,10 @@ class TrademarkClaim(UniversalBaseModel):
         FieldMetadata(alias="registrationNumber"),
         pydantic.Field(alias="registrationNumber", description="The trademark registration number"),
     ] = None
+    """
+    The trademark registration number
+    """
+
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Additional description of the trademark
@@ -43,6 +47,10 @@ class TrademarkClaim(UniversalBaseModel):
         FieldMetadata(alias="noticeHtml"),
         pydantic.Field(alias="noticeHtml", description="HTML content to display about this specific trademark claim"),
     ] = None
+    """
+    HTML content to display about this specific trademark claim
+    """
+
     confidence: typing.Optional[float] = pydantic.Field(default=None)
     """
     Confidence score for the trademark match (0.0 to 1.0)

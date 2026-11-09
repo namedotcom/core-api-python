@@ -26,6 +26,10 @@ class VanityNameserverResponse(UniversalBaseModel):
             description="DomainName is the root domain for which this vanity nameserver is created. For example, if the hostname is 'ns1.example.com', the domainName would be 'example.com'.",
         ),
     ]
+    """
+    DomainName is the root domain for which this vanity nameserver is created. For example, if the hostname is 'ns1.example.com', the domainName would be 'example.com'.
+    """
+
     ips: typing.List[str] = pydantic.Field()
     """
     IPs is a list of IP addresses that are used for glue records for this vanity nameserver. These should be valid IPv4 or IPv6 addresses.

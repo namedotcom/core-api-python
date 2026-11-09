@@ -11,7 +11,7 @@ from .domain_response_payload import DomainResponsePayload
 
 class PrivacyResponse(UniversalBaseModel):
     """
-    PrivacyResponse contains the updated domain info as well as the order info for the newly purchased Whois Privacy.
+    PrivacyResponse contains the updated domain info as well as the order info for the Whois Privacy that was enabled or extended.
     """
 
     domain: typing.Optional[DomainResponsePayload] = None
@@ -23,8 +23,14 @@ class PrivacyResponse(UniversalBaseModel):
     total_paid: typing_extensions.Annotated[
         float,
         FieldMetadata(alias="totalPaid"),
-        pydantic.Field(alias="totalPaid", description="TotalPaid is the total amount paid, including VAT."),
+        pydantic.Field(
+            alias="totalPaid",
+            description="TotalPaid is the total amount paid, including VAT when applicable. Whois Privacy is free and is not included in this amount.",
+        ),
     ]
+    """
+    TotalPaid is the total amount paid, including VAT when applicable. Whois Privacy is free and is not included in this amount.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

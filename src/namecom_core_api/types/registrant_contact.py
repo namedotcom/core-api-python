@@ -18,11 +18,19 @@ class RegistrantContact(UniversalBaseModel):
         FieldMetadata(alias="firstName"),
         pydantic.Field(alias="firstName", description="First name of the contact."),
     ] = None
+    """
+    First name of the contact.
+    """
+
     last_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="lastName"),
         pydantic.Field(alias="lastName", description="Last name of the contact."),
     ] = None
+    """
+    Last name of the contact.
+    """
+
     company_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="companyName"),
@@ -31,6 +39,10 @@ class RegistrantContact(UniversalBaseModel):
             description='Company name of the contact. Leave blank if the contact is an individual. Please be advised that ICANN policy links the "Company Name" field (Organization) in your domain\'s contact details to its legal ownership. If this field contains information, the listed organization is considered the legal "Registered Name Holder" (domain owner).',
         ),
     ] = None
+    """
+    Company name of the contact. Leave blank if the contact is an individual. Please be advised that ICANN policy links the "Company Name" field (Organization) in your domain's contact details to its legal ownership. If this field contains information, the listed organization is considered the legal "Registered Name Holder" (domain owner).
+    """
+
     address1: typing.Optional[str] = pydantic.Field(default=None)
     """
     The first line of the contact's address.
@@ -84,6 +96,10 @@ class RegistrantContact(UniversalBaseModel):
             description="Indicates if the contact has been verified as per ICANN requirements. If the value is `false` it indicates that the contact has not completed the required verification process. This property is read-only and will be included in responses but should not be included in requests.",
         ),
     ] = None
+    """
+    Indicates if the contact has been verified as per ICANN requirements. If the value is `false` it indicates that the contact has not completed the required verification process. This property is read-only and will be included in responses but should not be included in requests.
+    """
+
     verification_id: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="verificationId"),
@@ -92,6 +108,9 @@ class RegistrantContact(UniversalBaseModel):
             description="When the contact is unverified, this is the ID of the pending verification record. Use this ID with the resend verification email and verify contact endpoints. Omitted or null when the contact is verified.",
         ),
     ] = None
+    """
+    When the contact is unverified, this is the ID of the pending verification record. Use this ID with the resend verification email and verify contact endpoints. Omitted or null when the contact is verified.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

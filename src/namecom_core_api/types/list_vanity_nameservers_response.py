@@ -22,6 +22,10 @@ class ListVanityNameserversResponse(UniversalBaseModel):
             description="LastPage is the identifier for the final page of results. It is only populated if there is another page of results after the current page. If no further pages exist, this field will be null.",
         ),
     ] = None
+    """
+    LastPage is the identifier for the final page of results. It is only populated if there is another page of results after the current page. If no further pages exist, this field will be null.
+    """
+
     next_page: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="nextPage"),
@@ -30,6 +34,10 @@ class ListVanityNameserversResponse(UniversalBaseModel):
             description="NextPage is the identifier for the next page of results. It is only populated if there is another page of results after the current page. If no further pages exist, this field will be null.",
         ),
     ] = None
+    """
+    NextPage is the identifier for the next page of results. It is only populated if there is another page of results after the current page. If no further pages exist, this field will be null.
+    """
+
     vanity_nameservers: typing_extensions.Annotated[
         typing.List[VanityNameserverResponse],
         FieldMetadata(alias="vanityNameservers"),
@@ -38,6 +46,9 @@ class ListVanityNameserversResponse(UniversalBaseModel):
             description="VanityNameservers is the list of vanity nameservers associated with the domain. If no vanity nameservers are configured, this will be an empty array.",
         ),
     ]
+    """
+    VanityNameservers is the list of vanity nameservers associated with the domain. If no vanity nameservers are configured, this will be an empty array.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

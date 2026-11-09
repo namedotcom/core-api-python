@@ -27,6 +27,10 @@ class PricingResponse(UniversalBaseModel):
             description="PurchasePrice is the total standard or registry-premium registration cost for the requested `years` query parameter — not a one-year component. Does not include aftermarket, expiring, or backorder acquisition prices. If `null`, name.com is not currently accepting registrations for this domain/term combination. For registry premium create (`purchaseType: registration`), pass this value with the same `years`. For aftermarket, expiring, or backorder types, use `purchasePrice` from Search/Check Availability instead.",
         ),
     ] = None
+    """
+    PurchasePrice is the total standard or registry-premium registration cost for the requested `years` query parameter — not a one-year component. Does not include aftermarket, expiring, or backorder acquisition prices. If `null`, name.com is not currently accepting registrations for this domain/term combination. For registry premium create (`purchaseType: registration`), pass this value with the same `years`. For aftermarket, expiring, or backorder types, use `purchasePrice` from Search/Check Availability instead.
+    """
+
     renewal_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="renewalPrice"),
@@ -35,6 +39,10 @@ class PricingResponse(UniversalBaseModel):
             description="RenewalPrice is the total renewal cost for the requested `years`. If `null`, name.com is not currently accepting renewals for this domain/term combination. Pass as `purchasePrice` on [Renew Domain](/api/v1/reference/domains/renew-domain) for premium renewals. Do not use for computing Create Domain `purchasePrice` or multi-year create totals.",
         ),
     ] = None
+    """
+    RenewalPrice is the total renewal cost for the requested `years`. If `null`, name.com is not currently accepting renewals for this domain/term combination. Pass as `purchasePrice` on [Renew Domain](/api/v1/reference/domains/renew-domain) for premium renewals. Do not use for computing Create Domain `purchasePrice` or multi-year create totals.
+    """
+
     transfer_price: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="transferPrice"),
@@ -43,6 +51,9 @@ class PricingResponse(UniversalBaseModel):
             description="TransferPrice is the inbound transfer cost for this domain. The `years` query parameter does not affect this value. Pricing uses the TLD's minimum transfer/registration term (typically 1 year; for TLDs with a higher minimum, e.g. `.ai`, the total will reflect that minimum). If `null`, transfers are not accepted for this domain/term combination. Pass to [Create Transfer](/api/v1/reference/transfers/create-transfer) as `purchasePrice` when transfer price validation applies (required for premium transfers).",
         ),
     ] = None
+    """
+    TransferPrice is the inbound transfer cost for this domain. The `years` query parameter does not affect this value. Pricing uses the TLD's minimum transfer/registration term (typically 1 year; for TLDs with a higher minimum, e.g. `.ai`, the total will reflect that minimum). If `null`, transfers are not accepted for this domain/term combination. Pass to [Create Transfer](/api/v1/reference/transfers/create-transfer) as `purchasePrice` when transfer price validation applies (required for premium transfers).
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -1,7 +1,5 @@
 from .conftest import get_client, verify_request_count
 
-from namecom_core_api.webhook_notifications import ModifySubscriptionRequestBodyUrl
-
 
 def test_webhookNotifications_get_subscribed_notifications() -> None:
     """Test GetSubscribedNotifications endpoint with WireMock"""
@@ -29,9 +27,6 @@ def test_webhookNotifications_modify_subscription() -> None:
     client = get_client(test_id)
     client.webhook_notifications.modify_subscription(
         id=1,
-        request=ModifySubscriptionRequestBodyUrl(
-            url="url",
-        ),
     )
     verify_request_count(test_id, "PUT", "/core/v1/notifications/1", None, 1)
 

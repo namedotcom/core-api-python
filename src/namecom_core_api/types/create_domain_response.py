@@ -25,9 +25,12 @@ class CreateDomainResponse(UniversalBaseModel):
         FieldMetadata(alias="totalPaid"),
         pydantic.Field(
             alias="totalPaid",
-            description="TotalPaid is the total amount paid, including VAT and Whois privacy protection.",
+            description="TotalPaid is the total amount paid, including VAT when applicable. Whois Privacy is free and is not included in this amount.",
         ),
     ]
+    """
+    TotalPaid is the total amount paid, including VAT when applicable. Whois Privacy is free and is not included in this amount.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

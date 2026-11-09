@@ -6,14 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .modify_subscription_request_body import ModifySubscriptionRequestBody
-    from .modify_subscription_request_body_active import ModifySubscriptionRequestBodyActive
-    from .modify_subscription_request_body_url import ModifySubscriptionRequestBodyUrl
-_dynamic_imports: typing.Dict[str, str] = {
-    "ModifySubscriptionRequestBody": ".modify_subscription_request_body",
-    "ModifySubscriptionRequestBodyActive": ".modify_subscription_request_body_active",
-    "ModifySubscriptionRequestBodyUrl": ".modify_subscription_request_body_url",
-}
+    from .url_forwarding_input_type import UrlForwardingInputType
+_dynamic_imports: typing.Dict[str, str] = {"UrlForwardingInputType": ".url_forwarding_input_type"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -37,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ModifySubscriptionRequestBody", "ModifySubscriptionRequestBodyActive", "ModifySubscriptionRequestBodyUrl"]
+__all__ = ["UrlForwardingInputType"]
