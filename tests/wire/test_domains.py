@@ -2334,9 +2334,23 @@ def test_domains_set_contacts_throws_too_many_requests_error() -> None:
     verify_request_count(test_id, "POST", "/core/v1/domains/domainName:setContacts", None, 1)
 
 
+def test_domains_set_contacts_throws_unavailable_for_legal_reasons_error() -> None:
+    """Test SetContacts endpoint error response (UnavailableForLegalReasonsError) with WireMock"""
+    test_id = "domains.set_contacts.8"
+    client = get_client(test_id)
+    with pytest.raises(UnavailableForLegalReasonsError) as exc_info:
+        client.domains.set_contacts(
+            domain_name="domainName",
+            contacts=ContactsRequest(),
+        )
+    assert exc_info.value.status_code == 451
+    assert jsonable_encoder(exc_info.value.body) == {"message": "message"}
+    verify_request_count(test_id, "POST", "/core/v1/domains/domainName:setContacts", None, 1)
+
+
 def test_domains_set_contacts_throws_internal_server_error() -> None:
     """Test SetContacts endpoint error response (InternalServerError) with WireMock"""
-    test_id = "domains.set_contacts.8"
+    test_id = "domains.set_contacts.9"
     client = get_client(test_id)
     with pytest.raises(InternalServerError) as exc_info:
         client.domains.set_contacts(
@@ -2350,7 +2364,7 @@ def test_domains_set_contacts_throws_internal_server_error() -> None:
 
 def test_domains_set_contacts_throws_bad_gateway_error() -> None:
     """Test SetContacts endpoint error response (BadGatewayError) with WireMock"""
-    test_id = "domains.set_contacts.9"
+    test_id = "domains.set_contacts.10"
     client = get_client(test_id)
     with pytest.raises(BadGatewayError) as exc_info:
         client.domains.set_contacts(
@@ -2364,7 +2378,7 @@ def test_domains_set_contacts_throws_bad_gateway_error() -> None:
 
 def test_domains_set_contacts_throws_service_unavailable_error() -> None:
     """Test SetContacts endpoint error response (ServiceUnavailableError) with WireMock"""
-    test_id = "domains.set_contacts.10"
+    test_id = "domains.set_contacts.11"
     client = get_client(test_id)
     with pytest.raises(ServiceUnavailableError) as exc_info:
         client.domains.set_contacts(
@@ -2378,7 +2392,7 @@ def test_domains_set_contacts_throws_service_unavailable_error() -> None:
 
 def test_domains_set_contacts_throws_gateway_timeout_error() -> None:
     """Test SetContacts endpoint error response (GatewayTimeoutError) with WireMock"""
-    test_id = "domains.set_contacts.11"
+    test_id = "domains.set_contacts.12"
     client = get_client(test_id)
     with pytest.raises(GatewayTimeoutError) as exc_info:
         client.domains.set_contacts(

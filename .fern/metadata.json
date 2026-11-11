@@ -7,9 +7,8 @@
     "package_name": "namecom_core_api",
     "enable_wire_tests": true
   },
-  "originGitCommit": "016dfdfe860eea6d6077ce29d8d09f65521b8fa9",
-  "originGitCommitIsDirty": false,
-  "invokedBy": "manual",
-  "requestedVersion": "1.36.3",
-  "sdkVersion": "1.36.3"
+  "invokedBy": "ci",
+  "requestedVersion": "1.36.4",
+  "ciProvider": "gitlab",
+  "sdkVersion": "1.36.4"
 }

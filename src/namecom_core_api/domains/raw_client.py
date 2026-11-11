@@ -2647,6 +2647,17 @@ class RawDomainsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 451:
+                raise UnavailableForLegalReasonsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        UnavailableForLegal451,
+                        parse_obj_as(
+                            type_=UnavailableForLegal451,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 500:
                 raise InternalServerError(
                     headers=dict(_response.headers),
@@ -6193,6 +6204,17 @@ class AsyncRawDomainsClient:
                         typing.Any,
                         parse_obj_as(
                             type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 451:
+                raise UnavailableForLegalReasonsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        UnavailableForLegal451,
+                        parse_obj_as(
+                            type_=UnavailableForLegal451,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

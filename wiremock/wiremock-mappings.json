@@ -8079,8 +8079,8 @@
         }
       },
       "response": {
-        "status": 500,
-        "body": "{\n  \"key\": \"value\"\n}",
+        "status": 451,
+        "body": "{\n  \"message\": \"message\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -8118,7 +8118,7 @@
         }
       },
       "response": {
-        "status": 502,
+        "status": 500,
         "body": "{\n  \"key\": \"value\"\n}",
         "headers": {
           "Content-Type": "application/json"
@@ -8157,7 +8157,7 @@
         }
       },
       "response": {
-        "status": 503,
+        "status": 502,
         "body": "{\n  \"key\": \"value\"\n}",
         "headers": {
           "Content-Type": "application/json"
@@ -8196,13 +8196,52 @@
         }
       },
       "response": {
-        "status": 504,
+        "status": 503,
         "body": "{\n  \"key\": \"value\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
       "uuid": "7308f7a2-30f5-42e4-a052-6fbe9041805f",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "250a360f-e028-437e-b56c-bc05a6c1a9d6",
+      "name": "Set Contacts - default - domains.set_contacts.12",
+      "request": {
+        "urlPathTemplate": "/core/v1/domains/{domainName}:setContacts",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "equalTo": "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
+          },
+          "X-Test-Id": {
+            "equalTo": "domains.set_contacts.12"
+          }
+        },
+        "pathParameters": {
+          "domainName": {
+            "equalTo": "domainName"
+          }
+        }
+      },
+      "response": {
+        "status": 504,
+        "body": "{\n  \"key\": \"value\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "250a360f-e028-437e-b56c-bc05a6c1a9d6",
       "persistent": true,
       "priority": 1,
       "metadata": {
@@ -34989,6 +35028,6 @@
     }
   ],
   "meta": {
-    "total": 912
+    "total": 913
   }
 }

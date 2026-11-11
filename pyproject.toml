@@ -6,11 +6,15 @@ license-files = ["LICENSE"]
 
 [tool.poetry]
 name = "namecom-core-api"
-version = "1.36.3"
-description = ""
+version = "1.36.4"
+description = "Official Python SDK for the name.com Core API"
 readme = "README.md"
 authors = []
-keywords = []
+keywords = [
+    "namecom",
+    "domains",
+    "api"
+]
 license = "MIT"
 classifiers = [
     "Intended Audience :: Developers",
@@ -35,6 +39,8 @@ packages = [
 ]
 
 [tool.poetry.urls]
+Documentation = 'https://docs.name.com'
+Homepage = 'https://github.com/namedotcom/core-api-python'
 Repository = 'https://github.com/namedotcom/core-api-python'
 
 [tool.poetry.dependencies]
